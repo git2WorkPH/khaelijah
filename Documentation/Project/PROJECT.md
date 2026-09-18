@@ -25,10 +25,10 @@ REQUIREMENTS
 - Server-side runtime (future)
 
 ## Current phase
-Define the system architecture and first vertical slice.
+Implement the approved first grounded vertical slice.
 
 ## Current active task
-None. TASK-001 is verified; propose TASK-002 before product implementation.
+TASK-002 — Bootstrap strict TypeScript project and shared contracts.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.

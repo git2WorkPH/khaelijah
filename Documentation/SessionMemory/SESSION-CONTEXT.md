@@ -1,17 +1,18 @@
 # Project Session Context
 
 ## Phase
-REQUIREMENTS — first vertical slice design complete; implementation tasks pending proposal and approval.
+DEVELOPMENT — first grounded vertical slice implementation in progress.
 
 ## Active requirement
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-NONE
+TASK-002 — Bootstrap strict TypeScript project and shared contracts.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
 - TASK-001: first grounded vertical-slice design completed and verified.
+- TASK-002 through TASK-007 are explicitly approved by the project owner; implement them one at a time using stacked local task branches, without push or merge.
 
 ## Open findings
 - FIND-001: repository is documentation-only; no product code or Git metadata exists.
@@ -33,12 +34,12 @@ NONE
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Propose, review, and approve TASK-002 to bootstrap the TypeScript project and shared contracts.
-- Files likely involved: `Documentation/Tasks/Proposed/`, then source directories only after TASK-002 approval.
-- Do not modify: Do not create product source code until a follow-on implementation task is approved.
+- Next exact action: Create the TASK-002 branch and bootstrap the TypeScript project and shared contracts.
+- Files likely involved: `package.json`, `tsconfig.json`, `src/core/`, `test/`, and `Documentation/Tasks/Approved/TASK-002-bootstrap-typescript.md`.
+- Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
 ## Next recommended action
-Propose TASK-002: strict TypeScript project bootstrap and shared domain contracts.
+Complete TASK-002, then proceed to TASK-003 on its stacked local branch.
 
 ## Important constraints
 - TypeScript-only product runtime.
