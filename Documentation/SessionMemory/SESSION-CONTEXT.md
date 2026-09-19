@@ -7,7 +7,7 @@ DEVELOPMENT — first grounded vertical slice implementation in progress.
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-TASK-002 — Bootstrap strict TypeScript project and shared contracts.
+TASK-003 — Implement governed local corpus ingestion.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -29,13 +29,13 @@ TASK-002 — Bootstrap strict TypeScript project and shared contracts.
 - Remote sync: UNKNOWN
 
 ## Current implementation state
-- Last completed step: Bootstrap strict TypeScript project and shared contracts (TASK-002).
+- Last completed step: Implement governed local corpus ingestion (TASK-003).
 - Last verification command: `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test`.
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Commit the TASK-002 task-record update, merge TASK-002 into master, then create TASK-003.
-- Files likely involved: `src/knowledge/`, `corpus/`, `test/`, and `Documentation/Tasks/Approved/TASK-003-governed-ingestion.md`.
+- Next exact action: Commit and merge TASK-003, then implement deterministic lexical retrieval in TASK-004.
+- Files likely involved: `src/knowledge/retrieval.ts`, `test/`, and `Documentation/Tasks/Approved/TASK-004-lexical-retrieval.md`.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
 ## Next recommended action
