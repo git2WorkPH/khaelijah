@@ -1,7 +1,7 @@
 # TASK-004 — Implement deterministic lexical retrieval
 
-Task Status: APPROVED
-Git Status: NOT_STARTED
+Task Status: VERIFIED
+Git Status: CHANGES_UNCOMMITTED
 
 ## Requirement
 - REQ-PROD-001
@@ -29,6 +29,12 @@ Rank active technology-profile chunks through transparent lexical scoring and re
 
 ## Git
 - Base branch: task/TASK-003-governed-ingestion
-- Task branch: NOT_CREATED
+- Task branch: task/TASK-004-lexical-retrieval
 - Commit: NOT_COMMITTED
 
+## Implementation summary
+- Added deterministic BM25-style lexical ranking over active profile chunks with stable ranks and provenance-complete passages.
+- Added explicit insufficient-evidence, partial-coverage, unknown-profile, and empty-query outcomes.
+
+## Verification evidence
+- `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test` — PASS (8 tests)
