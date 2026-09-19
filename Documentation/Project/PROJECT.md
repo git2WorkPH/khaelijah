@@ -18,6 +18,7 @@ REQUIREMENTS
 - Backend: TypeScript service layer, deferred until the first vertical slice is designed.
 - Database: Versioned document store and vector index, implementation deferred.
 - Infrastructure: Reproducible local development and evaluation environment.
+- Package manager: pnpm.
 - Third-party services: None required for the core model path; curated source connectors are deferred.
 
 ## Target platforms

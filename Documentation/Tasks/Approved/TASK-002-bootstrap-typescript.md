@@ -1,7 +1,7 @@
 # TASK-002 — Bootstrap strict TypeScript project and shared contracts
 
-Task Status: APPROVED
-Git Status: NOT_STARTED
+Task Status: VERIFIED
+Git Status: COMMITTED
 
 ## Requirement
 - REQ-PROD-001
@@ -31,6 +31,26 @@ Create the dependency-free TypeScript foundation, shared domain contracts, and c
 
 ## Git
 - Base branch: master
-- Task branch: NOT_CREATED
-- Commit: NOT_COMMITTED
+- Task branch: task/TASK-002-bootstrap-typescript
+- Commit: bb1d971
 
+## Implementation summary
+- Added a strict, dependency-light TypeScript project using pnpm.
+- Added shared contracts for profiles, source provenance, chunks, retrieval, evidence, inference, grounded responses, and citations.
+- Added response validation that rejects citations absent from the evidence packet.
+
+## Files changed
+- `.gitignore`
+- `package.json`
+- `pnpm-lock.yaml`
+- `tsconfig.json`
+- `src/core/contracts.ts`
+- `src/core/result.ts`
+- `src/index.ts`
+- `test/contracts.test.ts`
+
+## Verification evidence
+- `pnpm run build` — PASS
+- `pnpm run typecheck` — PASS
+- `pnpm run lint` — PASS
+- `pnpm test` — PASS (3 tests)

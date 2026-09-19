@@ -23,19 +23,19 @@ TASK-002 — Bootstrap strict TypeScript project and shared contracts.
 
 ## Repository state
 - Base branch: UNKNOWN (not a Git repository at inspection time).
-- Current branch: UNKNOWN
-- Latest commit: UNKNOWN
-- Working tree: Documentation changed in this session.
+- Current branch: task/TASK-002-bootstrap-typescript
+- Latest commit: bb1d971 (`feat(core): bootstrap TypeScript contracts [TASK-002]`).
+- Working tree: Documentation update pending final task-record commit.
 - Remote sync: UNKNOWN
 
 ## Current implementation state
-- Last completed step: Create the implementation-ready first grounded vertical-slice design.
-- Last verification command: Cross-reference and placeholder scan of governed documentation.
+- Last completed step: Bootstrap strict TypeScript project and shared contracts (TASK-002).
+- Last verification command: `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test`.
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Create the TASK-002 branch and bootstrap the TypeScript project and shared contracts.
-- Files likely involved: `package.json`, `tsconfig.json`, `src/core/`, `test/`, and `Documentation/Tasks/Approved/TASK-002-bootstrap-typescript.md`.
+- Next exact action: Commit the TASK-002 task-record update, merge TASK-002 into master, then create TASK-003.
+- Files likely involved: `src/knowledge/`, `corpus/`, `test/`, and `Documentation/Tasks/Approved/TASK-003-governed-ingestion.md`.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
 ## Next recommended action
