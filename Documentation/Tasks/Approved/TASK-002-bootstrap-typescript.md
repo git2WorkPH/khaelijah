@@ -1,7 +1,7 @@
 # TASK-002 — Bootstrap strict TypeScript project and shared contracts
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: COMMITTED
 
 ## Requirement
 - REQ-PROD-001
@@ -32,7 +32,7 @@ Create the dependency-free TypeScript foundation, shared domain contracts, and c
 ## Git
 - Base branch: master
 - Task branch: task/TASK-002-bootstrap-typescript
-- Commit: NOT_COMMITTED
+- Commit: bb1d971
 
 ## Implementation summary
 - Added a strict, dependency-light TypeScript project using pnpm.

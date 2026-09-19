@@ -23,9 +23,9 @@ TASK-002 — Bootstrap strict TypeScript project and shared contracts.
 
 ## Repository state
 - Base branch: UNKNOWN (not a Git repository at inspection time).
-- Current branch: UNKNOWN
-- Latest commit: UNKNOWN
-- Working tree: Documentation changed in this session.
+- Current branch: task/TASK-002-bootstrap-typescript
+- Latest commit: bb1d971 (`feat(core): bootstrap TypeScript contracts [TASK-002]`).
+- Working tree: Documentation update pending final task-record commit.
 - Remote sync: UNKNOWN
 
 ## Current implementation state
@@ -34,7 +34,7 @@ TASK-002 — Bootstrap strict TypeScript project and shared contracts.
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Commit TASK-002, then create the stacked TASK-003 branch for governed local corpus ingestion.
+- Next exact action: Commit the TASK-002 task-record update, merge TASK-002 into master, then create TASK-003.
 - Files likely involved: `src/knowledge/`, `corpus/`, `test/`, and `Documentation/Tasks/Approved/TASK-003-governed-ingestion.md`.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
