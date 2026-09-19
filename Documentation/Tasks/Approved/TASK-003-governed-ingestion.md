@@ -1,7 +1,7 @@
 # TASK-003 — Implement governed local corpus ingestion
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: COMMITTED
 
 ## Requirement
 - REQ-FND-001
@@ -30,7 +30,7 @@ Parse a local Markdown technology corpus into source records and lifecycle-gover
 ## Git
 - Base branch: task/TASK-002-bootstrap-typescript
 - Task branch: task/TASK-003-governed-ingestion
-- Commit: NOT_COMMITTED
+- Commit: aab517f
 
 ## Implementation summary
 - Added front-matter validation, deterministic chunking and hashing, source approval checks, in-memory lifecycle storage, and refresh audit records.

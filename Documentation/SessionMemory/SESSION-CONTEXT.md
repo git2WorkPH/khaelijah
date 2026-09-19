@@ -23,8 +23,8 @@ TASK-003 — Implement governed local corpus ingestion.
 
 ## Repository state
 - Base branch: UNKNOWN (not a Git repository at inspection time).
-- Current branch: task/TASK-002-bootstrap-typescript
-- Latest commit: bb1d971 (`feat(core): bootstrap TypeScript contracts [TASK-002]`).
+- Current branch: task/TASK-003-governed-ingestion
+- Latest commit: aab517f (`feat(knowledge): add governed corpus ingestion [TASK-003]`).
 - Working tree: Documentation update pending final task-record commit.
 - Remote sync: UNKNOWN
 
