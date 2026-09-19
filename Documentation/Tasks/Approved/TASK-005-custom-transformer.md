@@ -1,7 +1,7 @@
 # TASK-005 — Implement the custom TypeScript Transformer inference path
 
-Task Status: APPROVED
-Git Status: NOT_STARTED
+Task Status: VERIFIED
+Git Status: CHANGES_UNCOMMITTED
 
 ## Requirement
 - REQ-PROD-001
@@ -28,6 +28,11 @@ Implement a small custom TypeScript Transformer forward path behind the inferenc
 
 ## Git
 - Base branch: task/TASK-004-lexical-retrieval
-- Task branch: NOT_CREATED
+- Task branch: task/TASK-005-custom-transformer
 - Commit: NOT_COMMITTED
 
+## Implementation summary
+- Added a TypeScript-only deterministic tokenizer, single-head attention encoder, feed-forward activation, and bounded inference adapter.
+
+## Verification evidence
+- `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test` — PASS (10 tests)
