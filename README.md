@@ -83,7 +83,7 @@ UTF-8 text → byte tokens → token + position embeddings
 
 A training example will shift tokens by one position: inputs `BOS, A, B` predict targets `A, B, EOS`. The loss measures how well the model predicts those targets; gradients describe how changing weights would affect that loss. An optimizer must still apply those changes.
 
-There is currently no `pnpm train` command, trained checkpoint, or decoder text-generation command. The demo continues to use the earlier encoder/template adapter. Training and checkpoint support must be completed before connecting learned generation to RAG.
+Run `pnpm train:toy` to load the original local `datasets/synthetic-pattern-v1.json` fixture and train the decoder for 200 AdamW steps. It prints configuration, dataset hash, loss curve, and pass/fail results. The repeating text verifies learning mechanics, not real-world competence. Training has step/time/memory limits and cancellation between steps. No database or checkpoint is written: weights exist in memory only. The demo still uses the earlier encoder/template adapter.
 
 ## Verification
 
@@ -94,7 +94,7 @@ pnpm lint
 pnpm evaluate
 ```
 
-The current suite contains 38 tests, covering tokenizer round trips, numerical kernel gradients, sampled full-model gradients, causal masking, batch isolation, padding, cache ownership, ingestion, retrieval, and response validation. Gradient checks compare backward results with small numerical perturbations of parameters.
+The current suite contains 44 tests, including dataset validation, optimizer numerics, bounded training, tokenizer round trips, kernel/full-model gradients, causal masking, batch isolation, padding, ingestion, retrieval, and response validation. Gradient checks compare backward results with numerical perturbations.
 
 `pnpm evaluate` prints five synthetic request fixtures, their responses, retrieval recall@3/nDCG@3, provenance checks, citation-ID checks, and insufficient-evidence behavior. Citation identity does not establish semantic support. Passing these checks does not demonstrate general application-building ability. The `lint` script currently repeats TypeScript checking rather than running a separate style linter.
 
@@ -116,6 +116,6 @@ The current suite contains 38 tests, covering tokenizer round trips, numerical k
 
 ## Next milestones
 
-TASK-011 adds dataset manifests, split isolation, AdamW, a bounded training loop, and a tiny-overfit experiment. TASK-012 adds checkpoint/resume, generation, and held-out learning evaluation. The architecture and acceptance gates are documented in `Documentation/Architecture/TRAINABLE-MODEL.md`.
+TASK-011 implements dataset manifests, split isolation, AdamW, bounded training, and a successful tiny-overfit experiment. TASK-012 is next: checkpoint/resume, generation, and held-out evaluation. See `Documentation/Architecture/TRAINABLE-MODEL.md` for the acceptance gates.
 
 Continuous internet refresh, useful learned application planning, semantic conflict detection, and application-editing tools remain future work. The long-term direction keeps current domain knowledge in the governed knowledge layer rather than attempting to train on the entire internet.

@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-None. TASK-010 verified and merged; remote push is the final closeout action.
+TASK-011 verified; see TASK-011-HANDOFF.md for the current implementation, experiment results, and 2%-remaining handoff. Commit/merge/push closeout pending.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -36,7 +36,7 @@ None. TASK-010 verified and merged; remote push is the final closeout action.
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Confirm TASK-010 synchronization, then proceed to TASK-011 dataset and trainer when authorized.
+- Next exact action: Complete TASK-011 closeout if not already in git log; then TASK-012 checkpoint/resume and held-out experiments.
 - Files likely involved: TASK-007 record, Acceptance/ACC-TASK-007.md, README.md.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
