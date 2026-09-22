@@ -7,12 +7,15 @@
     "node": ">=22"
   },
   "scripts": {
+    "demo": "pnpm run build && node dist/app/cli.js",
+    "evaluate": "pnpm run build && node dist/app/cli.js --evaluate",
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "test": "pnpm run build && node --experimental-strip-types --test test/*.test.ts"
   },
   "devDependencies": {
+    "@types/node": "^26.6.2",
     "typescript": "^5.7.3"
   }
 }

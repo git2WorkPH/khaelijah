@@ -33,3 +33,14 @@ test("rejects model citations not present in the evidence packet", async () => {
   const malicious: InferencePort = { async generate() { return { taskSummary: "x", citations: [{ passageId: "invented", claim: "x" }], recommendations: [], uncertainties: [] }; } };
   assert.equal((await planner(malicious).plan("Validate input", "r3", at)).status, "invalid_citation");
 });
+
+test("rejects evidence withdrawn while inference is running", async () => {
+  const store = new InMemoryKnowledgeStore();
+  store.ingest(profile, { filename: "validation.md", markdown }, at);
+  const inference: InferencePort = { async generate(request) {
+    store.withdraw("validation", at);
+    return new TransformerPlanAdapter().generate(request);
+  } };
+  const service = new GroundedPlanner(profile, new LexicalRetriever(profile, store), inference);
+  assert.equal((await service.plan("Validate input", "stale", at)).status, "stale_evidence");
+});

@@ -4,7 +4,7 @@ import { TinyTransformer, TransformerPlanAdapter, VocabularyTokenizer } from "..
 
 test("tokenization and Transformer forward passes are deterministic", () => {
   const tokens = new VocabularyTokenizer().encode("validate input validate");
-  const model = new TinyTransformer({ vocabularySize: 100, dimensions: 4 });
+  const model = new TinyTransformer({ vocabularySize: 8192, dimensions: 4 });
   assert.deepEqual(model.forward(tokens), model.forward(tokens));
   assert.equal(model.forward(tokens).length, 4);
 });

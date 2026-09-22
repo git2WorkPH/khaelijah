@@ -7,7 +7,8 @@ export interface RetrievalOutcome {
 }
 
 function tokens(value: string): string[] {
-  return value.toLowerCase().match(/[a-z0-9]+/gu) ?? [];
+  const stopWords = new Set(["a", "an", "the", "and", "at", "for", "from", "in", "including", "is", "of", "on", "to", "with"]);
+  return (value.toLowerCase().match(/[a-z0-9]+/gu) ?? []).filter((token) => !stopWords.has(token));
 }
 
 function bm25Score(queryTerms: readonly string[], text: string, averageLength: number): number {

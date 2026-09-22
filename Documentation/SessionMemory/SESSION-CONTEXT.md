@@ -1,45 +1,47 @@
 # Project Session Context
 
 ## Phase
-DEVELOPMENT — first grounded vertical slice implementation in progress.
+PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22.
 
 ## Active requirement
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-TASK-003 — Implement governed local corpus ingestion.
+TASK-007 — verification complete; commit, local merge, and remote master push pending.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
 - TASK-001: first grounded vertical-slice design completed and verified.
-- TASK-002 through TASK-007 are explicitly approved by the project owner; implement them one at a time using stacked local task branches, without push or merge.
+- TASK-002 through TASK-007 are explicitly approved. The owner subsequently authorized merging each completed branch into master and pushing verified master to origin. Use pnpm.
 
 ## Open findings
-- FIND-001: repository is documentation-only; no product code or Git metadata exists.
+- Fixed, untrained encoder weights and a templated recommendation do not demonstrate learned application-building ability.
+- Semantic conflict detection, real-domain evaluation, model training, and internet refresh remain outstanding. The local corpus is synthetic.
 
 ## Completed/verified work
 - Established project vision, scope, glossary, architecture boundary, requirements, decision record, and proposed first planning task.
 - Completed and verified TASK-001 design deliverable.
+- TASK-002 through TASK-006 merged locally; TASK-007 runnable prototype passes 15 tests. See Acceptance/ACC-TASK-007.md.
 
 ## Repository state
-- Base branch: UNKNOWN (not a Git repository at inspection time).
-- Current branch: task/TASK-003-governed-ingestion
-- Latest commit: aab517f (`feat(knowledge): add governed corpus ingestion [TASK-003]`).
-- Working tree: Documentation update pending final task-record commit.
+- Base branch: master.
+- Current branch: task/TASK-007-read-only-agent-evaluation (before final merge).
+- Latest commit: 59a1879 before TASK-007 commit; inspect git log for final hashes.
+- Working tree: TASK-007 changes; preserve the user's staged SCOPE.md edit and untracked package-lock.json. The added Node types dependency is preserved and synchronized into pnpm-lock.yaml.
 - Remote sync: UNKNOWN
 
 ## Current implementation state
-- Last completed step: Implement governed local corpus ingestion (TASK-003).
+- Last completed step: Verify CLI integration, 12 synthetic documents, all five fixtures, and stale-evidence regression.
 - Last verification command: `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test`.
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Commit and merge TASK-003, then implement deterministic lexical retrieval in TASK-004.
-- Files likely involved: `src/knowledge/retrieval.ts`, `test/`, and `Documentation/Tasks/Approved/TASK-004-lexical-retrieval.md`.
+- Next exact action: Commit and merge TASK-007; fetch origin, verify master and push without force. Preserve unrelated staged changes.
+- Files likely involved: TASK-007 record, Acceptance/ACC-TASK-007.md, README.md.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
 ## Next recommended action
-Complete TASK-002, then proceed to TASK-003 on its stacked local branch.
+Define the training milestone and measured model capability targets; do not describe the current template adapter as a trained model.
 
 ## Important constraints
 - TypeScript-only product runtime.

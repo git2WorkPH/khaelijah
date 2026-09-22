@@ -4,3 +4,7 @@ export * from "./knowledge/ingest.js";
 export * from "./knowledge/retrieval.js";
 export * from "./model/transformer.js";
 export * from "./rag/grounded-planner.js";
+export * from "./agent/planning-agent.js";
+export * from "./evaluation/fixtures.js";
+export * from "./evaluation/metrics.js";
+export * from "./app/demo.js";
