@@ -1,7 +1,7 @@
 # TASK-009 — Tokenizer, parameters, and numerical kernels
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 Owner authorization: continue after TASK-008; merge and push verified work to master.
 
@@ -22,7 +22,7 @@ Decoder assembly, loss, optimizer, dataset loading, training, and checkpoints (T
 ## Git
 - Base: master
 - Branch: task/TASK-009-training-kernels
-- Commit: pending
+- Commit: 2c9dda8
 
 ## Verification
 PASS: `pnpm test` (30 tests), `pnpm typecheck`, `pnpm lint`, `git diff --check`. Build runs within the test command. Lint remains the existing compiler-check alias.
