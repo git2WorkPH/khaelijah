@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-None. TASK-008 design verified in c81cca7; training implementation remains proposed.
+TASK-009 verified: byte tokenizer, parameter registry, and numerical kernels. Commit/merge/push closeout pending.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -36,12 +36,12 @@ None. TASK-008 design verified in c81cca7; training implementation remains propo
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Confirm TASK-008 synchronization, then obtain approval for proposed TASK-009 before implementing training kernels.
+- Next exact action: Confirm TASK-009 synchronization, then continue with TASK-010 causal decoder and masked loss when authorized.
 - Files likely involved: TASK-007 record, Acceptance/ACC-TASK-007.md, README.md.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
 ## Next recommended action
-Implement proposed TASK-009 after approval. TASK-008 defines the decoder, byte tokenizer, numerical training, checkpoint contracts, data isolation, resource limits, and measurable learning gates in Architecture/TRAINABLE-MODEL.md. No trainer has been implemented or run.
+TASK-010: causal decoder and masked cross-entropy. TASK-009 kernels pass finite differences for every operation; 30 tests pass overall. No trainer has been implemented or run. Standing owner instruction: merge and push each completed task to master after verification.
 
 ## Important constraints
 - TypeScript-only product runtime.

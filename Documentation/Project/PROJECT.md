@@ -29,7 +29,7 @@ PROTOTYPE
 Trainable model design complete; implementation planning follows the verified local prototype.
 
 ## Current active task
-None. TASK-008 design verified; TASK-009 through TASK-012 proposed.
+None. TASK-009 numerical foundation verified; TASK-010 is next.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.
@@ -64,7 +64,7 @@ Examples:
 - Push task branches automatically: No.
 - Pull request required: To be decided when a remote exists.
 - Verification required before merge: Yes.
-- Merge strategy: Manual.
+- Merge strategy: Merge each completed task into master after verification, then push origin/master (standing owner instruction).
 - Protected branches: [main]
 - Branch deletion after merge: [MANUAL / ALLOWED]
 
