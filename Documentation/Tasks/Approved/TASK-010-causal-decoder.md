@@ -1,7 +1,7 @@
 # TASK-010 — Causal decoder and masked next-token loss
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 Authorization: owner requested continuation after TASK-009 and standing verified master push.
 
@@ -24,7 +24,7 @@ Optimizer, datasets, actual training, checkpoints, generation, and RAG replaceme
 ## Git
 - Base: master
 - Branch: task/TASK-010-causal-decoder
-- Commit: pending
+- Commit: 3eecb9f
 
 ## Verification
 PASS: `pnpm test` (38 tests including build), `pnpm typecheck`, `pnpm lint`, `git diff --check`. Lint remains the project's compiler-check alias.

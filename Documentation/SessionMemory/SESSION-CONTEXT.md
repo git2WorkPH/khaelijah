@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-TASK-010 verified; merge and push closeout in progress.
+None. TASK-010 verified and merged; remote push is the final closeout action.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -26,12 +26,12 @@ TASK-010 verified; merge and push closeout in progress.
 ## Repository state
 - Base branch: master.
 - Current branch: master.
-- Latest implementation commit: 2c9dda8 (TASK-009); inspect git log for subsequent merge and closeout commits.
+- Latest implementation commit: 3eecb9f (TASK-010); inspect git log for subsequent merge and closeout commits.
 - Working tree: clean at TASK-008 start; user scope changes were already committed in 1091899. Preserve that commit.
 - Remote sync: UNKNOWN
 
 ## Current implementation state
-- Last completed step: Verify TASK-009 kernels against finite differences; all 30 tests, build, typecheck and compiler-based lint pass.
+- Last completed step: Verify TASK-010 causal decoder and masked loss; all 38 tests, build, typecheck and compiler-based lint pass.
 - Last verification command: `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test`.
 - Verification result: PASS.
 
