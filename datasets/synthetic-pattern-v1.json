@@ -1,0 +1,29 @@
+{
+  "version": "synthetic-pattern-v1",
+  "documents": [
+    {
+      "id": "repeat-train",
+      "split": "train",
+      "source": "original:jc-model/pattern-fixture-v1",
+      "license": "Original synthetic evaluation fixture authored for this repository",
+      "text": "abc abc abc abc abc abc abc abc ",
+      "sha256": "b9fe4201b52301bc622cf8f4e82dff68874a6698e9e15d909a00fb146a53380f"
+    },
+    {
+      "id": "repeat-validation",
+      "split": "validation",
+      "source": "original:jc-model/pattern-fixture-v1",
+      "license": "Original synthetic evaluation fixture authored for this repository",
+      "text": "abc abc abc abc abc abc abc ",
+      "sha256": "a9185a6fbc23e354c0a89a3fcf5450977e91d333fd67598aa15966ba682ec53a"
+    },
+    {
+      "id": "repeat-test",
+      "split": "test",
+      "source": "original:jc-model/pattern-fixture-v1",
+      "license": "Original synthetic evaluation fixture authored for this repository",
+      "text": "abc abc abc abc abc abc abc abc abc ",
+      "sha256": "df171371a7307a8e8df35141226965ca97156b7f617f799a23a1f312449af3b4"
+    }
+  ]
+}

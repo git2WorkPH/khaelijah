@@ -7,6 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
+    "train:toy": "pnpm run build && node dist/app/train.js",
     "demo": "pnpm run build && node dist/app/cli.js",
     "evaluate": "pnpm run build && node dist/app/cli.js --evaluate",
     "build": "tsc -p tsconfig.json",
