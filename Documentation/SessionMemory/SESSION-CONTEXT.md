@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-None. TASK-009 verified and merged into master; remote push is the final closeout action.
+TASK-010 verified; merge and push closeout in progress.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -36,12 +36,12 @@ None. TASK-009 verified and merged into master; remote push is the final closeou
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Confirm TASK-009 synchronization, then continue with TASK-010 causal decoder and masked loss when authorized.
+- Next exact action: Confirm TASK-010 synchronization, then proceed to TASK-011 dataset and trainer when authorized.
 - Files likely involved: TASK-007 record, Acceptance/ACC-TASK-007.md, README.md.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
 ## Next recommended action
-TASK-010: causal decoder and masked cross-entropy. TASK-009 kernels pass finite differences for every operation; 30 tests pass overall. No trainer has been implemented or run. Standing owner instruction: merge and push each completed task to master after verification.
+TASK-011: dataset manifests, split checks, AdamW, bounded training loop, and tiny-overfit experiment. TASK-010 decoder and loss pass sampled full-model finite differences, causal and padding checks, and batch gradient equivalence; 38 tests pass overall. No trainer has been implemented or run. Standing owner instruction: merge and push each completed task to master after verification.
 
 ## Important constraints
 - TypeScript-only product runtime.
