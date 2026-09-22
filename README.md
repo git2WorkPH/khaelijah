@@ -1,6 +1,14 @@
 # JC Model
 
-TypeScript-only experimental knowledge retrieval and read-only planning pipeline.
+JC Model is a TypeScript-only experiment in building a custom language model, a separately updated knowledge layer, and an application-building assistant.
+
+The central idea is to keep **learned model capabilities** separate from **current information**. Training changes model weights. Updating the knowledge layer changes the evidence available at answer time, without retraining the model.
+
+Two parts exist today: a runnable local retrieval/planning demonstration, and a separate trainable decoder with tested forward/backward calculations. The decoder has not yet been trained or connected to the demonstration.
+
+## Quick start
+
+Use Node.js with TypeScript stripping support (Node 22.6+; development has been verified on Node 26) and pnpm. Run commands from the repository root.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -9,10 +17,105 @@ pnpm demo "Plan request input validation for a TypeScript API"
 pnpm evaluate
 ```
 
-The local demonstration uses synthetic, internally authored technology passages. Their `example.invalid` URLs identify fixtures, not independently verified internet sources. It performs no network retrieval or application modifications.
+`demo`, `evaluate`, and `test` build the TypeScript source before running. The demo prints JSON; there is no chat UI or running server. No model download or API key is required.
 
-The model implements a small encoder with positional embeddings, Q/K/V attention, residual normalization, and a two-layer feed-forward block. Its weights are fixed and untrained, and its recommendation is a template. Passing the pipeline tests does not demonstrate learned application-building ability. Model training, semantic conflict detection, independent domain review of the 12-document synthetic corpus, and continuous internet refresh remain outstanding.
+## How the current demo works
 
-`pnpm evaluate` prints each fixture's response, retrieval scores, provenance and citation checks. Citation validity checks identity, not semantic truth. The current `lint` script runs TypeScript checks and is not a separate style linter.
+```text
+Application-planning request
+    → Read-only planning agent
+    → Lexical search over active local passages
+    → Evidence packet: passages, source metadata, warnings
+    → Fixed-weight encoder + template response adapter
+    → Citation and evidence-freshness checks
+    → JSON response and in-memory request log
+```
 
-The separate `src/model/trainable/decoder.ts` now provides a causal decoder with full backward composition, backed by the byte tokenizer and parameter registry. `src/training/loss.ts` implements masked next-token cross-entropy. These components are gradient-checked but have not been trained or connected to the demo adapter; the optimizer and training loop follow in TASK-011.
+1. **Load the knowledge profile.** Each invocation reads 12 explicitly listed Markdown documents from `corpus/technology-typescript-web/` into an in-memory store. Front matter identifies the source, publisher, license/access context, and publication date. Paragraphs become chunks with identifiers and ingestion metadata.
+2. **Retrieve evidence.** The request is matched against active chunks using deterministic lexical scoring. The demo returns up to three passages above its score threshold. This is word-based retrieval; embeddings and a vector database are not implemented.
+3. **Construct the response.** The planner passes the request and evidence to `TransformerPlanAdapter`. That adapter runs the fixed-weight encoder, copies retrieved passages into citations, and supplies a fixed review recommendation. The numerical encoder output does not generate the recommendation text.
+4. **Validate and return.** Citation IDs must refer to supplied evidence. A second retrieval detects changes to selected passage IDs during inference. The agent records the request ID, status, and selected passage IDs in memory.
+
+This exercises the retrieval-augmented generation (RAG) wiring. Learned text generation is still pending. The agent cannot edit applications, run shell commands, deploy software, or fetch internet sources.
+
+### Reading the output
+
+| Field/status | Meaning |
+| --- | --- |
+| `grounded` | The response passed the current structure and citation-ID checks; this is not a guarantee of factual correctness. |
+| `plan.taskSummary` | The submitted request. |
+| `plan.citations` | Passage IDs and quoted fixture content. |
+| `plan.recommendations` | The current template recommendation. |
+| `plan.uncertainties` | Prototype limitations and retrieval warnings. |
+| `evidence` | Retrieved content, scores, ranks, source information, and timestamps. |
+| `insufficient_evidence` | No passage met the retrieval threshold. |
+| `stale_evidence` | Selected evidence became inactive or changed during inference. |
+| `invalid_citation` | Model output failed response validation, including unknown citation IDs. |
+
+For example, an unsupported request can exercise the insufficient-evidence path:
+
+```sh
+pnpm demo "Recommend an authentication approach for an undocumented protocol"
+```
+
+### Where the knowledge comes from
+
+The corpus is synthetic, internally authored evaluation material. Its `example.invalid` URLs are fixture identifiers, not independently verified internet sources. It has no automatic refresh schedule. The store exposes update and withdrawal operations, but the CLI rebuilds it from the local files on every run; logs and indexed state are not persisted.
+
+To change a demonstration passage, edit its Markdown file and rerun the demo. Adding a document also requires adding its ID to the explicit list in `src/app/demo.ts`; the directory is not automatically scanned. Modifying this corpus does not train either model.
+
+## How the trainable model works
+
+The separate implementation under `src/model/trainable/` provides the building blocks for learning next-token probabilities:
+
+```text
+UTF-8 text → byte tokens → token + position embeddings
+    → causal Transformer blocks → vocabulary logits
+    → masked next-token loss → backward gradients
+    → optimizer updates [not implemented yet]
+```
+
+- **Tokenizer:** preserves case, whitespace, and valid Unicode through UTF-8 bytes. The vocabulary contains 256 byte values plus PAD, BOS, and EOS. Invalid generated UTF-8 decodes with replacement characters.
+- **Parameters:** named Float64 arrays hold weights and gradients. Seeded initialization is reproducible, and gradients can be accumulated and cleared.
+- **Decoder:** the default configuration uses a 64-token context, width 32, two blocks, four attention heads, and feed-forward width 128. Each block contains causal self-attention, residual connections, normalization, and a feed-forward network. Causal masking prevents a position from using future tokens.
+- **Loss:** masked cross-entropy compares each position's logits with its next-token target. Padding contributes no loss or gradient.
+- **Backward pass:** composes explicit numerical derivatives and accumulates parameter gradients. Training caches belong to one model and can be consumed once. Evaluation leaves weights and gradients unchanged.
+
+A training example will shift tokens by one position: inputs `BOS, A, B` predict targets `A, B, EOS`. The loss measures how well the model predicts those targets; gradients describe how changing weights would affect that loss. An optimizer must still apply those changes.
+
+There is currently no `pnpm train` command, trained checkpoint, or decoder text-generation command. The demo continues to use the earlier encoder/template adapter. Training and checkpoint support must be completed before connecting learned generation to RAG.
+
+## Verification
+
+```sh
+pnpm test
+pnpm typecheck
+pnpm lint
+pnpm evaluate
+```
+
+The current suite contains 38 tests, covering tokenizer round trips, numerical kernel gradients, sampled full-model gradients, causal masking, batch isolation, padding, cache ownership, ingestion, retrieval, and response validation. Gradient checks compare backward results with small numerical perturbations of parameters.
+
+`pnpm evaluate` prints five synthetic request fixtures, their responses, retrieval recall@3/nDCG@3, provenance checks, citation-ID checks, and insufficient-evidence behavior. Citation identity does not establish semantic support. Passing these checks does not demonstrate general application-building ability. The `lint` script currently repeats TypeScript checking rather than running a separate style linter.
+
+## Repository map
+
+| Path | Purpose |
+| --- | --- |
+| `src/app/` | CLI and local demonstration assembly |
+| `src/agent/` | Read-only request orchestration and logs |
+| `src/knowledge/` | Markdown ingestion, lifecycle records, and lexical retrieval |
+| `src/rag/` | Evidence assembly and response validation |
+| `src/model/transformer.ts` | Existing fixed-weight encoder and template adapter |
+| `src/model/trainable/` | Byte tokenizer, parameters, numerical kernels, and causal decoder |
+| `src/training/` | Masked next-token loss; training loop pending |
+| `src/evaluation/` | Synthetic request fixtures and evaluation metrics |
+| `corpus/` | Local Markdown demonstration knowledge |
+| `test/` | Automated verification |
+| `Documentation/` | Project scope, architecture, approved tasks, and session memory |
+
+## Next milestones
+
+TASK-011 adds dataset manifests, split isolation, AdamW, a bounded training loop, and a tiny-overfit experiment. TASK-012 adds checkpoint/resume, generation, and held-out learning evaluation. The architecture and acceptance gates are documented in `Documentation/Architecture/TRAINABLE-MODEL.md`.
+
+Continuous internet refresh, useful learned application planning, semantic conflict detection, and application-editing tools remain future work. The long-term direction keeps current domain knowledge in the governed knowledge layer rather than attempting to train on the entire internet.
