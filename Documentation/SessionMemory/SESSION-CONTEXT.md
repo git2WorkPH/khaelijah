@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-TASK-011 verified; see TASK-011-HANDOFF.md for the current implementation, experiment results, and 2%-remaining handoff. Commit/merge/push closeout pending.
+None. TASK-011 verified and merged; implementation commit 5a14c6f. See TASK-011-HANDOFF.md for experiment results and the 2%-remaining handoff.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.

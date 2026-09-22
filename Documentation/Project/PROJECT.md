@@ -29,7 +29,7 @@ PROTOTYPE
 Trainable model design complete; implementation planning follows the verified local prototype.
 
 ## Current active task
-None. TASK-010 causal decoder and masked loss verified; TASK-011 is next.
+None. TASK-011 bounded training verified; TASK-012 checkpoint/resume and evaluation is next.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.
