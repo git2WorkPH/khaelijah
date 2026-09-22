@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-None — TASK-007 prototype verification and local merge complete.
+TASK-008 — trainable model design verified; commit/merge/push closeout in progress.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -36,12 +36,12 @@ None — TASK-007 prototype verification and local merge complete.
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Confirm origin/master synchronization, then define the next training milestone. Preserve unrelated staged changes.
+- Next exact action: Confirm TASK-008 synchronization, then obtain approval for proposed TASK-009 before implementing training kernels.
 - Files likely involved: TASK-007 record, Acceptance/ACC-TASK-007.md, README.md.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 
 ## Next recommended action
-Define the training milestone and measured model capability targets; do not describe the current template adapter as a trained model.
+Implement proposed TASK-009 after approval. TASK-008 defines the decoder, byte tokenizer, numerical training, checkpoint contracts, data isolation, resource limits, and measurable learning gates in Architecture/TRAINABLE-MODEL.md. No trainer has been implemented or run.
 
 ## Important constraints
 - TypeScript-only product runtime.

@@ -9,7 +9,7 @@ JC Model
 Developer-focused AI platform (model runtime, knowledge layer, and application-building agent)
 
 ## Product stage
-REQUIREMENTS
+PROTOTYPE
 
 ## Technology stack
 - Language: TypeScript (strict mode); no Python runtime in product code.
@@ -26,10 +26,10 @@ REQUIREMENTS
 - Server-side runtime (future)
 
 ## Current phase
-Implement the approved first grounded vertical slice.
+Trainable model design complete; implementation planning follows the verified local prototype.
 
 ## Current active task
-TASK-002 — Bootstrap strict TypeScript project and shared contracts.
+None. TASK-008 design verified; TASK-009 through TASK-012 proposed.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.
@@ -38,10 +38,10 @@ TASK-002 — Bootstrap strict TypeScript project and shared contracts.
 ## Git workflow
 
 ### Repository
-- Default/base branch: Unknown (repository metadata is not currently available).
+- Default/base branch: master.
 - Integration branch: None.
-- Remote: Unknown.
-- Task branch required: Yes, once Git is initialized.
+- Remote: origin.
+- Task branch required: Yes.
 
 ### Branch naming
 - Task: `task/TASK-ID-short-description`
