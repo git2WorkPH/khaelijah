@@ -1,7 +1,7 @@
 # TASK-006 — Implement grounded RAG response assembly
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 ## Requirement
 - REQ-PROD-001
@@ -29,7 +29,7 @@ Build evidence packets, invoke the custom inference boundary, validate citations
 ## Git
 - Base branch: task/TASK-005-custom-transformer
 - Task branch: task/TASK-006-grounded-rag
-- Commit: NOT_COMMITTED
+- Commit: 1f5fb4a
 
 ## Implementation summary
 - Added evidence-packet construction, inference invocation, citation validation, and explicit insufficient, stale, and invalid-citation responses.

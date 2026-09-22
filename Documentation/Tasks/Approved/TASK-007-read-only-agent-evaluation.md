@@ -1,7 +1,7 @@
 # TASK-007 — Implement the read-only agent and evaluation suite
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 ## Requirement
 - REQ-PROD-001
@@ -30,7 +30,7 @@ Expose the vertical slice through a read-only planning agent and measure retriev
 ## Git
 - Base branch: master
 - Task branch: task/TASK-007-read-only-agent-evaluation
-- Commit: NOT_COMMITTED
+- Commit: 6c409ca
 
 ## Implementation and verification
 
