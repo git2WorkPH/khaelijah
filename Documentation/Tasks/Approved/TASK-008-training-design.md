@@ -1,7 +1,7 @@
 # TASK-008 — Design the first trainable language model
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: COMMITTED
 
 ## Authorization
 Owner approved implementation of TASK-008 in conversation. This task delivers the architecture and measurable acceptance criteria; training code and runs are follow-on work.
@@ -26,7 +26,7 @@ Implementing the trainer, running training, fetching data, replacing the RAG ada
 ## Git
 - Base: master at 1091899
 - Branch: task/TASK-008-training-design
-- Commit: pending
+- Commit: c81cca7
 - Merge/push: authorized after verification by standing owner instructions.
 
 ## Verification

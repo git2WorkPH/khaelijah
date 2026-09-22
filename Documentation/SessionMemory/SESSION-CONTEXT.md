@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-TASK-008 — trainable model design verified; commit/merge/push closeout in progress.
+None. TASK-008 design verified in c81cca7; training implementation remains proposed.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -26,8 +26,8 @@ TASK-008 — trainable model design verified; commit/merge/push closeout in prog
 ## Repository state
 - Base branch: master.
 - Current branch: master.
-- Latest implementation commit: 6c409ca; subsequent documentation closeout records the merge.
-- Working tree: TASK-007 changes; preserve the user's staged SCOPE.md edit and untracked package-lock.json. The added Node types dependency is preserved and synchronized into pnpm-lock.yaml.
+- Latest design commit: c81cca7 (TASK-008); inspect git log for the closeout and merge commits.
+- Working tree: clean at TASK-008 start; user scope changes were already committed in 1091899. Preserve that commit.
 - Remote sync: UNKNOWN
 
 ## Current implementation state
