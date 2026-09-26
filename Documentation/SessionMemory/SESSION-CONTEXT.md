@@ -1,53 +1,35 @@
 # Project Session Context
 
-## Phase
-PROTOTYPE — bounded toy training and curated internet ingestion into SQLite verified.
+## Current state
 
-## Active requirement
-REQ-PROD-001; REQ-FND-001
+Documentation handover prepared on 2026-09-27. No product code changed in this handover.
+TASK-001–011 and TASK-013 are VERIFIED and included in master/origin/master at baseline 35ee33e. TASK-012 is APPROVED but not implemented; its missing task record has now been restored. TASK-014–018 are new PROPOSED follow-ons requiring approval.
 
-## Active task
-None. TASK-013 is verified and merged; documentation closeout and push pending.
+Read [TECHNICAL-HANDOVER.md](TECHNICAL-HANDOVER.md) for runtime paths, commands, database/checkpoint recovery, pitfalls, and detailed continuation instructions. Read [task index](../Tasks/README.md) for every task's status and dependencies.
 
-## Recent decisions
-- ADR-001: separate durable learned model capability from the refreshable knowledge layer.
-- TASK-001: first grounded vertical-slice design completed and verified.
-- TASK-002 through TASK-007 are explicitly approved. The owner subsequently authorized merging each completed branch into master and pushing verified master to origin. Use pnpm.
+## Repository / closeout
 
-## Open findings
-- Fixed, untrained encoder weights and a templated recommendation do not demonstrate learned application-building ability.
-- Semantic conflict detection and real-domain evaluation remain outstanding. Toy training is implemented; the original demo corpus is synthetic. Internet ingestion is separate from training and generated answers.
+- Base: master. Handover branch: docs/technical-handover. Inspect git status/log for the final merge/closeout commit and current branch.
+- Last runtime implementation: bba121f (TASK-013); merge 88e6714; prior closeout 35ee33e.
+- Baseline master was synchronized with origin/master. Handover commit/merge/push is pending at this pre-commit snapshot; verify actual Git state rather than repeating completed operations.
+- Preserve uncommitted user formatting change in src/app/train.ts. It is excluded from the documentation commit.
+- No known running training/ingestion process at handover.
 
-## Completed/verified work
-- Established project vision, scope, glossary, architecture boundary, requirements, decision record, and proposed first planning task.
-- Completed and verified TASK-001 design deliverable.
-- TASK-002 through TASK-011 completed: local prototype, causal decoder/backward/loss, synthetic dataset manifests, AdamW, and bounded training. Toy training reduced NLL from 6.1749793357 to 0.01249047425 in 200 steps; weights remain in memory.
-- TASK-013 completed ahead of TASK-012 by owner authorization: allowlisted SQLite documentation ingestion, versioned SQLite persistence, refresh auditing, and provenance-bearing FTS5 search. Live ingestion produced 14 chunks; repeat refresh returned unchanged. See Acceptance/TASK-013-live-ingestion.md.
+## Verification and capability boundaries
 
-## Repository state
-- Base branch: master.
-- Current branch: master.
-- Latest implementation commit: bba121f (TASK-013); merge: 88e6714. Inspect git log for subsequent documentation closeout.
-- Working tree: preserve unrelated existing formatting edit in src/app/train.ts; excluded from task commits.
-- Remote sync: push pending at this snapshot; check git status and origin/master on resume.
+Rechecked during this handover: pnpm test (51 tests including build), pnpm typecheck, pnpm lint, git diff --check passed; all 46 local Markdown links in Tasks/SessionMemory/Project resolved. Lint is compiler-based. Task-specific historical counts remain in each record.
+Toy AdamW training is implemented and verified, but weights are not persisted yet. Synthetic learning is not application-building quality.
+SQLite internet ingestion and FTS5 passage search are implemented; only sqlite-appropriate-uses is registered. They are not connected to the existing template-based RAG planner or automatically used for training.
+The knowledge DB is ignored local data, not backed up by Git. No training-run DB exists.
 
-## Current implementation state
-- Last completed step: Verify TASK-013; all 51 tests, build, typecheck and compiler-based lint pass.
-- Last verification command: `pnpm test && pnpm typecheck && pnpm lint && git diff --check`.
-- Verification result: PASS.
+## Next exact action
 
-## Resume instructions
-- Next exact action: Commit TASK-013 documentation closeout and push master; then read and resume approved TASK-012.
-- Files likely involved: TASK-012 record, model checkpoint/generation modules, tests, README.md.
-- Do not modify: Preserve src/app/train.ts user edit. Do not add external model services, arbitrary crawling, or write-capable agent tools.
+Check git status/log; if handover closeout is pending, finish only the reviewed documentation commit/merge/push. Then start TASK-012 using its approved checklist and project-development skill: checkpoint schema/validation and round-trip tests, optimizer/cursor resume, bounded generation, then three-seed held-out evaluation. Read TRAINABLE-MODEL.md and current implementation first.
 
-## Next recommended action
-TASK-012: checkpoint/resume, generation, and held-out evaluation. Knowledge CLI: `pnpm knowledge:ingest sqlite-appropriate-uses`, then `pnpm knowledge:search "when should I use SQLite for local storage"`. Default database is ignored `data/knowledge.sqlite`; override with JC_KNOWLEDGE_DB. Search returns passages, not generated answers. No scheduled crawling, vector embeddings, or automatic training on ingested text. Standing owner instruction: merge and push each completed task to master after verification.
+Relevant files: src/training/{trainer,optimizer,dataset}.ts, src/model/trainable/{decoder,parameters,tokenizer}.ts, TASK-012 record. Checkpoint and generation modules do not exist yet. Preserve the train.ts user diff when work overlaps.
 
-## Important constraints
-- TypeScript-only product runtime.
-- Never treat the entire internet as the training corpus or current source of truth.
-- Preserve retrieval provenance and source governance.
-- Medical capability requires a dedicated safety and governance scope before any implementation.
+## Standing constraints
 
-Session memory summarizes authoritative documents; it does not override them.
+Use pnpm and TypeScript-only runtime. No hosted model dependency. Merge each completed verified task into master and push origin/master; no force-push or unrelated commits. Knowledge and weights stay separate (ADR-001); SQLite decision is ADR-002. Public availability does not imply reuse rights. Medical and write-capable agent scope need separate approval/safety work. Update memory at meaningful boundaries and immediately at 2% remaining credit; no unattended credit monitor is installed.
+
+Historical TASK-011-HANDOFF.md is superseded by this file. Memory summarizes authoritative tasks/designs and does not override them.

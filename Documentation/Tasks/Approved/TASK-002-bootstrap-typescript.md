@@ -1,7 +1,7 @@
 # TASK-002 — Bootstrap strict TypeScript project and shared contracts
 
 Task Status: VERIFIED
-Git Status: COMMITTED
+Git Status: MERGED
 
 ## Requirement
 - REQ-PROD-001
@@ -22,9 +22,9 @@ Create the dependency-free TypeScript foundation, shared domain contracts, and c
 - Corpus ingestion, retrieval ranking, Transformer computation, RAG orchestration, or agent execution.
 
 ## Acceptance criteria
-- [ ] `npm run build`, `npm run typecheck`, `npm run lint`, and `npm test` execute locally.
-- [ ] The public contracts preserve the information defined by the vertical-slice design.
-- [ ] Contract tests cover invalid lifecycle and citation-safe response validation inputs.
+- [x] `pnpm build`, `pnpm typecheck`, `pnpm lint`, and `pnpm test` execute locally.
+- [x] The public contracts preserve the information defined by the vertical-slice design.
+- [x] Contract tests cover invalid lifecycle and citation-safe response validation inputs.
 
 ## Verification expectations
 - Build, typecheck, lint, and unit tests must pass.
@@ -54,3 +54,12 @@ Create the dependency-free TypeScript foundation, shared domain contracts, and c
 - `pnpm run typecheck` — PASS
 - `pnpm run lint` — PASS
 - `pnpm test` — PASS (3 tests)
+
+## Technical handover — 2026-09-27
+
+- Delivery: complete; implementation/design commit `bb1d971` is included in master and origin/master at handover baseline `35ee33e`.
+- Code/evidence to read: src/core/contracts.ts; src/core/result.ts; package.json; test/contracts.test.ts.
+- Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
+- Integration notes: Keep strict TypeScript, pnpm, and citation validation. The existing RetrievalPort is asynchronous, but GroundedPlanner currently depends on concrete LexicalRetriever; bridging that mismatch is future integration work.
+- Recheck: pnpm test; pnpm typecheck; pnpm lint.
+- Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.

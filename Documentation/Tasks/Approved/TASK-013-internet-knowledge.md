@@ -37,3 +37,12 @@ Broad crawling, JavaScript-rendered sites, scheduled refresh, vector embeddings,
 PASS: `pnpm test` (51 tests including build), `pnpm typecheck`, `pnpm lint`. Live ingestion added version 1 with 14 chunks; live FTS5 search returned provenance-complete results. Stream size/timeout and long-token chunk preservation regression checks also pass. See `Documentation/Acceptance/TASK-013-live-ingestion.md`.
 
 Implementation: `src/knowledge/{internet-ingest,sqlite-store}.ts`, `src/app/knowledge.ts`, CLI scripts, tests, ADR-002, README, and acceptance evidence. Node's built-in SQLite API is used; no npm runtime dependency was added. The unrelated pre-existing formatting edit in `src/app/train.ts` is excluded from this task.
+
+## Technical handover — 2026-09-27
+
+- Delivery: complete; implementation/design commit `bba121f` is included in master and origin/master at handover baseline `35ee33e`.
+- Code/evidence to read: src/knowledge/{internet-ingest,sqlite-store}.ts; src/app/knowledge.ts; test/internet-knowledge.test.ts; Documentation/Acceptance/TASK-013-live-ingestion.md.
+- Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
+- Integration notes: Only sqlite-appropriate-uses is registered. Fetch/parse/version/search works; no scheduler, vector index, persistent withdrawal API, or RAG adapter. Public accessibility is not reuse permission. Add source-specific license/robots review before registering more URLs. Default data/knowledge.sqlite is ignored and must be backed up separately.
+- Recheck: pnpm test; pnpm knowledge:ingest sqlite-appropriate-uses; pnpm knowledge:search "when should I use SQLite" (ingestion requires network).
+- Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.

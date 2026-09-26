@@ -1,7 +1,7 @@
 # TASK-003 — Implement governed local corpus ingestion
 
 Task Status: VERIFIED
-Git Status: COMMITTED
+Git Status: MERGED
 
 ## Requirement
 - REQ-FND-001
@@ -20,9 +20,9 @@ Parse a local Markdown technology corpus into source records and lifecycle-gover
 - Network fetching, scheduled jobs, databases, or vector indexes.
 
 ## Acceptance criteria
-- [ ] Valid documents ingest into traceable source and chunk records.
-- [ ] Updates supersede prior chunks and withdrawals exclude chunks from active retrieval.
-- [ ] Refresh results report additions, updates, withdrawals, and failures.
+- [x] Valid documents ingest into traceable source and chunk records.
+- [x] Updates supersede prior chunks and withdrawals exclude chunks from active retrieval.
+- [x] Refresh results report additions, updates, withdrawals, and failures.
 
 ## Verification expectations
 - Build, typecheck, lint, and unit tests must pass.
@@ -43,3 +43,12 @@ Parse a local Markdown technology corpus into source records and lifecycle-gover
 
 ## Verification evidence
 - `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test` — PASS (6 tests)
+
+## Technical handover — 2026-09-27
+
+- Delivery: complete; implementation/design commit `aab517f` is included in master and origin/master at handover baseline `35ee33e`.
+- Code/evidence to read: src/knowledge/ingest.ts; test/ingest.test.ts.
+- Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
+- Integration notes: This store is in-memory and serves the local Markdown demo. It is NOT the SQLite store. Preserve supersede/withdraw/failure semantics when unifying adapters; persistent withdrawal still needs implementation.
+- Recheck: pnpm test (local ingestion tests).
+- Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.

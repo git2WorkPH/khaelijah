@@ -1,5 +1,7 @@
 # TASK-011 handoff
 
+> Historical snapshot, superseded by SESSION-CONTEXT.md and TECHNICAL-HANDOVER.md. TASK-011 is now merged/pushed; TASK-013 added SQLite knowledge persistence and internet ingestion. The pending actions and database statements below describe the earlier snapshot, not current state.
+
 Saved after usage reached 2% remaining, as requested by the owner.
 
 TASK-011 is implemented on task/TASK-011-training-loop. Code adds local JSON manifest validation (SHA-256, provenance, cross-split duplicates), deterministic shifted/padded batches, AdamW with global clipping and atomic finite updates, and an async bounded trainer with cancellation between steps.

@@ -38,3 +38,12 @@ PASS: `pnpm test` (38 tests including build), `pnpm typecheck`, `pnpm lint`, `gi
 
 ## Follow-up
 TASK-011: dataset manifests, split checks, AdamW, bounded trainer, and a tiny-overfit experiment. No actual training has run in TASK-010.
+
+## Technical handover — 2026-09-27
+
+- Delivery: complete; implementation/design commit `3eecb9f` is included in master and origin/master at handover baseline `35ee33e`.
+- Code/evidence to read: src/model/trainable/decoder.ts; src/training/loss.ts; test/decoder.test.ts.
+- Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
+- Integration notes: CausalDecoder.forward(batch, false) is cache-free evaluation; training cache handles are single-use/model-owned. TASK-012 generation must construct valid Batch inputs/masks and select last-position logits without mutating parameters.
+- Recheck: pnpm test (decoder tests including sampled full-model finite differences).
+- Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.
