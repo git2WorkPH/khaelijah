@@ -2,9 +2,30 @@
 
 ## Start here
 
-Read SESSION-CONTEXT.md, this file, Documentation/Tasks/README.md, then the selected approved task and linked architecture. Use .agents/skills/project-development/SKILL.md for implementation and project-session-memory/SKILL.md for closeout. Repository files, tests, and Git history are authoritative; conversation recall is not required.
+Check [session context](SESSION-CONTEXT.md) for the current branch, user-owned changes, and next action, then follow the reading order below. Use .agents/skills/project-development/SKILL.md for implementation and project-session-memory/SKILL.md for closeout. Repository files, tests, and Git history are authoritative; conversation recall is not required.
 
 Baseline: master/origin/master at 35ee33e before this documentation update. TASK-001–011 and TASK-013 are delivered. TASK-012 is approved but NOT implemented. This handover changes documentation only. New TASK-014–018 records are proposals, not retroactively approved by earlier blanket approval.
+
+## Read these in order
+
+This order connects the project goal → requirements → remaining work → implementation → expected results.
+
+1. [Project vision](../Project/VISION.md) — what we are building, who it is for, and why.
+2. [Product requirements](../Requirements/Product/REQ-PROD-001-grounded-application-assistance.md) and [knowledge requirements](../Requirements/Foundation/REQ-FND-001-governed-knowledge-layer.md) — what the system must deliver and how evidence must be governed.
+3. [Task register](../Tasks/README.md) — what is complete, what remains, and which tasks are approved versus proposed.
+4. [TASK-012: checkpoint/resume, generation, and held-out evaluation](../Tasks/Approved/TASK-012-checkpoints-generation.md) — the next task's scope, technical checklist, exclusions, and acceptance tests. For subsequent work, read the selected approved task instead.
+5. [Trainable model design](../Architecture/TRAINABLE-MODEL.md) — the technical specification and measurable gates behind TASK-012. For subsequent tasks, read their linked architecture and decisions before coding.
+
+### TASK-012 goal and expected results
+
+| Goal | Expected result / completion evidence |
+| --- | --- |
+| Preserve training | Save and validate model weights, optimizer state, and resume metadata; reload without losing progress. |
+| Resume correctly | Five updates + save/load + five match ten uninterrupted updates for parameters and optimizer moments within 1e-10 on the same runtime/config/data. |
+| Generate text | A loaded model produces reproducible greedy continuations, respects context/output bounds, and demonstrates a learned-pattern continuation distinct from its prompt. |
+| Measure learning | Each of seeds 11, 22, and 33 achieves selected validation NLL at least 10% below initialization; report test results separately after selection. |
+
+These results establish persistence, reproducibility, and toy learning—not useful application-building answers. Domain training/evaluation and learned grounded-inference integration remain later work. The approved task and architecture contain the full acceptance criteria; this summary does not replace them.
 
 ## Three separate runtime paths
 
