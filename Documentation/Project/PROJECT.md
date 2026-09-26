@@ -16,7 +16,7 @@ PROTOTYPE
 - Framework: Custom Transformer implementation; framework selection is deferred.
 - Platform: Local development first; service deployment later.
 - Backend: TypeScript service layer, deferred until the first vertical slice is designed.
-- Database: Versioned document store and vector index, implementation deferred.
+- Database: SQLite for the first persistent knowledge store and FTS5 index (ADR-002); vector retrieval deferred.
 - Infrastructure: Reproducible local development and evaluation environment.
 - Package manager: pnpm.
 - Third-party services: None required for the core model path; curated source connectors are deferred.
@@ -29,7 +29,7 @@ PROTOTYPE
 Trainable model design complete; implementation planning follows the verified local prototype.
 
 ## Current active task
-None. TASK-011 bounded training verified; TASK-012 checkpoint/resume and evaluation is next.
+TASK-013 — public-domain internet ingestion and persistent SQLite search.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.
