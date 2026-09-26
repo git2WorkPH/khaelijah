@@ -9,9 +9,9 @@ Read [TECHNICAL-HANDOVER.md](TECHNICAL-HANDOVER.md) for runtime paths, commands,
 
 ## Repository / closeout
 
-- Base: master. Handover branch: docs/technical-handover. Inspect git status/log for the final merge/closeout commit and current branch.
+- Base/current branch: master. Handover branch: docs/technical-handover; documentation commit 62e14a9, merge f535132. Inspect git log for the following memory closeout commit.
 - Last runtime implementation: bba121f (TASK-013); merge 88e6714; prior closeout 35ee33e.
-- Baseline master was synchronized with origin/master. Handover commit/merge/push is pending at this pre-commit snapshot; verify actual Git state rather than repeating completed operations.
+- Handover merge f535132 was successfully pushed to origin/master and synchronization verified. This memory-only closeout follows it; verify actual Git state on resume rather than repeating the completed handover merge.
 - Preserve uncommitted user formatting change in src/app/train.ts. It is excluded from the documentation commit.
 - No known running training/ingestion process at handover.
 
@@ -24,7 +24,7 @@ The knowledge DB is ignored local data, not backed up by Git. No training-run DB
 
 ## Next exact action
 
-Check git status/log; if handover closeout is pending, finish only the reviewed documentation commit/merge/push. Then start TASK-012 using its approved checklist and project-development skill: checkpoint schema/validation and round-trip tests, optimizer/cursor resume, bounded generation, then three-seed held-out evaluation. Read TRAINABLE-MODEL.md and current implementation first.
+Check git status/log and remote synchronization, then start TASK-012 using its approved checklist and project-development skill: checkpoint schema/validation and round-trip tests, optimizer/cursor resume, bounded generation, then three-seed held-out evaluation. Read TRAINABLE-MODEL.md and current implementation first. The technical handover is complete; do not reimplement delivered tasks.
 
 Relevant files: src/training/{trainer,optimizer,dataset}.ts, src/model/trainable/{decoder,parameters,tokenizer}.ts, TASK-012 record. Checkpoint and generation modules do not exist yet. Preserve the train.ts user diff when work overlaps.
 
