@@ -7,7 +7,7 @@ PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-None. TASK-011 verified and merged; implementation commit 5a14c6f. See TASK-011-HANDOFF.md for experiment results and the 2%-remaining handoff.
+TASK-013 — public-domain internet ingestion and SQLite search; implementation verified, closeout pending.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -36,7 +36,7 @@ None. TASK-011 verified and merged; implementation commit 5a14c6f. See TASK-011-
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Complete TASK-011 closeout if not already in git log; then TASK-012 checkpoint/resume and held-out experiments.
+- Next exact action: Commit, merge, and push TASK-013; then choose TASK-012 checkpoints or expand approved knowledge sources.
 - Files likely involved: TASK-007 record, Acceptance/ACC-TASK-007.md, README.md.
 - Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
 

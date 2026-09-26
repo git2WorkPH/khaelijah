@@ -4,9 +4,11 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.16"
   },
   "scripts": {
+    "knowledge:ingest": "pnpm run build && node dist/app/knowledge.js ingest",
+    "knowledge:search": "pnpm run build && node dist/app/knowledge.js search",
     "train:toy": "pnpm run build && node dist/app/train.js",
     "demo": "pnpm run build && node dist/app/cli.js",
     "evaluate": "pnpm run build && node dist/app/cli.js --evaluate",

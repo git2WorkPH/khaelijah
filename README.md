@@ -8,16 +8,30 @@ Two parts exist today: a runnable local retrieval/planning demonstration, and a 
 
 ## Quick start
 
-Use Node.js with TypeScript stripping support (Node 22.6+; development has been verified on Node 26) and pnpm. Run commands from the repository root.
+Use Node.js 22.16+ (development verified on Node 26) and pnpm. The internet knowledge commands require the built-in `node:sqlite` API. Run commands from the repository root.
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm test
 pnpm demo "Plan request input validation for a TypeScript API"
 pnpm evaluate
+pnpm knowledge:ingest sqlite-appropriate-uses
+pnpm knowledge:search "when should I use SQLite for local storage"
 ```
 
 `demo`, `evaluate`, and `test` build the TypeScript source before running. The demo prints JSON; there is no chat UI or running server. No model download or API key is required.
+
+The knowledge commands use `data/knowledge.sqlite` by default. Set `JC_KNOWLEDGE_DB` to choose another database file.
+
+## Persistent internet knowledge
+
+TASK-013 adds a deliberately narrow internet-ingestion path. The only initial source is SQLite's “Appropriate Uses For SQLite” documentation. The source registry records its canonical URL, publisher, public-domain status, and the SQLite copyright page that supports that status. Arbitrary URLs are rejected.
+
+`pnpm knowledge:ingest sqlite-appropriate-uses` performs a manual HTTPS fetch with a timeout, redirect-host allowlist, HTML content-type check, and 2 MB response limit. It extracts readable text, creates deterministic passages, hashes the normalized document, and commits the refresh to SQLite in one transaction. Repeating an unchanged refresh records an audit without duplicating content. Changed content creates a new active version and supersedes prior passages. Failed fetches or parsing keep the last active version searchable.
+
+`pnpm knowledge:search "query"` searches active passages through SQLite FTS5 and returns JSON containing passage text, source URL, publisher, public-domain declaration and evidence URL, fetch time, content hash, document version, and rank. This is the first prompt-like use of internet knowledge: the prompt searches stored evidence. It is not yet passed to the custom decoder or the read-only planning demo.
+
+The SQLite file is ignored by Git and intended as local operational data. Model checkpoints remain separate. Ingested text is not automatically approved as training data. Adding another source requires a code-reviewed allowlist entry and evidence that its terms permit the intended storage and retrieval use.
 
 ## How the current demo works
 
@@ -105,6 +119,8 @@ The current suite contains 44 tests, including dataset validation, optimizer num
 | `src/app/` | CLI and local demonstration assembly |
 | `src/agent/` | Read-only request orchestration and logs |
 | `src/knowledge/` | Markdown ingestion, lifecycle records, and lexical retrieval |
+| `src/knowledge/sqlite-store.ts` | Persistent versions, audits, FTS5 passages, and provenance |
+| `src/knowledge/internet-ingest.ts` | Approved-source network policy, fetch, HTML extraction, and chunking |
 | `src/rag/` | Evidence assembly and response validation |
 | `src/model/transformer.ts` | Existing fixed-weight encoder and template adapter |
 | `src/model/trainable/` | Byte tokenizer, parameters, numerical kernels, and causal decoder |
