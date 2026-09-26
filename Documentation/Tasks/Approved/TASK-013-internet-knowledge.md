@@ -1,7 +1,7 @@
 # TASK-013 — Public-domain internet ingestion and SQLite search
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 Owner authorized TASK-013 before TASK-012 and requires verified work merged and pushed to master.
 
@@ -30,7 +30,8 @@ Broad crawling, JavaScript-rendered sites, scheduled refresh, vector embeddings,
 ## Git
 - Base: master
 - Branch: task/TASK-013-internet-knowledge
-- Commit: pending
+- Implementation commit: bba121f
+- Merge commit: 88e6714
 
 ## Verification
 PASS: `pnpm test` (51 tests including build), `pnpm typecheck`, `pnpm lint`. Live ingestion added version 1 with 14 chunks; live FTS5 search returned provenance-complete results. Stream size/timeout and long-token chunk preservation regression checks also pass. See `Documentation/Acceptance/TASK-013-live-ingestion.md`.

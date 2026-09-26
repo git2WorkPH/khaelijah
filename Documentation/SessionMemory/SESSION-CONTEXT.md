@@ -1,13 +1,13 @@
 # Project Session Context
 
 ## Phase
-PROTOTYPE — local retrieval/encoder/agent demonstration verified on 2026-09-22.
+PROTOTYPE — bounded toy training and curated internet ingestion into SQLite verified.
 
 ## Active requirement
 REQ-PROD-001; REQ-FND-001
 
 ## Active task
-TASK-013 — public-domain internet ingestion and SQLite search; implementation verified, closeout pending.
+None. TASK-013 is verified and merged; documentation closeout and push pending.
 
 ## Recent decisions
 - ADR-001: separate durable learned model capability from the refreshable knowledge layer.
@@ -16,32 +16,33 @@ TASK-013 — public-domain internet ingestion and SQLite search; implementation 
 
 ## Open findings
 - Fixed, untrained encoder weights and a templated recommendation do not demonstrate learned application-building ability.
-- Semantic conflict detection, real-domain evaluation, model training, and internet refresh remain outstanding. The local corpus is synthetic.
+- Semantic conflict detection and real-domain evaluation remain outstanding. Toy training is implemented; the original demo corpus is synthetic. Internet ingestion is separate from training and generated answers.
 
 ## Completed/verified work
 - Established project vision, scope, glossary, architecture boundary, requirements, decision record, and proposed first planning task.
 - Completed and verified TASK-001 design deliverable.
-- TASK-002 through TASK-006 merged locally; TASK-007 runnable prototype passes 15 tests. See Acceptance/ACC-TASK-007.md.
+- TASK-002 through TASK-011 completed: local prototype, causal decoder/backward/loss, synthetic dataset manifests, AdamW, and bounded training. Toy training reduced NLL from 6.1749793357 to 0.01249047425 in 200 steps; weights remain in memory.
+- TASK-013 completed ahead of TASK-012 by owner authorization: allowlisted SQLite documentation ingestion, versioned SQLite persistence, refresh auditing, and provenance-bearing FTS5 search. Live ingestion produced 14 chunks; repeat refresh returned unchanged. See Acceptance/TASK-013-live-ingestion.md.
 
 ## Repository state
 - Base branch: master.
 - Current branch: master.
-- Latest implementation commit: 3eecb9f (TASK-010); inspect git log for subsequent merge and closeout commits.
-- Working tree: clean at TASK-008 start; user scope changes were already committed in 1091899. Preserve that commit.
-- Remote sync: UNKNOWN
+- Latest implementation commit: bba121f (TASK-013); merge: 88e6714. Inspect git log for subsequent documentation closeout.
+- Working tree: preserve unrelated existing formatting edit in src/app/train.ts; excluded from task commits.
+- Remote sync: push pending at this snapshot; check git status and origin/master on resume.
 
 ## Current implementation state
-- Last completed step: Verify TASK-010 causal decoder and masked loss; all 38 tests, build, typecheck and compiler-based lint pass.
-- Last verification command: `pnpm run build && pnpm run typecheck && pnpm run lint && pnpm test`.
+- Last completed step: Verify TASK-013; all 51 tests, build, typecheck and compiler-based lint pass.
+- Last verification command: `pnpm test && pnpm typecheck && pnpm lint && git diff --check`.
 - Verification result: PASS.
 
 ## Resume instructions
-- Next exact action: Commit, merge, and push TASK-013; then choose TASK-012 checkpoints or expand approved knowledge sources.
-- Files likely involved: TASK-007 record, Acceptance/ACC-TASK-007.md, README.md.
-- Do not modify: Do not add external model services, live internet access, or write-capable agent tools.
+- Next exact action: Commit TASK-013 documentation closeout and push master; then read and resume approved TASK-012.
+- Files likely involved: TASK-012 record, model checkpoint/generation modules, tests, README.md.
+- Do not modify: Preserve src/app/train.ts user edit. Do not add external model services, arbitrary crawling, or write-capable agent tools.
 
 ## Next recommended action
-TASK-011: dataset manifests, split checks, AdamW, bounded training loop, and tiny-overfit experiment. TASK-010 decoder and loss pass sampled full-model finite differences, causal and padding checks, and batch gradient equivalence; 38 tests pass overall. No trainer has been implemented or run. Standing owner instruction: merge and push each completed task to master after verification.
+TASK-012: checkpoint/resume, generation, and held-out evaluation. Knowledge CLI: `pnpm knowledge:ingest sqlite-appropriate-uses`, then `pnpm knowledge:search "when should I use SQLite for local storage"`. Default database is ignored `data/knowledge.sqlite`; override with JC_KNOWLEDGE_DB. Search returns passages, not generated answers. No scheduled crawling, vector embeddings, or automatic training on ingested text. Standing owner instruction: merge and push each completed task to master after verification.
 
 ## Important constraints
 - TypeScript-only product runtime.

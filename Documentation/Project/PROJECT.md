@@ -26,10 +26,10 @@ PROTOTYPE
 - Server-side runtime (future)
 
 ## Current phase
-Trainable model design complete; implementation planning follows the verified local prototype.
+Bounded toy-model training and curated internet ingestion into SQLite are implemented and verified. Checkpoint persistence and generation remain next.
 
 ## Current active task
-TASK-013 — public-domain internet ingestion and persistent SQLite search.
+None. TASK-013 is verified and merged; TASK-012 is the next recommended implementation task.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.
