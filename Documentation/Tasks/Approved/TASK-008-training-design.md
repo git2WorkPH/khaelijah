@@ -1,7 +1,7 @@
 # TASK-008 — Design the first trainable language model
 
 Task Status: VERIFIED
-Git Status: COMMITTED
+Git Status: MERGED
 
 ## Authorization
 Owner approved implementation of TASK-008 in conversation. This task delivers the architecture and measurable acceptance criteria; training code and runs are follow-on work.
@@ -35,5 +35,14 @@ Manual requirements/design review and `git diff --check`; no executable changes 
 ## Implementation summary and evidence
 - Deliverable: `Documentation/Architecture/TRAINABLE-MODEL.md`.
 - Architecture and contracts sections satisfy architecture criteria; data/loss section specifies isolated splits and masks; gates table defines numerical and learning thresholds; loop/checkpoint sections define bounds and failures.
-- Follow-on TASK-009 through TASK-012 are proposed only.
+- Historical design proposed TASK-009–012; owner subsequently approved the sequence. TASK-009–011 are complete, TASK-012 remains next.
 - Updated project profile and session memory; runtime unchanged. Build/tests are not applicable to this documentation task.
+
+## Technical handover — 2026-09-27
+
+- Delivery: complete; implementation/design commit `c81cca7` is included in master and origin/master at handover baseline `35ee33e`.
+- Code/evidence to read: Documentation/Architecture/TRAINABLE-MODEL.md.
+- Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
+- Integration notes: TASK-009–011 are now implemented. TASK-012 remains unimplemented and has a restored approved record. Keep numeric, resume, and held-out thresholds unchanged unless a reviewed design change is recorded.
+- Recheck: Cross-check the gates against tests and acceptance reports; no runtime implementation in this task.
+- Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.

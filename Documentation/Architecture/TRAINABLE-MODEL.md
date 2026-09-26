@@ -1,6 +1,6 @@
 # First trainable model — TASK-008
 
-Status: design baseline; implementation pending.
+Status: design baseline; TASK-009–011 implemented and verified. TASK-012 checkpoint/resume, generation and held-out gates remain pending. Current task records supersede historical planning status below.
 
 ## Outcome and existing gap
 
@@ -110,7 +110,7 @@ Greedy generation is the default acceptance path. An optional temperature/top-k 
 
 ## Measurable gates
 
-These are future implementation acceptance criteria, not results already achieved.
+These are acceptance criteria, not blanket claims of success. TASK-009–011 evidence covers tokenizer, numerics, causality, masks, training signal and tiny overfit; resume, generation and three-seed held-out gates remain TASK-012 work.
 
 | Gate | Required evidence |
 | --- | --- |
@@ -128,11 +128,11 @@ These are future implementation acceptance criteria, not results already achieve
 
 Pattern learning proves numerical learning behavior only. Add realistic domain evaluation before claiming software-design usefulness. Do not tune held-out examples or relax thresholds merely to make a failed run pass; record failure and propose a reviewed experiment change.
 
-## Follow-on tasks — proposed, not approved
+## Follow-on tasks — current status
 
 - TASK-009: byte tokenizer, parameter registry, numerical kernels and gradient checks.
 - TASK-010: causal decoder, backward composition, masked loss, and causality tests; depends on TASK-009.
 - TASK-011: manifest loader, split checks, AdamW, bounded training loop, and tiny-overfit experiment; depends on TASK-010.
 - TASK-012: checkpoint/resume, generation, three-seed held-out experiment, and acceptance report; depends on TASK-011.
 
-Each task must become an approved task record before implementation. RAG replacement, domain training, medical capabilities, and internet ingestion remain outside this milestone.
+TASK-009–011 are approved and verified; TASK-012 has an approved record under Tasks/Approved/. RAG replacement, domain training and medical capabilities remain outside this milestone. Internet ingestion was delivered separately in TASK-013 and does not imply training permission or model integration.

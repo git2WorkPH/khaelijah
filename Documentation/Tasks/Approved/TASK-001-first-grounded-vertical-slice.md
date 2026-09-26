@@ -1,7 +1,7 @@
 # TASK-001 — Design the first grounded vertical slice
 
 Task Status: VERIFIED
-Git Status: NOT_STARTED
+Git Status: MERGED
 
 ## Requirement
 
@@ -54,11 +54,8 @@ Produce an implementation-ready technical design for a small, local technology-p
 
 ## Git
 
-- Base branch: Unknown (Git metadata unavailable).
-- Task branch: NOT_CREATED
-- Commit: NOT_COMMITTED
-- Remote state: NOT_PUSHED
-- Merge state: NOT_MERGED
+- Delivered in initial repository commit: 15960f2 (reachable from master and origin/master).
+- Original separate task branch: not recorded; do not invent historical branch metadata.
 
 ## Implementation summary
 
@@ -77,4 +74,13 @@ Created `Documentation/Architecture/FIRST-GROUNDED-VERTICAL-SLICE.md`, defining 
 
 ## Follow-ups
 
-- Propose TASK-002 before creating product source code.
+- TASK-002–007 completed the original implementation sequence.
+
+## Technical handover — 2026-09-27
+
+- Delivery: complete; implementation/design commit `15960f2` is included in master and origin/master at handover baseline `35ee33e`.
+- Code/evidence to read: Documentation/Architecture/FIRST-GROUNDED-VERTICAL-SLICE.md.
+- Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
+- Integration notes: Planning baseline, not a trained capability. Implementation tasks 002–007 are complete; retain the contracts and failure states when adding new adapters.
+- Recheck: Review the design against REQ-PROD-001, REQ-FND-001, and ADR-001.
+- Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.

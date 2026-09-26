@@ -37,3 +37,12 @@ PASS: `pnpm test` (30 tests), `pnpm typecheck`, `pnpm lint`, `git diff --check`.
 
 ## Follow-up
 TASK-010: compose the causal decoder and masked cross-entropy from these kernels.
+
+## Technical handover — 2026-09-27
+
+- Delivery: complete; implementation/design commit `2c9dda8` is included in master and origin/master at handover baseline `35ee33e`.
+- Code/evidence to read: src/model/trainable/{tokenizer,parameters,operations}.ts; test/training-kernels.test.ts.
+- Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
+- Integration notes: Use byte tokenizer (259 vocabulary) and named Float64 arrays, not legacy hashed IDs. Checkpoint restore must preserve parameter names/shapes and SeededRandom state. Rerun finite differences after any kernel change.
+- Recheck: pnpm test (training-kernels tests).
+- Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.
