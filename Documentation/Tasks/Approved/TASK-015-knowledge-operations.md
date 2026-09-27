@@ -1,7 +1,7 @@
 # TASK-015 — Website onboarding, refresh and persistent lifecycle
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 ## Authorization
 
@@ -49,7 +49,7 @@ Unlocks TASK-016 dataset selection; retrieval approval does not grant training a
 
 ## Git and resume
 
-Base: master (f7760ef). Branch: task/TASK-015-knowledge-operations. Commit: pending scoped closeout. Implementation verified. Next: commit, merge master and push under standing owner authorization.
+Base: master (f7760ef). Branch: task/TASK-015-knowledge-operations. Implementation commit: 91f2593. Merge: 299e109, pushed to origin/master. Implementation verified; remaining user-owned edits in app/train.ts and app/knowledge.ts excluded. Next approved implementation: TASK-016.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
 

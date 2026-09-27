@@ -5,7 +5,7 @@ Implementation: reviewed page registration, bounded pinned HTTPS fetching, previ
 ## Automated verification
 
 `pnpm test`: PASS, 73 tests including build (64 previous + 9 operations tests).
-`pnpm typecheck`: PASS. `pnpm lint`: PASS (currently compiler alias, not a separate style/security linter). `git diff --check`: PASS at verification.
+`pnpm typecheck`: PASS. `pnpm lint`: PASS (currently compiler alias, not a separate style/security linter). `pnpm evaluate`: PASS. `git diff --check`: PASS at verification. All relative Markdown file links resolve. Implementation 91f2593; merge 299e109 pushed to origin/master.
 
 `test/source-operations.test.ts` exercises:
 
@@ -15,7 +15,7 @@ Implementation: reviewed page registration, bounded pinned HTTPS fetching, previ
 - Singleton lease, interval refusal, one retry/backoff for transient status, no 429 retry and preservation of last active content after failure.
 - Encoded/private URL, mixed private/public DNS, peer mismatch and exact-path redirect rejection; helper-level DNS/peer fixtures do not replace end-to-end hostile-network testing.
 - PDF/login/paywall markers and injected low disk refuse publication; bounded policy preview never grants approval.
-- Version-0 migration preserves pre-existing document versions/FTS and refresh audits. Online backup/reopen preserves registry events, audits and version 2; overwrite and future-schema refusal.
+- Version-0 migration preserves pre-existing document versions/FTS and refresh audits; injected malformed registry JSON aborts migration while preserving version 0 and existing documents/audits. Online backup/reopen preserves registry events, audits and version 2; overwrite and future-schema refusal.
 - Actual CLI JSON registration/review/health without source-code edits; new-source legacy refresh shortcut refused.
 
 Existing ingestion tests cover streamed size/deadline failure; existing persistent-RAG tests cover provenance, lifecycle validation and hostile source text. No content is executed.

@@ -16,13 +16,13 @@ Current answers are still source-backed templates. TASK-012 toy checkpoint/resum
 
 ## Git and preservation
 
-Base master at start: f7760ef. Task branch: task/TASK-015-knowledge-operations. Implementation verified; commit/merge/push closeout is the current action. Check Git and this file's next revision for final hashes; do not infer a push from verification alone.
+Base master at start: f7760ef. Task branch: task/TASK-015-knowledge-operations. Implementation: 91f2593. Merge: 299e109, successfully pushed to origin/master. Current branch: master. This documentation-only closeout records that delivered state; use git log for its own subsequent commit hash. Only the two user-owned edits below remain outside the closeout.
 
 Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. These are not TASK-015 changes. Only the new sources CLI and package script alter the supported ingestion command. Standing authorization: merge verified tasks into master and push origin/master. No unrelated commits, destructive resets or force pushes.
 
 ## Next exact action
 
-Finish scoped TASK-015 Git closeout if still pending; then implement approved TASK-016 on its own branch using project-development. Read its full requirements and existing dataset/trainer/checkpoint code. Design the training registry ADR, immutable source-version exports with explicit training rights, job lifecycle and resource supervision. Do not treat retrieval-approved SQLite data as automatically training-approved. Freeze a narrow domain, eligible examples and human-reviewed evaluation rubric before capability experiments. Later work must preserve test isolation and cannot mark useful explanations achieved merely because a pipeline runs.
+Implement approved TASK-016 on its own branch using project-development. Read its full requirements and existing dataset/trainer/checkpoint code. Design the training registry ADR, immutable source-version exports with explicit training rights, job lifecycle and resource supervision. Do not treat retrieval-approved SQLite data as automatically training-approved. Freeze a narrow domain, eligible examples and human-reviewed evaluation rubric before capability experiments. Later work must preserve test isolation and cannot mark useful explanations achieved merely because a pipeline runs.
 
 ## Constraints and resources
 
