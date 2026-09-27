@@ -4,7 +4,7 @@
 
 Check [session context](SESSION-CONTEXT.md) for the current branch, user-owned changes, and next action, then follow the reading order below. Use .agents/skills/project-development/SKILL.md for implementation and project-session-memory/SKILL.md for closeout. Repository files, tests, and Git history are authoritative; conversation recall is not required.
 
-Baseline: master/origin/master at 35ee33e before this documentation update. TASK-001–011 and TASK-013 are delivered. TASK-012 is approved but NOT implemented. This handover changes documentation only. New TASK-014–018 records are proposals, not retroactively approved by earlier blanket approval.
+Current milestone: TASK-001–013 are verified; TASK-012 added checkpoint/resume, bounded generation and three-seed synthetic held-out evidence. Check SESSION-CONTEXT.md and Git status for closeout/synchronization. TASK-014–018 remain proposals, not retroactively approved by earlier blanket approval.
 
 ## Read these in order
 
@@ -13,7 +13,7 @@ This order connects the project goal → requirements → remaining work → imp
 1. [Project vision](../Project/VISION.md) — what we are building, who it is for, and why.
 2. [Product requirements](../Requirements/Product/REQ-PROD-001-grounded-application-assistance.md) and [knowledge requirements](../Requirements/Foundation/REQ-FND-001-governed-knowledge-layer.md) — what the system must deliver and how evidence must be governed.
 3. [Task register](../Tasks/README.md) — what is complete, what remains, and which tasks are approved versus proposed.
-4. [TASK-012: checkpoint/resume, generation, and held-out evaluation](../Tasks/Approved/TASK-012-checkpoints-generation.md) — the next task's scope, technical checklist, exclusions, and acceptance tests. For subsequent work, read the selected approved task instead.
+4. [TASK-012: checkpoint/resume, generation, and held-out evaluation](../Tasks/Approved/TASK-012-checkpoints-generation.md) — the latest completed task's scope, technical checklist, exclusions, and acceptance evidence. For subsequent work, read the selected approved task; TASK-014 is still proposed.
 5. [Trainable model design](../Architecture/TRAINABLE-MODEL.md) — the technical specification and measurable gates behind TASK-012. For subsequent tasks, read their linked architecture and decisions before coding.
 
 ### TASK-012 goal and expected results
@@ -32,7 +32,7 @@ These results establish persistence, reproducibility, and toy learning—not use
 | Path | Entry and data flow | What it proves / does not prove |
 | --- | --- | --- |
 | Original demo | app/cli.ts → app/demo.ts → local Markdown ingestion → LexicalRetriever → GroundedPlanner → fixed encoder/template → read-only agent | Contract/retrieval/citation plumbing; not learned answers |
-| Trainable model | app/train.ts → synthetic manifest → byte batches → CausalDecoder + loss → AdamW + train | Toy numerical learning; weights lost on exit until TASK-012 |
+| Trainable model | app/model.ts → synthetic manifest → byte batches → CausalDecoder + loss → AdamW + train → checkpoint/load/generate | Persistent/resumable toy pattern learning; not grounded application-building |
 | Internet knowledge | app/knowledge.ts → approved source fetch → HTML extraction/chunks → SqliteKnowledgeStore → FTS5 search | Persistent source passages and provenance; not yet connected to GroundedPlanner or model training |
 
 Do not imply that internet ingestion trains the decoder, that the SQLite index is vector search, or that the current planner builds applications autonomously.
@@ -51,13 +51,16 @@ pnpm lint
 pnpm evaluate
 pnpm demo
 pnpm train:toy
+pnpm model train data/pattern.json 200 11
+pnpm model resume data/pattern.json 25
+pnpm model generate data/pattern.json "abc "
 pnpm knowledge:ingest sqlite-appropriate-uses
 pnpm knowledge:search "when should I use SQLite for local storage"
 ```
 
 The last ingest needs network and writes the local database. Tests inject fetches and run offline; do not make live fetch a unit-test dependency. train:toy is a bounded 200-step experiment and can take longer than tests. lint is currently a TypeScript compiler alias, not a style/security linter.
 
-Last baseline: 51 tests passed, including build; typecheck/lint/diff whitespace checks passed. TASK-011 experiment JSON reports NLL 6.1749793357 → 0.01249047425, seed 11, 44,355 parameters. TASK-013 acceptance records live 14-chunk ingestion/search and unchanged refresh. Historical evidence is not a guarantee for a different runtime or future modifications.
+Current baseline: 56 tests passed, including build; typecheck/lint/evaluate/diff checks passed. TASK-012 report records exact resume and three-seed validation improvements above the 10% threshold. TASK-011 experiment JSON reports NLL 6.1749793357 → 0.01249047425, seed 11, 44,355 parameters. TASK-013 acceptance records live 14-chunk ingestion/search and unchanged refresh. Historical evidence is not a guarantee for a different runtime or future modifications.
 
 ## Durable data and recovery
 
@@ -66,11 +69,11 @@ Last baseline: 51 tests passed, including build; typecheck/lint/diff whitespace 
 - Database uses WAL. Do not copy only a live .sqlite file and assume a consistent backup; use a SQLite-supported backup procedure or close all connections before a consistent file backup. Backup/restore tooling is future work.
 - data/ is ignored by Git. A Git push does not back up ingested content. Live TASK-013 validation used temporary databases; do not assume those survive or that a new checkout has data.
 - Training manifest: datasets/synthetic-pattern-v1.json. Training evidence JSON is not a weight checkpoint. No persisted training-run database currently exists.
-- TASK-012 will add local checkpoints. Do not repurpose the knowledge DB to store weights without a separate design decision.
+- TASK-012 checkpoints are local files (default examples under ignored data/). Use pnpm model train/resume/generate; train:toy itself remains in-memory only. Resume requires matching manifest/batches and Node runtime version. Saves occur every 25 updates and on normal/resource/cancellation stops, not forced kills. Do not repurpose the knowledge DB to store weights without a separate design decision.
 
-## Immediate next work: TASK-012
+## Latest completed work: TASK-012; next proposal: TASK-014
 
-The approved task includes the step-by-step checklist and exact gates. Start checkpoint schema/validation and round-trip tests, then optimizer/cursor resume equivalence, then bounded generation, then three-seed held-out evaluation. Keep the old inference adapter intact. Current trainer chooses batches using optimizer.step % batches.length; exact resume requires data/config/state consistency.
+TASK-012's checklist and [acceptance report](../Acceptance/TASK-012-checkpoints-generation.md) record checkpoint corruption/I/O checks, exact multi-batch resume, bounded generation, and three-seed held-out results. Reproduce with pnpm model experiment data/task012 Documentation/Acceptance/TASK-012-experiment.json. Current trainer chooses batches using optimizer.step % batches.length; exact resume requires data/config/state consistency. The old inference adapter remains intact. Ask for TASK-014 approval before connecting persistent retrieval to grounded prompts.
 
 ## Subsequent technical backlog
 
@@ -84,7 +87,7 @@ Each has its own scope, implementation checklist, dependencies and acceptance ga
 
 ## Preserve and avoid
 
-- Existing uncommitted src/app/train.ts change is user-owned formatting. Never reset, stash, overwrite, or include it in documentation commits. Inspect its diff before future overlapping work.
+- Existing uncommitted src/app/train.ts and src/app/knowledge.ts changes are user-owned formatting. Never reset, stash, overwrite, or include them in task commits. Inspect their diffs before future overlapping work.
 - Use TypeScript-only runtime, pnpm, no hosted model dependency. Follow project task branches; no force pushes or destructive resets.
 - Publicly readable does not mean licensed for reuse. Only the registered SQLite documentation page is fetched today. License and robots review were manual; no general automated policy checker exists.
 - Do not silently relax held-out/numerical gates or re-label toy learning as software-engineering competence.
@@ -99,4 +102,4 @@ Each has its own scope, implementation checklist, dependencies and acceptance ga
 5. For completed verified work only, commit scoped files, merge master, push and verify synchronization. Never use a task completion claim as a substitute for push evidence.
 6. At 2% remaining credit, save memory immediately as requested. Memory is already saved here proactively; no unattended usage monitor has been installed.
 
-Suggested continuation prompt: "Read Documentation/SessionMemory/SESSION-CONTEXT.md and TECHNICAL-HANDOVER.md, inspect Git status, and continue approved TASK-012 using project-development and project-session-memory skills. Preserve user edits, use pnpm, and merge/push only after verification."
+Suggested continuation prompt after owner approval: "TASK-014 is approved. Read Documentation/SessionMemory/SESSION-CONTEXT.md and TECHNICAL-HANDOVER.md, inspect Git status, and implement TASK-014 using project-development and project-session-memory skills. Preserve user edits, use pnpm, and merge/push only after verification."

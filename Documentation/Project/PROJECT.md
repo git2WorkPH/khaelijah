@@ -26,10 +26,10 @@ PROTOTYPE
 - Server-side runtime (future)
 
 ## Current phase
-Bounded toy-model training and curated internet ingestion into SQLite are implemented and verified. Checkpoint persistence and generation remain next.
+Bounded toy-model training, checkpoint/resume, generation, synthetic held-out evaluation, and curated internet ingestion into SQLite are implemented and verified. Persistent RAG integration remains proposed.
 
 ## Current active task
-None. TASK-013 is verified and merged; TASK-012 is the next recommended implementation task.
+TASK-012 — verified; Git closeout pending. TASK-014 persistent RAG is the next proposal requiring owner approval.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.
