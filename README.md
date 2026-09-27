@@ -4,7 +4,7 @@ JC Model is a TypeScript-only experiment in building a custom language model, a 
 
 The central idea is to keep **learned model capabilities** separate from **current information**. Training changes model weights. Updating the knowledge layer changes the evidence available at answer time, without retraining the model.
 
-Two parts exist today: a runnable local retrieval/planning demonstration, and a separate trainable decoder with tested forward/backward calculations. The decoder has not yet been trained or connected to the demonstration.
+Three separate paths exist today: a local retrieval/template-planning demonstration, a trainable decoder with checkpoint/resume and bounded text generation, and persistent internet-document retrieval. The decoder has learned a synthetic repeating pattern; it is not yet connected to either retrieval path or useful for general application-building.
 
 ## Quick start
 
@@ -50,7 +50,7 @@ Application-planning request
 3. **Construct the response.** The planner passes the request and evidence to `TransformerPlanAdapter`. That adapter runs the fixed-weight encoder, copies retrieved passages into citations, and supplies a fixed review recommendation. The numerical encoder output does not generate the recommendation text.
 4. **Validate and return.** Citation IDs must refer to supplied evidence. A second retrieval detects changes to selected passage IDs during inference. The agent records the request ID, status, and selected passage IDs in memory.
 
-This exercises the retrieval-augmented generation (RAG) wiring. Learned text generation is still pending. The agent cannot edit applications, run shell commands, deploy software, or fetch internet sources.
+This exercises the retrieval-augmented generation (RAG) wiring. The separate decoder supports learned text generation, but this demo still uses templates. The agent cannot edit applications, run shell commands, deploy software, or fetch internet sources.
 
 ### Reading the output
 
@@ -86,7 +86,7 @@ The separate implementation under `src/model/trainable/` provides the building b
 UTF-8 text → byte tokens → token + position embeddings
     → causal Transformer blocks → vocabulary logits
     → masked next-token loss → backward gradients
-    → optimizer updates [not implemented yet]
+    → clipped AdamW optimizer updates → checkpoint files
 ```
 
 - **Tokenizer:** preserves case, whitespace, and valid Unicode through UTF-8 bytes. The vocabulary contains 256 byte values plus PAD, BOS, and EOS. Invalid generated UTF-8 decodes with replacement characters.
@@ -95,9 +95,30 @@ UTF-8 text → byte tokens → token + position embeddings
 - **Loss:** masked cross-entropy compares each position's logits with its next-token target. Padding contributes no loss or gradient.
 - **Backward pass:** composes explicit numerical derivatives and accumulates parameter gradients. Training caches belong to one model and can be consumed once. Evaluation leaves weights and gradients unchanged.
 
-A training example will shift tokens by one position: inputs `BOS, A, B` predict targets `A, B, EOS`. The loss measures how well the model predicts those targets; gradients describe how changing weights would affect that loss. An optimizer must still apply those changes.
+A training example shifts tokens by one position: inputs `BOS, A, B` predict targets `A, B, EOS`. The loss measures how well the model predicts those targets; gradients describe how changing weights would affect that loss. AdamW applies those changes after global-norm clipping.
 
 Run `pnpm train:toy` to load the original local `datasets/synthetic-pattern-v1.json` fixture and train the decoder for 200 AdamW steps. It prints configuration, dataset hash, loss curve, and pass/fail results. The repeating text verifies learning mechanics, not real-world competence. Training has step/time/memory limits and cancellation between steps. No database or checkpoint is written: weights exist in memory only. The demo still uses the earlier encoder/template adapter.
+
+### Save, resume, and generate (TASK-012)
+
+The separate `model` CLI uses the same frozen synthetic dataset without changing `train:toy`:
+
+```sh
+pnpm model train data/pattern.json 200 11
+pnpm model resume data/pattern.json 25
+pnpm model generate data/pattern.json "abc "
+pnpm model experiment data/task012 Documentation/Acceptance/TASK-012-experiment.json
+```
+
+`train` starts a new model (optional steps/seed default to 200/11); `resume` loads full state and performs the specified number of additional steps (default 200). Both write the chosen checkpoint path every 25 cumulative steps and on normal/cancellation/resource stops. SIGINT/SIGTERM cancel between updates and save the last complete state; a resource/cancellation stop exits with code 2. Invalid data or I/O errors exit with code 1 and do not replace the prior valid checkpoint. The requested path is replaced on successful saves; use different paths to keep separate runs.
+
+Checkpoints are versioned JSON with canonical sorted-key SHA-256 checksums, named weights, optimizer moments/options/step, RNG states, dataset/batch hashes and order/cursor, runtime and metrics. Validation occurs before restore. A sibling temporary file is flushed and validated before atomic rename. Limits are 32 MiB per file and 500,000 parameter elements; the default model has 44,355. Resume requires the same Node version and matching manifest/batching identity. Evaluation can load weight-only checkpoints through the library without optimizer state. Checksums detect corruption, not authenticity of untrusted files.
+
+`generate` returns only the continuation, defaults to greedy decoding, stops at EOS or 64 new tokens, and slides the context window. The library additionally supports seeded temperature/top-k sampling; it never emits PAD/BOS. Output is ungrounded experimental text, not an accepted implementation plan. Generated invalid UTF-8 bytes decode as replacement characters.
+
+`experiment` runs seeds 11/22/33 for 200 updates each, measures validation every 25, selects the lowest validation-loss checkpoint, then evaluates test once per selected model. All three passed the required 10% validation improvement and reproduced `abc abc abc ` after reload. These held-out patterns are intentionally near-duplicates, not realistic generalization evidence. See [acceptance results](Documentation/Acceptance/TASK-012-checkpoints-generation.md).
+
+Checkpoints under `data/` are ignored by Git and need separate backups. No training-run database exists; SQLite stores knowledge documents, not model weights.
 
 ## Verification
 
@@ -108,7 +129,7 @@ pnpm lint
 pnpm evaluate
 ```
 
-The current suite contains 44 tests, including dataset validation, optimizer numerics, bounded training, tokenizer round trips, kernel/full-model gradients, causal masking, batch isolation, padding, ingestion, retrieval, and response validation. Gradient checks compare backward results with numerical perturbations.
+The current suite contains 56 tests, including checkpoint corruption/failure handling, exact multi-batch resume, bounded generation, read-only evaluation, dataset validation, optimizer numerics, bounded training, tokenizer round trips, kernel/full-model gradients, causal masking, batch isolation, padding, ingestion, retrieval, and response validation. Gradient checks compare backward results with numerical perturbations.
 
 `pnpm evaluate` prints five synthetic request fixtures, their responses, retrieval recall@3/nDCG@3, provenance checks, citation-ID checks, and insufficient-evidence behavior. Citation identity does not establish semantic support. Passing these checks does not demonstrate general application-building ability. The `lint` script currently repeats TypeScript checking rather than running a separate style linter.
 
@@ -123,8 +144,8 @@ The current suite contains 44 tests, including dataset validation, optimizer num
 | `src/knowledge/internet-ingest.ts` | Approved-source network policy, fetch, HTML extraction, and chunking |
 | `src/rag/` | Evidence assembly and response validation |
 | `src/model/transformer.ts` | Existing fixed-weight encoder and template adapter |
-| `src/model/trainable/` | Byte tokenizer, parameters, numerical kernels, and causal decoder |
-| `src/training/` | Masked next-token loss; training loop pending |
+| `src/model/trainable/` | Byte tokenizer, parameters, numerical kernels, causal decoder, and generation |
+| `src/training/` | Dataset manifests, masked loss, AdamW, bounded training, and checkpoint persistence |
 | `src/evaluation/` | Synthetic request fixtures and evaluation metrics |
 | `corpus/` | Local Markdown demonstration knowledge |
 | `test/` | Automated verification |
@@ -132,6 +153,6 @@ The current suite contains 44 tests, including dataset validation, optimizer num
 
 ## Next milestones
 
-TASK-011 implements dataset manifests, split isolation, AdamW, bounded training, and a successful tiny-overfit experiment. TASK-012 is next: checkpoint/resume, generation, and held-out evaluation. See `Documentation/Architecture/TRAINABLE-MODEL.md` for the acceptance gates.
+TASK-011 and TASK-012 implement dataset manifests, AdamW, bounded training, checkpoints/resume, generation, and synthetic held-out evaluation. TASK-014 proposes connecting the SQLite knowledge path to grounded prompts; it requires approval. See [task register](Documentation/Tasks/README.md) and [technical handover](Documentation/SessionMemory/TECHNICAL-HANDOVER.md) for continuation.
 
 Continuous internet refresh, useful learned application planning, semantic conflict detection, and application-editing tools remain future work. The long-term direction keeps current domain knowledge in the governed knowledge layer rather than attempting to train on the entire internet.

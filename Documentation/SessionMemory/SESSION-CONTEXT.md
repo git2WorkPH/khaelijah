@@ -1,35 +1,46 @@
 # Project Session Context
 
-## Current state
+## Current milestone
 
-Documentation handover prepared on 2026-09-27. No product code changed in this handover.
-TASK-001–011 and TASK-013 are VERIFIED and included in master/origin/master at baseline 35ee33e. TASK-012 is APPROVED but not implemented; its missing task record has now been restored. TASK-014–018 are new PROPOSED follow-ons requiring approval.
+TASK-012 implementation is VERIFIED on task/TASK-012-checkpoints-generation, based on master 91640dc. Commit/merge/push closeout is pending at this snapshot. TASK-001–013 are now verified; TASK-014–018 remain PROPOSED and need approval.
 
-Read [TECHNICAL-HANDOVER.md](TECHNICAL-HANDOVER.md) for runtime paths, commands, database/checkpoint recovery, pitfalls, and detailed continuation instructions. Read [task index](../Tasks/README.md) for every task's status and dependencies.
+Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-012](../Tasks/Approved/TASK-012-checkpoints-generation.md), and [acceptance report](../Acceptance/TASK-012-checkpoints-generation.md). Do not restart completed work.
 
-## Repository / closeout
+## Implementation
 
-- Base/current branch: master. Handover branch: docs/technical-handover; documentation commit 62e14a9, merge f535132. Inspect git log for the following memory closeout commit.
-- Last runtime implementation: bba121f (TASK-013); merge 88e6714; prior closeout 35ee33e.
-- Handover merge f535132 was successfully pushed to origin/master and synchronization verified. This memory-only closeout follows it; verify actual Git state on resume rather than repeating the completed handover merge.
-- Preserve uncommitted user formatting change in src/app/train.ts. It is excluded from the documentation commit.
-- No known running training/ingestion process at handover.
+- src/training/checkpoint.ts: bounded versioned/checksummed files, named weights, optimizer/moments/step, RNG, manifest/batch hashes/order/cursor, runtime and metrics. Atomic validated sibling-temp saves; evaluation-only versus full-resume restore.
+- src/model/trainable/generation.ts: bounded greedy or seeded temperature/top-k, rolling context, EOS and byte decoding.
+- src/training/trainer.ts: complete-step and stop callbacks.
+- src/app/model.ts: separate train/resume/generate/experiment CLI; legacy train:toy and RAG demo stay unchanged.
+- Checkpoints are ignored local data, not part of Git pushes. SQLite still stores knowledge only; internet retrieval is not automatically training data or wired to the model.
 
-## Verification and capability boundaries
+## Verification
 
-Rechecked during this handover: pnpm test (51 tests including build), pnpm typecheck, pnpm lint, git diff --check passed; all 46 local Markdown links in Tasks/SessionMemory/Project resolved. Lint is compiler-based. Task-specific historical counts remain in each record.
-Toy AdamW training is implemented and verified, but weights are not persisted yet. Synthetic learning is not application-building quality.
-SQLite internet ingestion and FTS5 passage search are implemented; only sqlite-appropriate-uses is registered. They are not connected to the existing template-based RAG planner or automatically used for training.
-The knowledge DB is ignored local data, not backed up by Git. No training-run DB exists.
+PASS: pnpm test (56 tests including build), pnpm typecheck, pnpm lint (compiler alias), pnpm evaluate and git diff --check.
+PASS: pnpm model experiment data/task012 Documentation/Acceptance/TASK-012-experiment.json.
+Seeds 11/22/33 selected validation NLL: 0.260527/0.296939/0.335994, each >10% improvement. Synthetic near-duplicate patterns only; no claim of application-building quality.
+PASS: five-step CLI training plus five-step resume reaches cumulative step 10; generation from seed-11 checkpoint returns repeating pattern with EOS.
+Regression: ten updates versus five/disk-save/load/five match exactly, including moments, using a nonzero cursor among three batches; corrupt files/I/O failures/resource stops/read-only inference are tested.
+No known running processes at handoff.
+
+## Git and preservation
+
+Base: master. Current task branch: task/TASK-012-checkpoints-generation. Implementation commit pending; inspect git log/status for subsequent closeout.
+Preserve and EXCLUDE user formatting changes in src/app/train.ts and src/app/knowledge.ts. The latter appeared during this task and was inspected as formatting-only. No task implementation depends on either edit.
+Standing authorization: merge completed verified tasks into master and push origin/master; no unrelated commits, destructive resets or force-pushes.
 
 ## Next exact action
 
-Check git status/log and remote synchronization, then start TASK-012 using its approved checklist and project-development skill: checkpoint schema/validation and round-trip tests, optimizer/cursor resume, bounded generation, then three-seed held-out evaluation. Read TRAINABLE-MODEL.md and current implementation first. The technical handover is complete; do not reimplement delivered tasks.
+Review scoped diff, commit TASK-012 files only, record its hash, merge master, push and verify synchronization. Then request approval for TASK-014 persistent RAG before implementation. TASK-014–018 are not approved by earlier blanket authorization.
 
-Relevant files: src/training/{trainer,optimizer,dataset}.ts, src/model/trainable/{decoder,parameters,tokenizer}.ts, TASK-012 record. Checkpoint and generation modules do not exist yet. Preserve the train.ts user diff when work overlaps.
+## Reproduce
 
-## Standing constraints
+Use Node >=22.16, pnpm and TypeScript-only runtime. Same Node version/config/data are required for exact resume.
+- pnpm model train data/pattern.json 200 11
+- pnpm model resume data/pattern.json 25
+- pnpm model generate data/pattern.json "abc "
+- pnpm model experiment data/task012 Documentation/Acceptance/TASK-012-experiment.json
 
-Use pnpm and TypeScript-only runtime. No hosted model dependency. Merge each completed verified task into master and push origin/master; no force-push or unrelated commits. Knowledge and weights stay separate (ADR-001); SQLite decision is ADR-002. Public availability does not imply reuse rights. Medical and write-capable agent scope need separate approval/safety work. Update memory at meaningful boundaries and immediately at 2% remaining credit; no unattended credit monitor is installed.
+CLI saves every 25 cumulative updates and on normal/resource/cancellation stops. A forced kill is not a graceful checkpoint. Back up ignored local checkpoint/database files separately. Public accessibility is not reuse permission; medical and workspace-write capabilities need separate approved safety scope.
 
-Historical TASK-011-HANDOFF.md is superseded by this file. Memory summarizes authoritative tasks/designs and does not override them.
+Update task/session memory at meaningful boundaries and at 2% remaining usage. Latest usage check during TASK-012 showed 24% remaining in the five-hour window, 88% weekly; no reset consumed and no unattended monitor installed. Historical memory snapshots do not override current tasks, Git state or evidence.

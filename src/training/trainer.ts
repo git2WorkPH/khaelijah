@@ -8,6 +8,15 @@ export interface TrainingOptions {
   maxMilliseconds: number;
   maxRssBytes: number;
   signal?: AbortSignal;
+  /** Called only at complete update boundaries and once on a normal/resource stop. */
+  onBoundary?: (state: TrainingBoundary) => void | Promise<void>;
+}
+export interface TrainingMetric { step: number; loss: number; gradientNorm: number; }
+export interface TrainingBoundary {
+  step: number;
+  nextBatch: number;
+  metrics: readonly TrainingMetric[];
+  stopReason?: "max_steps" | "time_limit" | "memory_limit" | "cancelled";
 }
 export const DEFAULT_TRAINING = {
   maxSteps: 2000,
@@ -89,7 +98,9 @@ export async function train(
     model.backward(output.cache, loss.gradient);
     const gradientNorm = optimizer.update();
     metrics.push({ step: optimizer.step, loss: loss.loss, gradientNorm });
+    await options.onBoundary?.({ step: optimizer.step, nextBatch: optimizer.step % batches.length, metrics: metrics.map((m) => ({ ...m })) });
   }
+  await options.onBoundary?.({ step: optimizer.step, nextBatch: optimizer.step % batches.length, metrics: metrics.map((m) => ({ ...m })), stopReason });
   return {
     stopReason,
     completedSteps: metrics.length,
