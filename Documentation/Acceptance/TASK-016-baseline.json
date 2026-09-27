@@ -1,0 +1,320 @@
+{
+  "task": "TASK-016",
+  "domain": "application architecture",
+  "selectionPolicy": "Fixed 10-update baseline; final checkpoint selected before sealed loss test. No hyperparameter search or task-quality claim.",
+  "benchmarkHash": "197bef45aabec89de045aba42def0fa2ea19e28d1d293ffa8cef23d172e47127",
+  "snapshotHash": "5d2be92603e799d8a42e8f6ba46bcfa3a728154c2c7d92bb2f582c5f461e7fa1",
+  "runs": [
+    {
+      "cancelRequested": false,
+      "checkpoint": {
+        "hash": "abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0",
+        "path": "/Users/cervantes/Documents/ChatGPT/jc-model/data/training/964616ad-8fb1-4473-b5b4-2014e4d9f3d1/step-10.json"
+      },
+      "config": {
+        "batchSize": 1,
+        "maxMilliseconds": 60000,
+        "maxRssBytes": 1073741824,
+        "model": {
+          "blocks": 2,
+          "context": 64,
+          "feedForward": 128,
+          "heads": 4,
+          "seed": 11,
+          "width": 32
+        },
+        "steps": 10
+      },
+      "configHash": "295906aaad458a34545e4840f6ed120994ce7389bf9f99a52c2dc370e4a53e36",
+      "createdAt": 1790551272078,
+      "endedAt": 1790551293602,
+      "id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "kind": "train",
+      "needsReview": [],
+      "parent": null,
+      "reason": "max_steps",
+      "result": {
+        "checkpointBytes": 2595417,
+        "completedSteps": 10,
+        "cumulativeSteps": 10,
+        "elapsedMilliseconds": 819,
+        "estimatedArtifactBytes": 169772160,
+        "finalValidationNll": 4.625060627977373,
+        "initialValidationNll": 5.8573883255909935,
+        "lastObservation": {
+          "freeDiskBytes": 139246014464,
+          "pressure": 1,
+          "support": "macOS ps RSS + memorystatus pressure + system swap; sampled, not hard reservation",
+          "swapBytes": 15307374592,
+          "workerRss": 230719488
+        },
+        "metrics": [
+          {
+            "gradientNorm": 4.832235581344132,
+            "loss": 5.68991887550708,
+            "step": 1
+          },
+          {
+            "gradientNorm": 3.6391296778028406,
+            "loss": 5.613091966578901,
+            "step": 2
+          },
+          {
+            "gradientNorm": 4.128556362654621,
+            "loss": 5.434842496680365,
+            "step": 3
+          },
+          {
+            "gradientNorm": 3.115088117612415,
+            "loss": 5.300619049036317,
+            "step": 4
+          },
+          {
+            "gradientNorm": 2.713608854775034,
+            "loss": 5.2195472658751925,
+            "step": 5
+          },
+          {
+            "gradientNorm": 2.5098967040719415,
+            "loss": 4.96766536414072,
+            "step": 6
+          },
+          {
+            "gradientNorm": 2.6795882665228623,
+            "loss": 4.902462275429521,
+            "step": 7
+          },
+          {
+            "gradientNorm": 2.4758864603371276,
+            "loss": 4.786684581776808,
+            "step": 8
+          },
+          {
+            "gradientNorm": 2.4365567163737563,
+            "loss": 4.8693116560169525,
+            "step": 9
+          },
+          {
+            "gradientNorm": 2.0675308486611823,
+            "loss": 4.7160781056224765,
+            "step": 10
+          }
+        ],
+        "nextBatch": 10,
+        "observations": 1,
+        "parameterCount": 44355,
+        "peakObservedWorkerRss": 230719488,
+        "peakWorkerRss": 265060352,
+        "stepsPerSecond": 16.438033024179298,
+        "stopReason": "max_steps",
+        "supervisorReason": null,
+        "taskQuality": "not_scored; loss does not establish explanation quality",
+        "testEvaluated": false
+      },
+      "resumeCheckpoint": null,
+      "runtime": "v26.1.0",
+      "snapshot": "5d2be92603e799d8a42e8f6ba46bcfa3a728154c2c7d92bb2f582c5f461e7fa1",
+      "startedAt": 1790551292783,
+      "status": "completed",
+      "supervisorPid": 24345,
+      "workerPid": 24349
+    },
+    {
+      "cancelRequested": false,
+      "checkpoint": {
+        "hash": "abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0",
+        "path": "/Users/cervantes/Documents/ChatGPT/jc-model/data/training/964616ad-8fb1-4473-b5b4-2014e4d9f3d1/step-10.json"
+      },
+      "config": {
+        "batchSize": 1,
+        "maxMilliseconds": 60000,
+        "maxRssBytes": 1073741824,
+        "model": {
+          "blocks": 2,
+          "context": 64,
+          "feedForward": 128,
+          "heads": 4,
+          "seed": 11,
+          "width": 32
+        },
+        "steps": 10
+      },
+      "configHash": "295906aaad458a34545e4840f6ed120994ce7389bf9f99a52c2dc370e4a53e36",
+      "createdAt": 1790551325266,
+      "endedAt": 1790551384060,
+      "id": "c3a7dd63-d661-4341-8f32-800935e69291",
+      "kind": "test",
+      "needsReview": [],
+      "parent": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "reason": "max_steps",
+      "result": {
+        "checkpointBytes": 2595417,
+        "elapsedMilliseconds": 314,
+        "estimatedArtifactBytes": 169772160,
+        "lastObservation": {
+          "freeDiskBytes": 139238256640,
+          "pressure": 1,
+          "support": "macOS ps RSS + memorystatus pressure + system swap; sampled, not hard reservation",
+          "swapBytes": 15273820160,
+          "workerRss": 63389696
+        },
+        "observations": 0,
+        "peakObservedWorkerRss": 0,
+        "peakWorkerRss": 189579264,
+        "selectedCheckpoint": "abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0",
+        "stopReason": "max_steps",
+        "supervisorReason": null,
+        "taskQuality": "not_scored; human benchmark evaluation belongs to TASK-019",
+        "testNll": 4.6412598024329945,
+        "updates": 0
+      },
+      "resumeCheckpoint": {
+        "hash": "abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0",
+        "path": "/Users/cervantes/Documents/ChatGPT/jc-model/data/training/964616ad-8fb1-4473-b5b4-2014e4d9f3d1/step-10.json"
+      },
+      "runtime": "v26.1.0",
+      "snapshot": "5d2be92603e799d8a42e8f6ba46bcfa3a728154c2c7d92bb2f582c5f461e7fa1",
+      "startedAt": 1790551383745,
+      "status": "completed",
+      "supervisorPid": 24535,
+      "workerPid": 24540
+    }
+  ],
+  "events": [
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551272079,
+      "detail": {
+        "action": "submitted",
+        "parent": null
+      }
+    },
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551292786,
+      "detail": {
+        "action": "started"
+      }
+    },
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551292791,
+      "detail": {
+        "action": "preflight",
+        "deadline": 1790551352783,
+        "estimatedBytes": 169772160,
+        "observation": {
+          "freeDiskBytes": 139248357376,
+          "pressure": 1,
+          "support": "macOS ps RSS + memorystatus pressure + system swap; sampled, not hard reservation",
+          "swapBytes": 15307374592,
+          "workerRss": 63569920
+        }
+      }
+    },
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551293227,
+      "detail": {
+        "action": "checkpoint",
+        "hash": "bc1a140e081a48e7d184b5282cee00d88826664581cba4405a7c47a808d3c953",
+        "path": "/Users/cervantes/Documents/ChatGPT/jc-model/data/training/964616ad-8fb1-4473-b5b4-2014e4d9f3d1/step-5.json"
+      }
+    },
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551293299,
+      "detail": {
+        "action": "resources",
+        "observation": {
+          "freeDiskBytes": 139246014464,
+          "pressure": 1,
+          "support": "macOS ps RSS + memorystatus pressure + system swap; sampled, not hard reservation",
+          "swapBytes": 15307374592,
+          "workerRss": 230719488
+        }
+      }
+    },
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551293426,
+      "detail": {
+        "action": "checkpoint",
+        "hash": "abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0",
+        "path": "/Users/cervantes/Documents/ChatGPT/jc-model/data/training/964616ad-8fb1-4473-b5b4-2014e4d9f3d1/step-10.json"
+      }
+    },
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551293480,
+      "detail": {
+        "action": "checkpoint",
+        "hash": "abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0",
+        "path": "/Users/cervantes/Documents/ChatGPT/jc-model/data/training/964616ad-8fb1-4473-b5b4-2014e4d9f3d1/step-10.json"
+      }
+    },
+    {
+      "run_id": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1",
+      "at": 1790551293602,
+      "detail": {
+        "action": "completed",
+        "reason": "max_steps"
+      }
+    },
+    {
+      "run_id": "c3a7dd63-d661-4341-8f32-800935e69291",
+      "at": 1790551325267,
+      "detail": {
+        "action": "submitted",
+        "parent": "964616ad-8fb1-4473-b5b4-2014e4d9f3d1"
+      }
+    },
+    {
+      "run_id": "c3a7dd63-d661-4341-8f32-800935e69291",
+      "at": 1790551383748,
+      "detail": {
+        "action": "started"
+      }
+    },
+    {
+      "run_id": "c3a7dd63-d661-4341-8f32-800935e69291",
+      "at": 1790551383754,
+      "detail": {
+        "action": "preflight",
+        "deadline": 1790551443745,
+        "estimatedBytes": 169772160,
+        "observation": {
+          "freeDiskBytes": 139238256640,
+          "pressure": 1,
+          "support": "macOS ps RSS + memorystatus pressure + system swap; sampled, not hard reservation",
+          "swapBytes": 15273820160,
+          "workerRss": 63389696
+        }
+      }
+    },
+    {
+      "run_id": "c3a7dd63-d661-4341-8f32-800935e69291",
+      "at": 1790551384057,
+      "detail": {
+        "action": "checkpoint",
+        "hash": "abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0",
+        "path": "/Users/cervantes/Documents/ChatGPT/jc-model/data/training/964616ad-8fb1-4473-b5b4-2014e4d9f3d1/step-10.json"
+      }
+    },
+    {
+      "run_id": "c3a7dd63-d661-4341-8f32-800935e69291",
+      "at": 1790551384060,
+      "detail": {
+        "action": "completed",
+        "reason": "max_steps"
+      }
+    }
+  ],
+  "quality": {
+    "humanScored": false,
+    "explanationGate": "not established",
+    "uncertaintyGate": "not established",
+    "promotionAllowed": false
+  },
+  "limits": "Tiny original corpus and single seed; loss is not explanation quality. Pressure/RSS sampling is not an OS hard reservation; final evaluation was shorter than the sampling interval. Existing system swap is recorded, not attributed to this job. Subjective laptop responsiveness was not independently measured."
+}

@@ -7,6 +7,7 @@
     "node": ">=22.16"
   },
   "scripts": {
+    "jobs": "pnpm run build && node dist/app/jobs.js",
     "sources": "pnpm run build && node dist/app/sources.js",
     "knowledge:ask": "pnpm run build && node dist/app/ask.js",
     "model": "pnpm run build && node dist/app/model.js",

@@ -1,6 +1,8 @@
 # Local training resource policy
 
-Status: owner constraints recorded; implementation safeguards remain proposed tasks. This document does not authorize starting experiments or approve TASK-015–020.
+Status: owner constraints recorded; TASK-015 ingestion and TASK-016 job safeguards implemented. Owner approved TASK-015–020 and the original application-architecture corpus plus a short 60-second/1 GiB baseline. Further scaling/experiments still require reviewed scope and budgets.
+
+TASK-016 defaults remain 60 seconds and 1 GiB RSS, with a separate supervisor, 500 ms pressure/RSS sampling, 64 MiB swap-growth stop and 1 GiB disk reserve plus estimated artifacts. See [operations and limits](../Training/JOBS.md). Its short baseline used about 253 MiB peak worker RSS; this does not calibrate the proposed 6 GiB upper cap or prove other-application responsiveness. Monitoring is not an OS hard memory reservation; no cloud fallback exists.
 
 ## Firm owner constraints
 

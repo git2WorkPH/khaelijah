@@ -1,31 +1,44 @@
-# Project Session Context — 2026-09-27
+# Project Session Context — 2026-09-28
 
 ## Current milestone
 
-TASK-001–015 verified. Owner explicitly approved TASK-015–020. This development cycle implements TASK-015 only, as required by the project-development skill. Remaining approved order: 016 → 019 → 020 → 017 → 018. Do not request blanket implementation approval again or label remaining tasks complete.
+TASK-001–016 verified; TASK-016 is in final Git closeout, not yet claimed pushed in this record. Owner explicitly approved TASK-015–020. Remaining order: **019 → 020 → 017 → 018**. Use project-development for exactly one approved task per cycle, and project-session-memory at meaningful boundaries/2% remaining.
 
-Read [technical handover](TECHNICAL-HANDOVER.md) in its documented order, [TASK-015 acceptance](../Acceptance/TASK-015-knowledge-operations.md), [operator guide](../Knowledge/SOURCE-OPERATIONS.md), then [TASK-016](../Tasks/Approved/TASK-016-domain-dataset-evaluation.md).
+Owner chose **application architecture**, not SQLite-backed storage, and explicitly approved freezing original project-authored examples, the 20 explanation + 10 uncertainty/conflict benchmark, and a short 60-second/1 GiB supervised baseline. Do not repeat domain-selection or blanket implementation-approval questions.
 
-## Implementation and verification
+Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-016](../Tasks/Approved/TASK-016-domain-dataset-evaluation.md), [operator guide](../Training/JOBS.md), [acceptance](../Acceptance/TASK-016-domain-dataset-evaluation.md), then [TASK-019](../Tasks/Approved/TASK-019-model-capability.md).
 
-TASK-015 adds persisted reviewed registrations, separate retrieval/training permissions, bounded policy display, public-IPv4-pinned HTTPS, exact-URL scope, explicit text-preview/hash commit, dynamic technology profiles, refresh lease/rate/retry, transactional withdrawal/reactivation, additive schema 1, health and consistent non-overwriting backup/reopen recovery.
+## Implemented and verified
 
-PASS: pnpm test (73 including build), pnpm typecheck, pnpm lint (compiler alias) and git diff --check. Live approved SQLite fetch in isolated /tmp/jc-task015-live.1FVUJn/knowledge.sqlite: added 14 chunks; ask returned grounded with five citations and modelUsed false. This temp DB is not a durable requirement; operator guide has reproducible commands. No production knowledge DB changed and no training job ran.
+New jobs CLI plus snapshot, registry, job-policy, resource-monitor, supervisor and worker modules. Separate SQLite metadata store at data/training/registry.sqlite; weights in per-attempt checkpoint files. Explicit source-version export or original-corpus preview → reviewed immutable snapshot → queue → start. Cancellation, explicit resume lineage, conservative recovery, one worker per registry and one-time held-out evaluation. Source rights revalidated on export/start/resume/runtime; audit flags affected runs. No retraining on ingestion and no automatic promotion.
 
-Current answers are still source-backed templates. TASK-012 toy checkpoint/resume/generation remains separate. No domain training-run registry or useful learned-explanation capability yet. Human review remains responsible for rights and restricted-page eligibility. No scheduled crawling, automatic model training, purge or workspace-write capability was added.
+PASS: pnpm test (84 including build), pnpm typecheck, pnpm lint (compiler alias), git diff --check. Preserve historical TASK-015 acceptance separately. The new tests use small real child processes and injected observations; no network/full-disk/two-hour stress tests.
+
+Actual owner-approved baseline:
+- Benchmark hash: 197bef45aabec89de045aba42def0fa2ea19e28d1d293ffa8cef23d172e47127.
+- Snapshot hash: 5d2be92603e799d8a42e8f6ba46bcfa3a728154c2c7d92bb2f582c5f461e7fa1.
+- Training run: 964616ad-8fb1-4473-b5b4-2014e4d9f3d1; ten steps, seed 11, 44,355 parameters, 819 ms, peak worker RSS 265060352 bytes.
+- Validation NLL: 5.8573883255909935 → 4.625060627977373.
+- Selected final checkpoint payload hash: abe86c7fa1fa648b8c306784b6c7c271fd10619ebb28dfa13b8ed17fca0648d0.
+- Zero-update final loss-test run: c3a7dd63-d661-4341-8f32-800935e69291; NLL 4.6412598024329945, 314 ms.
+- Raw run/resource/checkpoint evidence is committed as Documentation/Acceptance/TASK-016-baseline.json; actual weight files/DB remain local ignored data and require separate backup.
+
+The loss-test split has been inspected once and cannot silently be reused for candidate tuning. The 30-case architecture-answer rubric remains unscored. No useful learned explanation, human capability score or promotion is claimed. Tiny corpus/context and single seed are explicit limitations.
 
 ## Git and preservation
 
-Base master at start: f7760ef. Task branch: task/TASK-015-knowledge-operations. Implementation: 91f2593. Merge: 299e109, successfully pushed to origin/master. Current branch: master. This documentation-only closeout records that delivered state; use git log for its own subsequent commit hash. Only the two user-owned edits below remain outside the closeout.
+Base at start: master b88e512. Active branch: task/TASK-016-domain-dataset-evaluation. Implementation is uncommitted pending final closeout; inspect Git before resuming. The prior low-credit documentation edits were ours and are included in TASK-016.
 
-Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. These are not TASK-015 changes. Only the new sources CLI and package script alter the supported ingestion command. Standing authorization: merge verified tasks into master and push origin/master. No unrelated commits, destructive resets or force pushes.
+Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. No TASK-016 change touches them. Standing authorization: merge verified task branch into master and push origin/master; no unrelated commits, force pushes, destructive resets or automatic branch deletion.
 
 ## Next exact action
 
-Implement approved TASK-016 on its own branch using project-development. Read its full requirements and existing dataset/trainer/checkpoint code. Design the training registry ADR, immutable source-version exports with explicit training rights, job lifecycle and resource supervision. Do not treat retrieval-approved SQLite data as automatically training-approved. Freeze a narrow domain, eligible examples and human-reviewed evaluation rubric before capability experiments. Later work must preserve test isolation and cannot mark useful explanations achieved merely because a pipeline runs.
+Finish scoped TASK-016 commit/merge/push if still pending, then begin approved TASK-019. Read the frozen benchmark/rubric, source-to-example lineage, baseline limits and job resource policy. Establish honest human-scored architecture capability evidence before data/model/context improvements. If reusing any inspected loss holdout, record an explicit new evaluation strategy/fresh holdout; do not tune against the prior test. TASK-020 owns checkpoint promotion, TASK-017 learned RAG and TASK-018 workspace actions.
 
-## Constraints and resources
+## Resource and safety constraints
 
-Use pnpm and TypeScript-only product code; Node >=22.16. Owner M3 MacBook Pro with 18 GB RAM/512 GB total storage. Local-only, no paid cloud or remote compute, at most 7,200 seconds/run, preserve other-app headroom. Proposed initial RSS ceiling 6 GiB is not calibrated safe capacity; shorter/lower defaults remain valid. TASK-015 bounds fetch concurrency/bytes/time and checks a 1 GiB disk reserve plus estimated operation bytes. Training supervision and pressure calibration remain TASK-016 onward; free capacity is not total capacity.
+MacBook Pro M3, 18 GB RAM/512 GB total storage; local-only, no paid cloud/remote compute. Absolute cap 7,200 seconds and 6 GiB RSS; default jobs 60 seconds/1 GiB. Actual larger-run safe capacity is not calibrated. Jobs reserve 1 GiB disk plus checkpoint/temporary/history estimates. Monitor is macOS-only and fails closed without ps/sysctl permission. Pressure/swap/RSS sampling is not an OS hard reservation; no subjective responsiveness result exists.
 
-Last usage check: 37% five-hour and 58% weekly remaining; no reset consumed. Save memory at meaningful boundaries and immediately at 2% remaining, as requested. No unattended credit monitor installed. No known running training/server processes; closeout may have verification commands in flight, inspect tool/Git state before restarting.
+System swap was already substantial (~15 GB) while observed pressure was normal; do not attribute that to this subsecond baseline. Jobs stop on non-normal pressure or >64 MiB growth. Do not run legacy toy trainers or other checkouts concurrently: concurrency is enforced only in the supported fixed per-checkout registry. Recovery refuses live/reused recorded PIDs. Forced termination may leave a last validated earlier checkpoint, not the final update. Keep all snapshot/checkpoint history unless a separate deletion policy is approved.
+
+Last usage check: 34% five-hour and 42% weekly remaining; no reset credit consumed. Save memory immediately at 2% remaining. No unattended credit monitor. Actual baseline/evaluation processes finished; final verification/closeout may be in flight, inspect current tool/Git state before restarting.

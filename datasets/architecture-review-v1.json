@@ -1,0 +1,8 @@
+{
+  "reviewer": "project-owner (recorded conversation approval, 2026-09-28)",
+  "reason": "Owner selected application architecture, then explicitly approved freezing the original project-authored corpus and separate 20 explanation/10 uncertainty benchmark plus a short 60-second, 1 GiB supervised pipeline baseline. No web-source training rights or capability score is implied. Original hypothetical examples contain no real user records or credentials; distinct project/source groups separate splits; automatic near-duplicate checks supplement review.",
+  "reviewedAt": "2026-09-28T00:00:00+10:00",
+  "rights": true,
+  "privacy": true,
+  "contamination": true
+}
