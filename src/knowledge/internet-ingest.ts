@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { SqliteKnowledgeStore } from "./sqlite-store.js";
+import { safePublicFetch } from "./safe-http.js";
 
 export interface ApprovedInternetSource {
   id: string;
@@ -24,7 +25,7 @@ export const approvedInternetSources: Readonly<Record<string, ApprovedInternetSo
 });
 
 function assertAllowed(url: URL, source: ApprovedInternetSource): void {
-  if (url.protocol !== "https:" || url.hostname !== source.allowedHost || url.username || url.password || url.port) throw new Error("URL is outside the approved HTTPS source.");
+  if (url.href !== source.canonicalUrl || url.protocol !== "https:" || url.hostname !== source.allowedHost || url.username || url.password || url.port) throw new Error("URL is outside the approved HTTPS source/path.");
 }
 
 function decodeEntities(value: string): string {
@@ -77,8 +78,8 @@ export function chunkText(text: string, maxCharacters = 1200): string[] {
 
 export interface FetchOptions { fetch?: typeof fetch; now?: () => string; timeoutMs?: number; maxBytes?: number; }
 
-async function fetchApproved(source: ApprovedInternetSource, options: FetchOptions): Promise<{ html: string; fetchedAt: string }> {
-  const fetcher = options.fetch ?? fetch;
+export async function fetchApproved(source: ApprovedInternetSource, options: FetchOptions): Promise<{ html: string; fetchedAt: string }> {
+  const fetcher = options.fetch ?? safePublicFetch;
   const timeoutMs = options.timeoutMs ?? 15000;
   const maxBytes = options.maxBytes ?? 2_000_000;
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || !Number.isSafeInteger(maxBytes) || maxBytes < 1) throw new Error("Invalid fetch limits.");
@@ -128,6 +129,8 @@ async function fetchApproved(source: ApprovedInternetSource, options: FetchOptio
 export async function ingestApprovedSource(store: SqliteKnowledgeStore, sourceId: string, options: FetchOptions = {}) {
   const source = approvedInternetSources[sourceId];
   if (!source) throw new Error("Source is not approved.");
+  const registered = store.registeredSource(sourceId);
+  if (registered && registered.status !== "approved") throw new Error("Source is not approved or was withdrawn.");
   const failureAt = options.now?.() ?? new Date().toISOString();
   try {
     const { html, fetchedAt } = await fetchApproved(source, options);

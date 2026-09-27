@@ -7,9 +7,10 @@
     "node": ">=22.16"
   },
   "scripts": {
+    "sources": "pnpm run build && node dist/app/sources.js",
     "knowledge:ask": "pnpm run build && node dist/app/ask.js",
     "model": "pnpm run build && node dist/app/model.js",
-    "knowledge:ingest": "pnpm run build && node dist/app/knowledge.js ingest",
+    "knowledge:ingest": "pnpm run build && node dist/app/sources.js refresh",
     "knowledge:search": "pnpm run build && node dist/app/knowledge.js search",
     "train:toy": "pnpm run build && node dist/app/train.js",
     "demo": "pnpm run build && node dist/app/cli.js",

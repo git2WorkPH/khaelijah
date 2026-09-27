@@ -26,9 +26,9 @@ The knowledge commands use `data/knowledge.sqlite` by default. Set `JC_KNOWLEDGE
 
 ## Persistent internet knowledge
 
-TASK-013 adds a deliberately narrow internet-ingestion path. The only initial source is SQLite's “Appropriate Uses For SQLite” documentation. The source registry records its canonical URL, publisher, public-domain status, and the SQLite copyright page that supports that status. Arbitrary URLs are rejected.
+TASK-015 adds reviewed single-page onboarding to TASK-013's persistent ingestion. SQLite's “Appropriate Uses For SQLite” remains the initial approved source. New eligible technology HTML URLs can be submitted, reviewed, previewed and committed without editing source code. Follow the [source operations guide](Documentation/Knowledge/SOURCE-OPERATIONS.md) for JSON examples, rights review, commands and recovery. Public access alone is not reuse permission.
 
-`pnpm knowledge:ingest sqlite-appropriate-uses` performs a manual HTTPS fetch with a timeout, redirect-host allowlist, HTML content-type check, and 2 MB response limit. It extracts readable text, creates deterministic passages, hashes the normalized document, and commits the refresh to SQLite in one transaction. Repeating an unchanged refresh records an audit without duplicating content. Changed content creates a new active version and supersedes prior passages. Failed fetches or parsing keep the last active version searchable.
+`pnpm knowledge:ingest sqlite-appropriate-uses` preserves the reviewed-source shortcut. Fetching now uses public-IPv4 DNS/connection pinning, exact-URL scope, TLS validation, bounded retries, 15-second request deadlines and a 2 MB response limit. Compressed responses and IPv6-only sources are unsupported. Refresh is rate-limited (at least 60 seconds) and checks disk space. Text extraction, deterministic chunks and hashing precede transactional publication. Unchanged refreshes audit without duplicating content; changed versions supersede prior passages; failures preserve active content. New sources require `pnpm sources preview ID` followed by `pnpm sources commit ID HASH`.
 
 `pnpm knowledge:search "query"` searches active passages through SQLite FTS5 and returns JSON containing passage text, source URL, publisher, license declaration and evidence URL, fetch time, content hash, document version, and rank.
 
@@ -38,7 +38,7 @@ Selected passages carry stable database-local chunk/document IDs, chunk and docu
 
 FTS5 scores are raw, lower-is-better scores tagged `sqlite-fts5`; they are not compared to the local demo's lexical thresholds. Profile filtering occurs before limiting results. Prompt query terms are stop-word filtered, bounded and quoted for FTS matching. Keyword matches and citation membership do not prove semantic relevance or factual correctness. Retrieved text remains untrusted evidence.
 
-The SQLite file is ignored by Git and intended as local operational data. Model checkpoints remain separate. Ingested text is not automatically approved as training data. Adding another source requires a code-reviewed allowlist entry and evidence that its terms permit the intended storage and retrieval use.
+The SQLite file is ignored by Git and intended as local operational data. Model checkpoints remain separate. Ingested text is not automatically approved as training data. New registrations require recorded source-specific rights and robots review. Use `JC_KNOWLEDGE_PROFILE=technology-your-profile` for custom-source prompts. `pnpm sources` provides submit, policies, review, preview, commit, withdraw, reactivate, list, audit, health and backup commands. No background crawl or training is triggered.
 
 ## How the current demo works
 
