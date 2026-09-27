@@ -2,7 +2,7 @@
 
 ## Current milestone
 
-TASK-014 is VERIFIED on task/TASK-014-persistent-rag, based on master e64929b. Commit/merge/push pending at this snapshot. TASK-001–014 are verified; TASK-015–018 remain PROPOSED and need approval. TASK-014 was explicitly approved by the owner in conversation.
+TASK-014 is VERIFIED and merged into master: implementation 23aa823, merge ef34809. This closeout precedes the authorized push; inspect Git for final synchronization. TASK-001–014 are verified; TASK-015–018 remain PROPOSED and need approval. TASK-014 was explicitly approved by the owner in conversation.
 
 Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-014](../Tasks/Approved/TASK-014-persistent-rag.md), and [acceptance report](../Acceptance/TASK-014-persistent-rag.md). Do not restart completed work.
 
@@ -23,12 +23,12 @@ No known running processes.
 
 ## Git and preservation
 
-Base: master. Current task branch: task/TASK-014-persistent-rag. Implementation commit pending; inspect Git for final closeout/synchronization.
+Base/current branch: master. Completed branch: task/TASK-014-persistent-rag. Implementation 23aa823; merge ef34809; inspect Git for following documentation closeout and final synchronization.
 Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. Neither is changed by TASK-014. Standing authorization: merge verified tasks into master and push origin/master; no unrelated commits, destructive resets or force-pushes.
 
 ## Next exact action
 
-Review scoped diff, commit TASK-014 files only, record hash, merge master, push and verify synchronization. Then ask approval for TASK-015 knowledge operations (persistent withdrawal/refresh, migration and backup policy). Do not implement new proposals without approval.
+Check master/origin synchronization and complete a pending push only if needed; do not repeat TASK-014 implementation or merge. Ask approval for TASK-015 knowledge operations (persistent withdrawal/refresh, migration and backup policy). Do not implement new proposals without approval.
 
 ## Reproduce and limits
 

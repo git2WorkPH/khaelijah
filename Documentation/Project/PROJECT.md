@@ -29,7 +29,7 @@ PROTOTYPE
 Bounded toy-model training, checkpoint/resume, generation, synthetic held-out evaluation, and curated internet ingestion into SQLite are implemented and verified. Persistent source-backed template prompts are implemented; learned answer integration remains separate.
 
 ## Current active task
-TASK-014 is verified; Git closeout pending. TASK-015 knowledge operations is next proposed and requires approval.
+None. TASK-014 is verified and merged. TASK-015 knowledge operations is next proposed and requires approval.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.

@@ -1,7 +1,7 @@
 # TASK-014 — Connect persistent knowledge to grounded prompts
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 ## Authorization
 
@@ -36,7 +36,7 @@ Learned model replacement, autonomous writes, broad crawling and embeddings.
 
 ## Git and resume
 
-Base: master at e64929b. Branch: task/TASK-014-persistent-rag. Implementation commit: pending. Next action: scoped commit, merge and push after verification.
+Base: master at e64929b. Branch: task/TASK-014-persistent-rag. Implementation commit: 23aa823. Merge commit: ef34809. Verified master push is authorized.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
 
