@@ -1,10 +1,7 @@
-import type { KnowledgeProfile, RetrievedPassage, RetrievalPort, RetrievalQuery } from "../core/contracts.js";
+import type { KnowledgeProfile, RetrievedPassage, RetrievalPort, RetrievalQuery, RetrievalOutcome } from "../core/contracts.js";
 import { InMemoryKnowledgeStore } from "./ingest.js";
 
-export interface RetrievalOutcome {
-  readonly passages: readonly RetrievedPassage[];
-  readonly warnings: readonly string[];
-}
+export type { RetrievalOutcome } from "../core/contracts.js";
 
 function tokens(value: string): string[] {
   const stopWords = new Set(["a", "an", "the", "and", "at", "for", "from", "in", "including", "is", "of", "on", "to", "with"]);
@@ -28,8 +25,19 @@ function bm25Score(queryTerms: readonly string[], text: string, averageLength: n
 export class LexicalRetriever implements RetrievalPort {
   constructor(private readonly profile: KnowledgeProfile, private readonly store: InMemoryKnowledgeStore) {}
 
-  async retrieve(query: RetrievalQuery): Promise<readonly RetrievedPassage[]> {
-    return this.search(query).passages;
+  async retrieve(query: RetrievalQuery): Promise<RetrievalOutcome> {
+    return this.search(query);
+  }
+
+  async isCurrent(passages: readonly RetrievedPassage[]): Promise<boolean> {
+    const snapshot = this.store.snapshot();
+    return passages.every((p) => {
+      const chunk = snapshot.chunks.find((c) => c.id === p.chunk.id);
+      const source = snapshot.sources.find((s) => s.id === p.source.id);
+      return p.chunk.profileId === this.profile.id && this.profile.allowedSourceIds.includes(p.source.id) &&
+        chunk?.lifecycle === "active" && source?.lifecycle === "active" &&
+        JSON.stringify(chunk) === JSON.stringify(p.chunk) && JSON.stringify(source) === JSON.stringify(p.source);
+    });
   }
 
   search(query: RetrievalQuery): RetrievalOutcome {
@@ -40,7 +48,7 @@ export class LexicalRetriever implements RetrievalPort {
     const snapshot = this.store.snapshot();
     const sourceById = new Map(snapshot.sources.map((source) => [source.id, source]));
     const chunks = this.store.activeChunks().filter(
-      (chunk) => chunk.profileId === this.profile.id && sourceById.get(chunk.sourceId)?.lifecycle === "active",
+      (chunk) => chunk.profileId === this.profile.id && this.profile.allowedSourceIds.includes(chunk.sourceId) && sourceById.get(chunk.sourceId)?.lifecycle === "active",
     );
     const averageLength = chunks.length === 0 ? 1 : chunks.reduce((total, chunk) => total + tokens(chunk.text).length, 0) / chunks.length;
     const passages = chunks

@@ -32,7 +32,7 @@ Use `Documentation/Templates/TASK-TEMPLATE.md` for new tasks.
 
 ## Current task register — 2026-09-27
 
-Completed records remain in Approved/ to preserve existing references; Completed/ is not a second source of truth. Historical verification counts are retained; current baseline is 56 tests.
+Completed records remain in Approved/ to preserve existing references; Completed/ is not a second source of truth. Historical verification counts are retained; current baseline is 64 tests.
 
 | Task | Status | Next action |
 | --- | --- | --- |
@@ -49,7 +49,7 @@ Completed records remain in Approved/ to preserve existing references; Completed
 | [TASK-011](Approved/TASK-011-training-loop.md) | VERIFIED / delivered | Maintain regression coverage; see technical handover in record |
 | [TASK-012](Approved/TASK-012-checkpoints-generation.md) | VERIFIED / merged | Maintain checkpoint/resume/generation gates; see acceptance report |
 | [TASK-013](Approved/TASK-013-internet-knowledge.md) | VERIFIED / delivered | Maintain regression coverage; see technical handover in record |
-| [TASK-014](Proposed/TASK-014-persistent-rag.md) | PROPOSED / needs approval | Connect persistent knowledge to grounded prompts |
+| [TASK-014](Approved/TASK-014-persistent-rag.md) | VERIFIED / closeout pending | Source-backed SQLite template prompts |
 | [TASK-015](Proposed/TASK-015-knowledge-operations.md) | PROPOSED / needs approval | Govern source refresh and persistent lifecycle |
 | [TASK-016](Proposed/TASK-016-domain-dataset-evaluation.md) | PROPOSED / needs approval | Curate a licensed domain dataset and evaluation |
 | [TASK-017](Proposed/TASK-017-learned-grounded-inference.md) | PROPOSED / needs approval | Integrate learned generation behind the RAG boundary |

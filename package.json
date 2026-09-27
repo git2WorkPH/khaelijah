@@ -7,6 +7,7 @@
     "node": ">=22.16"
   },
   "scripts": {
+    "knowledge:ask": "pnpm run build && node dist/app/ask.js",
     "model": "pnpm run build && node dist/app/model.js",
     "knowledge:ingest": "pnpm run build && node dist/app/knowledge.js ingest",
     "knowledge:search": "pnpm run build && node dist/app/knowledge.js search",
