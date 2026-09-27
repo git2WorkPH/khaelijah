@@ -52,4 +52,4 @@ After verification: review scoped diff, commit task files only, update task/sess
 
 ## Follow-up and limits
 
-No outstanding acceptance failure. Synthetic near-duplicate splits do not prove useful application-building or real-domain generalization. The template RAG demo is unchanged. TASK-014 persistent RAG remains PROPOSED and requires approval. No training-run database or internet training corpus was added.
+No outstanding acceptance failure. Synthetic near-duplicate splits do not prove useful application-building or real-domain generalization. The template RAG demo is unchanged. TASK-014 subsequently received approval and added source-backed SQLite template prompts; learned model integration remains separate. No training-run database or internet training corpus was added.

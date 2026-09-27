@@ -15,6 +15,9 @@ export interface StoredDocument {
 
 export interface KnowledgeSearchResult {
   chunkId: number;
+  documentId: number;
+  ordinal: number;
+  score: number;
   sourceId: string;
   title: string;
   canonicalUrl: string;
@@ -30,8 +33,9 @@ export interface KnowledgeSearchResult {
 
 export class SqliteKnowledgeStore implements Disposable {
   private readonly db: DatabaseSync;
-  constructor(path: string) {
-    this.db = new DatabaseSync(path, { timeout: 5000 });
+  constructor(path: string, options: { readOnly?: boolean } = {}) {
+    this.db = new DatabaseSync(path, { timeout: 5000, readOnly: options.readOnly ?? false });
+    if (options.readOnly) return; // Prompting must not create/migrate or write a database.
     this.db.exec("PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL;");
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS sources(
@@ -108,20 +112,35 @@ export class SqliteKnowledgeStore implements Disposable {
     this.db.prepare("INSERT INTO refresh_runs(source_id,started_at,completed_at,status,chunk_count,error) VALUES(?,?,?,'failed',0,?)").run(sourceId, at, at, error.slice(0, 2000));
   }
 
-  search(query: string, limit = 5): KnowledgeSearchResult[] {
+  search(query: string, limit = 5, allowedSourceIds?: readonly string[]): KnowledgeSearchResult[] {
     const terms = query.toLowerCase().match(/[a-z0-9]+/gu)?.filter((term) => term.length > 1) ?? [];
     if (!terms.length || !Number.isInteger(limit) || limit < 1 || limit > 50) return [];
+    if (allowedSourceIds && !allowedSourceIds.length) return [];
+    const sourceFilter = allowedSourceIds ? ` AND s.id IN (${allowedSourceIds.map(() => "?").join(",")})` : "";
     const expression = terms.map((term) => `"${term}"`).join(" OR ");
-    const rows = this.db.prepare(`SELECT c.id chunk_id,s.id source_id,s.title,s.canonical_url,s.publisher,s.license,s.license_url,
+    const rows = this.db.prepare(`SELECT c.id chunk_id,d.id document_id,c.ordinal,s.id source_id,s.title,s.canonical_url,s.publisher,s.license,s.license_url,
       d.fetched_at,d.content_hash,d.version,c.text,bm25(chunk_search) score
       FROM chunk_search JOIN chunks c ON c.id=chunk_search.rowid JOIN documents d ON d.id=c.document_id
       JOIN sources s ON s.id=d.source_id WHERE chunk_search MATCH ? AND c.lifecycle='active' AND d.lifecycle='active' AND s.lifecycle='active'
-      ORDER BY score,c.id LIMIT ?`).all(expression, limit) as Record<string, unknown>[];
-    return rows.map((row, index) => ({
+      ${sourceFilter} ORDER BY score,c.id LIMIT ?`).all(expression, ...(allowedSourceIds ?? []), limit) as Record<string, unknown>[];
+    return rows.map((row, index) => this.searchResult(row, index + 1));
+  }
+
+  activeChunk(id: number): KnowledgeSearchResult | undefined {
+    if (!Number.isSafeInteger(id) || id < 1) return undefined;
+    const row = this.db.prepare(`SELECT c.id chunk_id,d.id document_id,c.ordinal,s.id source_id,s.title,s.canonical_url,s.publisher,s.license,s.license_url,
+      d.fetched_at,d.content_hash,d.version,c.text,0 score FROM chunks c JOIN documents d ON d.id=c.document_id
+      JOIN sources s ON s.id=d.source_id WHERE c.id=? AND c.lifecycle='active' AND d.lifecycle='active' AND s.lifecycle='active'`).get(id) as Record<string, unknown> | undefined;
+    return row ? this.searchResult(row, 0) : undefined;
+  }
+
+  private searchResult(row: Record<string, unknown>, rank: number): KnowledgeSearchResult {
+    return {
+      documentId: Number(row.document_id), ordinal: Number(row.ordinal), score: Number(row.score),
       chunkId: Number(row.chunk_id), sourceId: String(row.source_id), title: String(row.title), canonicalUrl: String(row.canonical_url),
       publisher: String(row.publisher), license: String(row.license), licenseUrl: String(row.license_url), fetchedAt: String(row.fetched_at),
-      contentHash: String(row.content_hash), version: Number(row.version), text: String(row.text), rank: index + 1,
-    }));
+      contentHash: String(row.content_hash), version: Number(row.version), text: String(row.text), rank,
+    };
   }
 
   audits(): Record<string, unknown>[] { return this.db.prepare("SELECT * FROM refresh_runs ORDER BY id").all() as Record<string, unknown>[]; }

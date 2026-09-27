@@ -17,6 +17,7 @@ pnpm demo "Plan request input validation for a TypeScript API"
 pnpm evaluate
 pnpm knowledge:ingest sqlite-appropriate-uses
 pnpm knowledge:search "when should I use SQLite for local storage"
+pnpm knowledge:ask "When should I use SQLite for local application storage?"
 ```
 
 `demo`, `evaluate`, and `test` build the TypeScript source before running. The demo prints JSON; there is no chat UI or running server. No model download or API key is required.
@@ -29,7 +30,13 @@ TASK-013 adds a deliberately narrow internet-ingestion path. The only initial so
 
 `pnpm knowledge:ingest sqlite-appropriate-uses` performs a manual HTTPS fetch with a timeout, redirect-host allowlist, HTML content-type check, and 2 MB response limit. It extracts readable text, creates deterministic passages, hashes the normalized document, and commits the refresh to SQLite in one transaction. Repeating an unchanged refresh records an audit without duplicating content. Changed content creates a new active version and supersedes prior passages. Failed fetches or parsing keep the last active version searchable.
 
-`pnpm knowledge:search "query"` searches active passages through SQLite FTS5 and returns JSON containing passage text, source URL, publisher, public-domain declaration and evidence URL, fetch time, content hash, document version, and rank. This is the first prompt-like use of internet knowledge: the prompt searches stored evidence. It is not yet passed to the custom decoder or the read-only planning demo.
+`pnpm knowledge:search "query"` searches active passages through SQLite FTS5 and returns JSON containing passage text, source URL, publisher, license declaration and evidence URL, fetch time, content hash, document version, and rank.
+
+`pnpm knowledge:ask "question"` opens the existing database read-only and uses the shared grounded planner with the approved `technology-sqlite` profile. It returns `mode: "source-backed-template"` and `modelUsed: false`: citations are verbatim passages, with a fixed recommendation to review them, not learned answers. It does not fetch pages, train/load a model, or execute source instructions. Ingest first if the database does not exist; `JC_KNOWLEDGE_DB` also selects the prompt database.
+
+Selected passages carry stable database-local chunk/document IDs, chunk and document hashes, document version, fetch/ingestion and retrieval times, and license evidence. Unknown publication/registration times are omitted. Both before and after response assembly, the planner checks those exact passages' active state/content/provenance; a concurrent refresh or withdrawal yields `stale_evidence`. Merely changing search rank does not invalidate evidence. Empty/unmatched queries return `insufficient_evidence`; invalid response schemas or citation IDs return `invalid_citation`.
+
+FTS5 scores are raw, lower-is-better scores tagged `sqlite-fts5`; they are not compared to the local demo's lexical thresholds. Profile filtering occurs before limiting results. Prompt query terms are stop-word filtered, bounded and quoted for FTS matching. Keyword matches and citation membership do not prove semantic relevance or factual correctness. Retrieved text remains untrusted evidence.
 
 The SQLite file is ignored by Git and intended as local operational data. Model checkpoints remain separate. Ingested text is not automatically approved as training data. Adding another source requires a code-reviewed allowlist entry and evidence that its terms permit the intended storage and retrieval use.
 
@@ -48,7 +55,7 @@ Application-planning request
 1. **Load the knowledge profile.** Each invocation reads 12 explicitly listed Markdown documents from `corpus/technology-typescript-web/` into an in-memory store. Front matter identifies the source, publisher, license/access context, and publication date. Paragraphs become chunks with identifiers and ingestion metadata.
 2. **Retrieve evidence.** The request is matched against active chunks using deterministic lexical scoring. The demo returns up to three passages above its score threshold. This is word-based retrieval; embeddings and a vector database are not implemented.
 3. **Construct the response.** The planner passes the request and evidence to `TransformerPlanAdapter`. That adapter runs the fixed-weight encoder, copies retrieved passages into citations, and supplies a fixed review recommendation. The numerical encoder output does not generate the recommendation text.
-4. **Validate and return.** Citation IDs must refer to supplied evidence. A second retrieval detects changes to selected passage IDs during inference. The agent records the request ID, status, and selected passage IDs in memory.
+4. **Validate and return.** Citation IDs must refer to supplied evidence. Exact lifecycle/content/provenance checks detect changes to selected passages during inference without depending on search rank. The agent records the request ID, status, and selected passage IDs in memory.
 
 This exercises the retrieval-augmented generation (RAG) wiring. The separate decoder supports learned text generation, but this demo still uses templates. The agent cannot edit applications, run shell commands, deploy software, or fetch internet sources.
 
@@ -129,7 +136,7 @@ pnpm lint
 pnpm evaluate
 ```
 
-The current suite contains 56 tests, including checkpoint corruption/failure handling, exact multi-batch resume, bounded generation, read-only evaluation, dataset validation, optimizer numerics, bounded training, tokenizer round trips, kernel/full-model gradients, causal masking, batch isolation, padding, ingestion, retrieval, and response validation. Gradient checks compare backward results with numerical perturbations.
+The current suite contains 64 tests, including persistent prompt provenance, read-only database/CLI behavior, profile isolation, refresh/withdrawal and ranking changes during inference, untrusted-source handling, checkpoint corruption/failure handling, exact multi-batch resume, bounded generation, read-only evaluation, dataset validation, optimizer numerics, bounded training, tokenizer round trips, kernel/full-model gradients, causal masking, batch isolation, padding, ingestion, retrieval, and response validation. Gradient checks compare backward results with numerical perturbations.
 
 `pnpm evaluate` prints five synthetic request fixtures, their responses, retrieval recall@3/nDCG@3, provenance checks, citation-ID checks, and insufficient-evidence behavior. Citation identity does not establish semantic support. Passing these checks does not demonstrate general application-building ability. The `lint` script currently repeats TypeScript checking rather than running a separate style linter.
 
@@ -153,6 +160,6 @@ The current suite contains 56 tests, including checkpoint corruption/failure han
 
 ## Next milestones
 
-TASK-011 and TASK-012 implement dataset manifests, AdamW, bounded training, checkpoints/resume, generation, and synthetic held-out evaluation. TASK-014 proposes connecting the SQLite knowledge path to grounded prompts; it requires approval. See [task register](Documentation/Tasks/README.md) and [technical handover](Documentation/SessionMemory/TECHNICAL-HANDOVER.md) for continuation.
+TASK-011 and TASK-012 implement dataset manifests, AdamW, bounded training, checkpoints/resume, generation, and synthetic held-out evaluation. TASK-014 connects SQLite knowledge to source-backed template prompts. TASK-015 proposes knowledge operations and requires approval. See [task register](Documentation/Tasks/README.md) and [technical handover](Documentation/SessionMemory/TECHNICAL-HANDOVER.md) for continuation.
 
 Continuous internet refresh, useful learned application planning, semantic conflict detection, and application-editing tools remain future work. The long-term direction keeps current domain knowledge in the governed knowledge layer rather than attempting to train on the entire internet.

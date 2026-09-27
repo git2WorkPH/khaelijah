@@ -2,45 +2,42 @@
 
 ## Current milestone
 
-TASK-012 implementation is VERIFIED and merged into master: implementation f21f358, merge 7eaf622. This memory closeout precedes the authorized push; inspect git status/log for final synchronization before resuming. TASK-001–013 are now verified; TASK-014–018 remain PROPOSED and need approval.
+TASK-014 is VERIFIED on task/TASK-014-persistent-rag, based on master e64929b. Commit/merge/push pending at this snapshot. TASK-001–014 are verified; TASK-015–018 remain PROPOSED and need approval. TASK-014 was explicitly approved by the owner in conversation.
 
-Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-012](../Tasks/Approved/TASK-012-checkpoints-generation.md), and [acceptance report](../Acceptance/TASK-012-checkpoints-generation.md). Do not restart completed work.
+Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-014](../Tasks/Approved/TASK-014-persistent-rag.md), and [acceptance report](../Acceptance/TASK-014-persistent-rag.md). Do not restart completed work.
 
 ## Implementation
 
-- src/training/checkpoint.ts: bounded versioned/checksummed files, named weights, optimizer/moments/step, RNG, manifest/batch hashes/order/cursor, runtime and metrics. Atomic validated sibling-temp saves; evaluation-only versus full-resume restore.
-- src/model/trainable/generation.ts: bounded greedy or seeded temperature/top-k, rolling context, EOS and byte decoding.
-- src/training/trainer.ts: complete-step and stop callbacks.
-- src/app/model.ts: separate train/resume/generate/experiment CLI; legacy train:toy and RAG demo stay unchanged.
-- Checkpoints are ignored local data, not part of Git pushes. SQLite still stores knowledge only; internet retrieval is not automatically training data or wired to the model.
+- Shared RetrievalPort.retrieve returns passages/warnings; isCurrent validates exact selected identities/content/provenance, independent of ranking. Local demo preserved.
+- SqliteRetriever maps database-local stable IDs, profile eligibility, chunk/document hashes, version and license evidence; source registration/publication dates unknown in SQLite are omitted.
+- GroundedPlanner clones inference input and revalidates evidence pre/post inference. Content/license refreshes or source/document/chunk withdrawal invalidate evidence; rank changes alone do not.
+- Separate src/app/ask.ts opens SQLite read-only: pnpm knowledge:ask. Output mode is source-backed-template, modelUsed false, citationMeaning verbatim source quotation. No network, training or source-instruction execution.
+- TASK-012 checkpoint/resume/generation remains separate and verified. Its synthetic patterns are not useful application-building quality. No training-run DB exists.
 
 ## Verification
 
-PASS: pnpm test (56 tests including build), pnpm typecheck, pnpm lint (compiler alias), pnpm evaluate and git diff --check.
-PASS: pnpm model experiment data/task012 Documentation/Acceptance/TASK-012-experiment.json.
-Seeds 11/22/33 selected validation NLL: 0.260527/0.296939/0.335994, each >10% improvement. Synthetic near-duplicate patterns only; no claim of application-building quality.
-PASS: five-step CLI training plus five-step resume reaches cumulative step 10; generation from seed-11 checkpoint returns repeating pattern with EOS.
-Regression: ten updates versus five/disk-save/load/five match exactly, including moments, using a nonzero cursor among three batches; corrupt files/I/O failures/resource stops/read-only inference are tested.
-No known running processes at handoff.
+PASS: pnpm test (64 tests including build), pnpm typecheck, pnpm lint (compiler alias), pnpm evaluate and git diff --check.
+PASS: pnpm knowledge:ask "When should I use SQLite for local application storage?" against existing local data/knowledge.sqlite returned five cited passages and modelUsed false. No new network fetch.
+Eight persistent-RAG tests cover reopen/readonly/CLI/missing DB, provenance, filtering before limit, empty/unmatched queries, content/license refresh, three lifecycle levels through a second connection, rank-only changes, invalid output, clone isolation and hostile source instructions.
+No known running processes.
 
 ## Git and preservation
 
-Base/current branch: master. Completed task branch: task/TASK-012-checkpoints-generation. Implementation f21f358; merge 7eaf622; inspect git log/status for subsequent documentation closeout and remote sync.
-Preserve and EXCLUDE user formatting changes in src/app/train.ts and src/app/knowledge.ts. The latter appeared during this task and was inspected as formatting-only. No task implementation depends on either edit.
-Standing authorization: merge completed verified tasks into master and push origin/master; no unrelated commits, destructive resets or force-pushes.
+Base: master. Current task branch: task/TASK-014-persistent-rag. Implementation commit pending; inspect Git for final closeout/synchronization.
+Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. Neither is changed by TASK-014. Standing authorization: merge verified tasks into master and push origin/master; no unrelated commits, destructive resets or force-pushes.
 
 ## Next exact action
 
-Check master/origin synchronization and finish a pending push only if needed. TASK-012 is complete: request approval for TASK-014 persistent RAG before implementation. TASK-014–018 are not approved by earlier blanket authorization. Do not repeat the completed TASK-012 merge.
+Review scoped diff, commit TASK-014 files only, record hash, merge master, push and verify synchronization. Then ask approval for TASK-015 knowledge operations (persistent withdrawal/refresh, migration and backup policy). Do not implement new proposals without approval.
 
-## Reproduce
+## Reproduce and limits
 
-Use Node >=22.16, pnpm and TypeScript-only runtime. Same Node version/config/data are required for exact resume.
-- pnpm model train data/pattern.json 200 11
-- pnpm model resume data/pattern.json 25
-- pnpm model generate data/pattern.json "abc "
-- pnpm model experiment data/task012 Documentation/Acceptance/TASK-012-experiment.json
+Use Node >=22.16 and pnpm, TypeScript-only runtime.
+- pnpm knowledge:ingest sqlite-appropriate-uses (approved network fetch; not run by ask)
+- pnpm knowledge:ask "When should I use SQLite for local storage?"
+- JC_KNOWLEDGE_DB selects another existing database; missing DB is not created by ask.
+- pnpm model train/resume/generate/experiment remain available; see README.
 
-CLI saves every 25 cumulative updates and on normal/resource/cancellation stops. A forced kill is not a graceful checkpoint. Back up ignored local checkpoint/database files separately. Public accessibility is not reuse permission; medical and workspace-write capabilities need separate approved safety scope.
+FTS5 lower-is-better scores are not local lexical thresholds. Keyword matching/citation membership do not establish semantic support. Snapshots are revalidated at observation points, not guaranteed forever after delivery. SQLite schema has no separate source registration/publication date. Back up ignored DB/checkpoint data separately. Training corpus rights are separate from retrieval rights. Medical and workspace-write capabilities need approved safety scope.
 
-Update task/session memory at meaningful boundaries and at 2% remaining usage. Latest usage check during TASK-012 showed 24% remaining in the five-hour window, 88% weekly; no reset consumed and no unattended monitor installed. Historical memory snapshots do not override current tasks, Git state or evidence.
+Latest usage check during TASK-014 showed 62% five-hour and 78% weekly remaining; no reset consumed. Update task/session memory at meaningful boundaries and at 2% remaining. Historical snapshots do not override current tasks, Git state or evidence.

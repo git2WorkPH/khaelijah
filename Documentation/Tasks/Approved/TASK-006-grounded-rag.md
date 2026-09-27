@@ -42,6 +42,6 @@ Build evidence packets, invoke the custom inference boundary, validate citations
 - Delivery: complete; implementation/design commit `1f5fb4a` is included in master and origin/master at handover baseline `35ee33e`.
 - Code/evidence to read: src/rag/grounded-planner.ts; src/core/result.ts; test/rag.test.ts.
 - Remaining work in this original task: none; later capabilities are follow-on scope, not unfinished acceptance.
-- Integration notes: Retain pre/post-inference active-evidence checks and unknown-citation rejection. SQLite search is not yet wired here. Validate response structure as well as citation membership before accepting learned output; membership alone does not prove claim support.
+- Integration notes: Retain pre/post-inference active-evidence checks and unknown-citation rejection. TASK-014 now supplies a SQLite retrieval adapter through the shared RetrievalPort. Validate response structure as well as citation membership before accepting learned output; membership alone does not prove claim support.
 - Recheck: pnpm test (RAG tests).
 - Cross-task resume instructions: [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). Historical test counts above describe the original task; the current baseline is 51 passing tests.

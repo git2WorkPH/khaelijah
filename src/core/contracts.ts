@@ -30,7 +30,8 @@ export interface SourceRecord {
   readonly publisher: string;
   readonly licenseOrAccess: string;
   readonly publishedAt?: IsoInstant;
-  readonly registeredAt: IsoInstant;
+  readonly registeredAt?: IsoInstant;
+  readonly licenseEvidenceUrl?: string;
   readonly refreshPolicy: "manual";
   readonly lifecycle: LifecycleStatus;
 }
@@ -45,6 +46,9 @@ export interface KnowledgeChunk {
   readonly contentHash: string;
   readonly lifecycle: LifecycleStatus;
   readonly ingestedAt: IsoInstant;
+  readonly documentVersion?: number;
+  readonly documentContentHash?: string;
+  readonly fetchedAt?: IsoInstant;
 }
 
 export interface RetrievalQuery {
@@ -60,10 +64,17 @@ export interface RetrievedPassage {
   readonly rank: number;
   readonly source: SourceRecord;
   readonly retrievedAt: IsoInstant;
+  readonly scoreKind?: "local-lexical" | "sqlite-fts5";
 }
 
+export interface RetrievalOutcome {
+  readonly passages: readonly RetrievedPassage[];
+  readonly warnings: readonly string[];
+}
 export interface RetrievalPort {
-  retrieve(query: RetrievalQuery): Promise<readonly RetrievedPassage[]>;
+  retrieve(query: RetrievalQuery): Promise<RetrievalOutcome>;
+  /** Check the exact selected identities/content/provenance, independently of ranking. */
+  isCurrent(passages: readonly RetrievedPassage[]): Promise<boolean>;
 }
 
 export interface EvidencePacket {
