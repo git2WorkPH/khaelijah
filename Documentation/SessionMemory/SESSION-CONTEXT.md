@@ -2,7 +2,9 @@
 
 ## Current milestone
 
-TASK-014 is VERIFIED and merged into master: implementation 23aa823, merge ef34809. This closeout precedes the authorized push; inspect Git for final synchronization. TASK-001–014 are verified; TASK-015–018 remain PROPOSED and need approval. TASK-014 was explicitly approved by the owner in conversation.
+TASK-014 is VERIFIED and pushed: implementation 23aa823, merge ef34809, closeout 82e780b. TASK-001–014 are verified. The owner requested a documentation-only expansion of the remaining roadmap; TASK-015–020 remain PROPOSED and need implementation approval.
+
+Read [ROADMAP.md](../Project/ROADMAP.md). Execution order: 015 website onboarding → 016 datasets/recorded training jobs → 019 model capability → 020 checkpoint promotion → 017 learned grounded explanations → 018 controlled application changes. Goals, expected outputs and proposed measurable gates are in each task. Domain/source selection, rights, compute budget and benchmark/reviewer remain owner decisions, not assumed approvals.
 
 Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-014](../Tasks/Approved/TASK-014-persistent-rag.md), and [acceptance report](../Acceptance/TASK-014-persistent-rag.md). Do not restart completed work.
 
@@ -23,12 +25,12 @@ No known running processes.
 
 ## Git and preservation
 
-Base/current branch: master. Completed branch: task/TASK-014-persistent-rag. Implementation 23aa823; merge ef34809; inspect Git for following documentation closeout and final synchronization.
+Base: master at 82e780b, synchronized with origin at roadmap start. Documentation branch: docs/remaining-roadmap; inspect Git for its final commit/merge/push. Completed runtime branch: task/TASK-014-persistent-rag. Runtime unchanged by roadmap update.
 Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. Neither is changed by TASK-014. Standing authorization: merge verified tasks into master and push origin/master; no unrelated commits, destructive resets or force-pushes.
 
 ## Next exact action
 
-Check master/origin synchronization and complete a pending push only if needed; do not repeat TASK-014 implementation or merge. Ask approval for TASK-015 knowledge operations (persistent withdrawal/refresh, migration and backup policy). Do not implement new proposals without approval.
+Finish documentation-only roadmap closeout if Git shows it pending; do not repeat TASK-014. Next implementation requires TASK-015 approval and a narrow HTML domain/source-review scope. Do not implement new proposals or spend compute without the relevant approval.
 
 ## Reproduce and limits
 

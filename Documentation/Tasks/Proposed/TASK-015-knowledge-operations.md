@@ -1,4 +1,4 @@
-# TASK-015 — Govern source refresh and persistent lifecycle
+# TASK-015 — Website onboarding, refresh and persistent lifecycle
 
 Task Status: PROPOSED
 Git Status: NOT_STARTED
@@ -18,6 +18,10 @@ src/knowledge/{internet-ingest,sqlite-store}.ts; src/app/knowledge.ts; new sourc
 
 ## Technical checklist
 
+- [ ] Add URL submission and a persisted pending/approved/rejected source registry; separate retrieval/storage permission from training permission. Require recorded reviewer, evidence URL, review time, scope and profile membership. A public page or robots allowance alone is not reuse permission.
+- [ ] Start with a single user-selected ordinary HTML page, not automatic recursive crawling. Review access/robots policies with bounded fetches before approval; approval precedes content indexing. Keep the existing SQLite source compatible.
+- [ ] Validate HTTPS, redirects, host/path scope, resolved addresses and actual connection targets; block loopback/private/link-local/metadata endpoints, credentials in URLs, DNS-rebinding and redirect bypasses. Enforce request/body/decompression/time limits, content-type checks and rate limits.
+- [ ] Define conservative extraction and canonicalization, reject unsupported/paywalled/login-required formats, and preview title/text/license/profile before indexing. Register approved sources in retrieval profiles without a source-code edit.
 - [ ] Specify a source registry policy with exact approved paths, license evidence/review time, extraction rules and refresh cadence; review robots/terms per source before registration.
 - [ ] Implement transactional persistent withdrawal/reactivation policy, audit reason/time and exclusion from search. Define retention/deletion policy separately rather than silently purging history.
 - [ ] Add bounded rate-limited refresh execution, retry/backoff and overlap prevention; scheduled execution requires an explicit operational deployment choice.
@@ -25,6 +29,9 @@ src/knowledge/{internet-ingest,sqlite-store}.ts; src/app/knowledge.ts; new sourc
 
 ## Acceptance and verification
 
+- [ ] Demonstrate submit URL → pending review → explicit approval → ingest → reopen database → knowledge:ask returns traceable passages, without editing the hard-coded source list. Capture exact proposed CLI commands and outputs during implementation.
+- [ ] Pending/rejected/out-of-profile sources are not searchable; denied URLs and redirect/DNS/private-network bypass fixtures cannot fetch content or reach blocked destinations.
+- [ ] Two approved HTML source fixtures with distinct extraction layouts produce useful non-navigation passages and preserve URL, version/hash, license evidence and fetch time. Unsupported formats fail explicitly.
 - [ ] Withdrawn sources/chunks cannot reappear through search or unchanged refresh without explicit authorized reactivation.
 - [ ] Injected fetch failures/retries/rate limits leave consistent versions and auditable results; no uncontrolled crawling.
 - [ ] Migration and backup/restore preserve version history, active FTS results and audit records; verify with temporary DBs.
@@ -32,7 +39,13 @@ src/knowledge/{internet-ingest,sqlite-store}.ts; src/app/knowledge.ts; new sourc
 
 ## Out of scope
 
-Unapproved source downloads, vector migration, medical content and automated inference from public accessibility to reuse permission.
+Unapproved content downloads/indexing, recursive crawling, JavaScript-rendered browser extraction, PDF ingestion, authentication/paywall bypass, vector migration, medical content and automatic training. PDF/rendered-page support requires separate tasks.
+
+## Goal, inputs and expected results
+
+Input: an owner-selected technology-domain HTTPS page, requested profile and recorded reuse evidence. Output: an auditable source registration plus searchable versioned passages, or a clear pending/rejection result. “Arbitrary website” means user-selected eligible sources, not unconditional access or reuse.
+
+Unlocks TASK-016 dataset selection; retrieval approval does not grant training approval. Before implementation choose the first narrow domain/source examples and approve the source-review workflow. Scheduled deployment remains a separate explicit operational choice.
 
 ## Git and resume
 
