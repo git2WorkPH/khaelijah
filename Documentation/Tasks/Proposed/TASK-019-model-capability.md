@@ -9,7 +9,7 @@ REQ-PROD-001; ADR-001. Determine whether our custom TypeScript model can explain
 
 ## Dependencies and authorization
 
-Depends on TASK-012 and TASK-016's immutable datasets, recorded runs and frozen benchmark. Runs before TASK-020 and TASK-017 despite its higher number. Proposed documentation only: owner must approve domain, compute/time budget and evaluation rubric before implementation or scaling.
+Depends on TASK-012 and TASK-016's immutable datasets, recorded runs and frozen benchmark. Runs before TASK-020 and TASK-017 despite its higher number. Proposed documentation only: owner has specified the local hardware/two-hour ceiling in TRAINING-BUDGET.md; domain, evaluation rubric and implementation still require approval before scaling.
 
 ## Inputs and expected outputs
 
@@ -43,4 +43,13 @@ No hosted-model substitution, medical capability, unrestricted domains, automati
 
 Likely files: src/model/trainable/, src/training/, datasets/, domain benchmark fixtures and a reviewed architecture ADR.
 Base: master. Planned branch: task/TASK-019-model-capability. Commit: none.
-First action after approval: freeze domain/rubric/budget and measure the existing baseline.
+First action after approval: freeze domain/rubric, calibrate safeguards within the owner budget, and measure the existing baseline.
+
+## Laptop-only implementation constraints
+
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+
+- [ ] Profile the actual M3/18 GB laptop using short CPU runs before selecting larger model/context/data sizes. Record peak RSS, system memory pressure/swap, step throughput, checkpoint size and impact on other applications; never infer available disk from 512 GB total capacity.
+- [ ] Use at most two hours per run, one worker and the provisional 6 GiB RSS ceiling (lower under pressure). Declare total trial budget and retain shorter existing limits until measurements support scaling.
+- [ ] Evaluate local acceleration only through a reviewed backend ADR and feasibility/numerical-parity tests; the existing TypeScript CPU implementation does not automatically use the M3 GPU. No hosted-model/Python/remote-compute substitution.
+- [ ] If the frozen explanation gates cannot be reached within the local ceiling, report a no-go and propose reviewed data/architecture/backend improvements. Do not silently increase memory, time or spending.

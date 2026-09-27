@@ -4,7 +4,9 @@
 
 TASK-014 is VERIFIED and pushed: implementation 23aa823, merge ef34809, closeout 82e780b. TASK-001–014 are verified. The owner requested a documentation-only expansion of the remaining roadmap; TASK-015–020 remain PROPOSED and need implementation approval.
 
-Read [ROADMAP.md](../Project/ROADMAP.md). Execution order: 015 website onboarding → 016 datasets/recorded training jobs → 019 model capability → 020 checkpoint promotion → 017 learned grounded explanations → 018 controlled application changes. Goals, expected outputs and proposed measurable gates are in each task. Domain/source selection, rights, compute budget and benchmark/reviewer remain owner decisions, not assumed approvals.
+Read [ROADMAP.md](../Project/ROADMAP.md). Execution order: 015 website onboarding → 016 datasets/recorded training jobs → 019 model capability → 020 checkpoint promotion → 017 learned grounded explanations → 018 controlled application changes. Domain/source selection, rights and benchmark/reviewer still require decisions. The owner has now specified the hardware/time/local-only constraints below; task implementation remains proposed.
+
+Resource policy: [TRAINING-BUDGET.md](../Project/TRAINING-BUDGET.md). Owner-reported MacBook Pro M3, 18 GB RAM, 512 GB total storage; local-only, no paid cloud/remote compute, maximum two hours/run and preserve other-application headroom. Proposed initial RSS ceiling is 6 GiB, subject to downward adjustment after pressure/swap measurements. Free disk and minimum reserve must be checked, not inferred from 512 GB capacity. TASK-015–020 contain resource-specific checklists; current CPU trainer does not use the M3 GPU automatically. No runtime defaults changed in this documentation update.
 
 Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-014](../Tasks/Approved/TASK-014-persistent-rag.md), and [acceptance report](../Acceptance/TASK-014-persistent-rag.md). Do not restart completed work.
 
@@ -25,12 +27,12 @@ No known running processes.
 
 ## Git and preservation
 
-Base: master at 82e780b, synchronized with origin at roadmap start. Documentation branch: docs/remaining-roadmap; inspect Git for its final commit/merge/push. Completed runtime branch: task/TASK-014-persistent-rag. Runtime unchanged by roadmap update.
+Base: master at 491461e, synchronized with origin at resource-policy start. Documentation branch: docs/local-training-budget; inspect Git for its final commit/merge/push. Earlier roadmap merge 491461e is already pushed. Completed runtime branch: task/TASK-014-persistent-rag. Runtime unchanged by this update.
 Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. Neither is changed by TASK-014. Standing authorization: merge verified tasks into master and push origin/master; no unrelated commits, destructive resets or force-pushes.
 
 ## Next exact action
 
-Finish documentation-only roadmap closeout if Git shows it pending; do not repeat TASK-014. Next implementation requires TASK-015 approval and a narrow HTML domain/source-review scope. Do not implement new proposals or spend compute without the relevant approval.
+Finish documentation-only local-training-budget closeout if Git shows it pending; do not repeat the earlier roadmap merge or TASK-014. Next implementation requires TASK-015 approval and a narrow HTML domain/source-review scope. Do not implement new proposals or spend compute without the relevant approval. Documentation link/whitespace checks pass; runtime tests were not rerun for this documentation-only change.
 
 ## Reproduce and limits
 

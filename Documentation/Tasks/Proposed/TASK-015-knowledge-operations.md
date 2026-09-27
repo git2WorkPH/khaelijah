@@ -52,3 +52,10 @@ Unlocks TASK-016 dataset selection; retrieval approval does not grant training a
 Base: master. Planned branch: task/TASK-015-knowledge-operations. Commit: none. No implementation performed. First action: obtain approval, review dependencies/current code, then refine interfaces and tests before coding.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
+
+## Laptop-only implementation constraints
+
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+
+- [ ] Use the local-only resource policy for fetch/extraction/indexing. Bound concurrent fetches, bytes and temporary extraction artifacts; check free disk before indexing or backup.
+- [ ] Test insufficient disk and bounded ingestion queues without filling the real disk; refuse work safely and preserve active knowledge/backup data.

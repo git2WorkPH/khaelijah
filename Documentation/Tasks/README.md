@@ -59,4 +59,6 @@ Completed records remain in Approved/ to preserve existing references; Completed
 
 Implementation order is **015 → 016 → 019 → 020 → 017 → 018**, not numeric order. Read the [remaining roadmap](../Project/ROADMAP.md) for goals, expected results, quality gates and owner decisions. This is planning authorization only; tasks remain proposed until implementation approval.
 
+All remaining tasks now reference the [laptop-only training budget](../Project/TRAINING-BUDGET.md): owner's M3/18 GB laptop, no paid cloud, at most two hours per run, memory headroom and disk preflight. Resource enforcement is planned work, not already implemented behavior.
+
 Read [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md) before resuming. TASK-013 was deliberately implemented before TASK-012. New proposals do not inherit prior blanket approval.
