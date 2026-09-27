@@ -32,7 +32,7 @@ Use `Documentation/Templates/TASK-TEMPLATE.md` for new tasks.
 
 ## Current task register — 2026-09-27
 
-Completed records remain in Approved/ to preserve existing references; Completed/ is not a second source of truth. Historical verification counts are retained; current baseline is 73 tests.
+Completed records remain in Approved/ to preserve existing references; Completed/ is not a second source of truth. Historical verification counts are retained; current baseline is 84 tests.
 
 | Task | Status | Next action |
 | --- | --- | --- |
@@ -51,14 +51,14 @@ Completed records remain in Approved/ to preserve existing references; Completed
 | [TASK-013](Approved/TASK-013-internet-knowledge.md) | VERIFIED / delivered | Maintain regression coverage; see technical handover in record |
 | [TASK-014](Approved/TASK-014-persistent-rag.md) | VERIFIED / merged | Source-backed SQLite template prompts |
 | [TASK-015](Approved/TASK-015-knowledge-operations.md) | VERIFIED | Reviewed onboarding/refresh/recovery; see acceptance evidence |
-| [TASK-016](Approved/TASK-016-domain-dataset-evaluation.md) | APPROVED / next | Knowledge-to-training snapshots, recorded jobs and frozen benchmark |
+| [TASK-016](Approved/TASK-016-domain-dataset-evaluation.md) | VERIFIED | Reviewed snapshots, supervised recorded jobs and frozen architecture benchmark |
 | [TASK-017](Approved/TASK-017-learned-grounded-inference.md) | APPROVED | Integrate learned generation behind the RAG boundary |
 | [TASK-018](Approved/TASK-018-application-agent-safety.md) | APPROVED | Design and gate application-building workspace actions |
-| [TASK-019](Approved/TASK-019-model-capability.md) | APPROVED | Measure and establish narrow-domain explanation capability |
+| [TASK-019](Approved/TASK-019-model-capability.md) | APPROVED / next | Measure application-architecture explanation capability; no quality claim yet |
 | [TASK-020](Approved/TASK-020-checkpoint-promotion.md) | APPROVED | Evaluate/review/promote checkpoints with rollback |
 
-Implementation order is **015 → 016 → 019 → 020 → 017 → 018**, not numeric order. Read the [remaining roadmap](../Project/ROADMAP.md) for goals, expected results, quality gates and owner decisions. Owner explicitly approved all six tasks; only TASK-015 has been implemented in this cycle.
+Implementation order is **015 → 016 → 019 → 020 → 017 → 018**, not numeric order. Read the [remaining roadmap](../Project/ROADMAP.md) for goals, expected results, quality gates and owner decisions. Owner explicitly approved all six tasks; TASK-015 and TASK-016 are implemented.
 
-All remaining tasks reference the [laptop-only training budget](../Project/TRAINING-BUDGET.md): owner's M3/18 GB laptop, no paid cloud, at most two hours/run, memory headroom and disk preflight. TASK-015 enforces bounded fetching and disk reserve; training-job resource enforcement remains TASK-016 work.
+All remaining tasks reference the [laptop-only training budget](../Project/TRAINING-BUDGET.md): owner's M3/18 GB laptop, no paid cloud, at most two hours/run, memory headroom and disk preflight. TASK-015 enforces bounded fetching/disk reserve; TASK-016 adds supervised training/evaluation budgets and telemetry. Larger-model safety/capability remains unproven.
 
 Read [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md) before resuming. TASK-013 was deliberately implemented before TASK-012. New proposals do not inherit prior blanket approval.

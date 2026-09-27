@@ -2,9 +2,11 @@
 
 ## Start here
 
+Latest delivery: TASK-016 implements reviewed application-architecture snapshots and supervised recorded jobs. Owner approved the original corpus and frozen benchmark plus a short baseline. Read [training operations](../Training/JOBS.md) and [acceptance evidence](../Acceptance/TASK-016-domain-dataset-evaluation.md). Next approved task is TASK-019 capability evaluation; do not repeat domain selection or treat public web access as training permission.
+
 Check [session context](SESSION-CONTEXT.md) for the current branch, user-owned changes, and next action, then follow the reading order below. Use .agents/skills/project-development/SKILL.md for implementation and project-session-memory/SKILL.md for closeout. Repository files, tests, and Git history are authoritative; conversation recall is not required.
 
-Current milestone: TASK-001–015 are verified. TASK-015 adds reviewed URL onboarding, pinned bounded fetching, preview/commit, dynamic profiles, lifecycle controls and backup/recovery. Owner explicitly approved TASK-015–020; TASK-016 is next. Check SESSION-CONTEXT.md and Git status for closeout/synchronization.
+Current milestone: TASK-001–016 are verified. Current suite has 84 tests. Owner explicitly approved TASK-015–020; remaining order is 019 → 020 → 017 → 018. Check SESSION-CONTEXT.md and Git status for closeout/synchronization.
 
 ## Read these in order
 
@@ -14,7 +16,7 @@ This order connects the project goal → requirements → remaining work → imp
 2. [Product requirements](../Requirements/Product/REQ-PROD-001-grounded-application-assistance.md) and [knowledge requirements](../Requirements/Foundation/REQ-FND-001-governed-knowledge-layer.md) — what the system must deliver and how evidence must be governed.
 3. [Task register](../Tasks/README.md) — what is complete, what remains, and which tasks are approved versus proposed.
    Read the [remaining roadmap](../Project/ROADMAP.md) alongside it for the goal → requirements → expected results → quality-gate chain. Remaining implementation order is 015 → 016 → 019 → 020 → 017 → 018.
-4. [TASK-015: knowledge operations](../Tasks/Approved/TASK-015-knowledge-operations.md) and its [operator guide](../Knowledge/SOURCE-OPERATIONS.md) — latest completed scope, commands and expected results. Then read [TASK-016](../Tasks/Approved/TASK-016-domain-dataset-evaluation.md), the next approved task. [TASK-012](../Tasks/Approved/TASK-012-checkpoints-generation.md) remains the checkpoint/trainer prerequisite.
+4. [TASK-016](../Tasks/Approved/TASK-016-domain-dataset-evaluation.md) and its [operator guide](../Training/JOBS.md) — latest completed scope, commands and expected results. Then read [TASK-019](../Tasks/Approved/TASK-019-model-capability.md), the next approved task. [TASK-012](../Tasks/Approved/TASK-012-checkpoints-generation.md) remains the checkpoint/trainer prerequisite; [TASK-015](../Tasks/Approved/TASK-015-knowledge-operations.md) governs internet source operations.
 5. [Trainable model design](../Architecture/TRAINABLE-MODEL.md) — the technical specification and measurable gates behind TASK-012. For subsequent tasks, read their linked architecture and decisions before coding.
 
 ### TASK-012 goal and expected results
@@ -68,12 +70,16 @@ TASK-014 historical baseline: 64 tests passed, including build; typecheck/lint/e
 
 - Knowledge: default data/knowledge.sqlite; JC_KNOWLEDGE_DB selects another path. SQLite tables are sources, documents, chunks, refresh_runs and chunk_search (FTS5).
 - Sources record license and evidence URL. Documents retain hash/version/fetch time/text; changed versions supersede earlier chunks; failed refresh leaves active data searchable.
-- Database uses WAL. Do not copy only a live .sqlite file and assume a consistent backup; use a SQLite-supported backup procedure or close all connections before a consistent file backup. Backup/restore tooling is future work.
+- Database uses WAL. Do not copy only a live .sqlite file and assume a consistent backup. Knowledge backup is supported by `pnpm sources backup NEW_PATH`; training backups must also preserve referenced checkpoint files. Stop all jobs/close connections or use a consistent SQLite backup procedure.
 - data/ is ignored by Git. A Git push does not back up ingested content. Live TASK-013 validation used temporary databases; do not assume those survive or that a new checkout has data.
-- Training manifest: datasets/synthetic-pattern-v1.json. Training evidence JSON is not a weight checkpoint. No persisted training-run database currently exists.
+- Legacy toy manifest: datasets/synthetic-pattern-v1.json. Governed architecture inputs: datasets/architecture-original-v1.json and architecture-benchmark-v1.json. Persistent training metadata now lives in data/training/registry.sqlite, with separate per-attempt checkpoint files. Training evidence JSON is not a weight checkpoint.
 - TASK-012 checkpoints are local files (default examples under ignored data/). Use pnpm model train/resume/generate; train:toy itself remains in-memory only. Resume requires matching manifest/batches and Node runtime version. Saves occur every 25 updates and on normal/resource/cancellation stops, not forced kills. Do not repurpose the knowledge DB to store weights without a separate design decision.
 
-## Latest completed work: TASK-015; next approved task: TASK-016
+## Latest completed work: TASK-016; next approved task: TASK-019
+
+TASK-016 adds app/jobs.ts, training/snapshot.ts (selected-version export/lineage/contamination checks), registry.ts (immutable snapshots, reviews, runs, events and one-time test reservations), job-policy.ts, resource-monitor.ts, supervisor.ts and job-worker.ts. The existing numerical trainer/checkpoint modules and two user-edited app files are unchanged. The CLI uses one fixed per-checkout registry, spawns one supervised CPU worker, checks rights/resources and records complete-step checkpoints. Resumes create new attempts; test evaluation performs no updates and cannot silently repeat a reserved holdout. Live original-domain baseline: validation NLL 5.86 → 4.63, one-time loss-test NLL 4.64, ten updates, peak worker RSS about 253 MiB. This does not establish answer quality; the 30-case architecture benchmark is still unscored. Follow [ADR-004](../Architecture/Decisions/ADR-004-training-registry.md), [operations](../Training/JOBS.md) and [acceptance](../Acceptance/TASK-016-domain-dataset-evaluation.md) before changing the job lifecycle.
+
+### Historical TASK-015 implementation
 
 Read [TASK-015 acceptance](../Acceptance/TASK-015-knowledge-operations.md). `src/app/sources.ts` owns operator writes; package knowledge:ingest now routes its legacy SQLite shortcut here, leaving user-owned app/knowledge.ts edits untouched. `source-policy.ts` validates metadata/review, `safe-http.ts` pins public IPv4 connections, `source-operations.ts` handles policies/preview/retries and `sqlite-store.ts` owns registry/version/lifecycle/backup transactions. Ask obtains profile source IDs from the persistent registry; `JC_KNOWLEDGE_PROFILE` selects a custom technology profile. No training run DB or model integration was added. Current suite: 73 tests. Follow the operator guide for manual review, limits and recovery.
 
@@ -90,7 +96,7 @@ TASK-012's checklist and [acceptance report](../Acceptance/TASK-012-checkpoints-
 
 See [ROADMAP.md](../Project/ROADMAP.md) for proposed measurable targets and remaining decisions: narrow domain/sources, reuse rights, resource-policy calibration and human-reviewed benchmark. The owner has specified the laptop/time/local-only budget below. Ingestion makes content searchable; training is a separate approved job, not triggered automatically by each fetch. Useful explanations are achieved only when quality gates pass; adding all pipeline code is not sufficient.
 
-Each has its own scope, implementation checklist, dependencies and acceptance gates under Tasks/Approved/. TASK-015 above is delivered; remaining order is 016 → 019 → 020 → 017 → 018. Semantic retrieval/vector indexes and accelerator work need measured justification and separate scope. Medical capabilities remain excluded.
+Each has its own scope, implementation checklist, dependencies and acceptance gates under Tasks/Approved/. TASK-015 and TASK-016 above are delivered; remaining order is 019 → 020 → 017 → 018. Semantic retrieval/vector indexes and accelerator work need measured justification and separate scope. Medical capabilities remain excluded.
 
 ## Preserve and avoid
 
@@ -110,4 +116,4 @@ Each has its own scope, implementation checklist, dependencies and acceptance ga
 5. For completed verified work only, commit scoped files, merge master, push and verify synchronization. Never use a task completion claim as a substitute for push evidence.
 6. At 2% remaining credit, save memory immediately as requested. Memory is already saved here proactively; no unattended usage monitor has been installed.
 
-Suggested continuation prompt after owner approval: "TASK-015 is approved. Read Documentation/SessionMemory/SESSION-CONTEXT.md and TECHNICAL-HANDOVER.md, inspect Git status, and implement TASK-015 using project-development and project-session-memory skills. Preserve user edits, use pnpm, and merge/push only after verification."
+Suggested continuation prompt: "Read Documentation/SessionMemory/SESSION-CONTEXT.md and TECHNICAL-HANDOVER.md, inspect Git status, and implement approved TASK-019 for application architecture using project-development and project-session-memory skills. Preserve user edits, use pnpm, enforce laptop-only limits, do not reuse inspected test data for tuning, and merge/push only after verification."

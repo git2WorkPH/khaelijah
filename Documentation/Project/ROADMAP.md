@@ -1,12 +1,12 @@
 # Remaining roadmap — from websites to learned explanations
 
-Status: TASK-015–020 explicitly approved for implementation. TASK-015 is verified. Approval does not bypass source rights, laptop-only compute limits, quality gates or workspace-action permissions.
+Status: TASK-015–020 explicitly approved for implementation. TASK-015 and TASK-016 are verified; see session memory for Git closeout. Approval does not bypass source rights, laptop-only compute limits, quality gates or workspace-action permissions.
 
 ## Goal and current baseline
 
 Accept a user-selected eligible website, store attributable knowledge, train our own TypeScript model on separately approved content, and produce useful learned explanations grounded in retrieved evidence. Controlled application building is a subsequent capability.
 
-TASK-001–015 are verified. Eligible single HTML pages can now be registered after review, previewed, stored and queried with source-backed templates; the custom model has checkpoint/resume and synthetic-pattern generation. Neither is yet useful general-domain learned explanation. See the [operator guide](../Knowledge/SOURCE-OPERATIONS.md).
+TASK-001–016 are verified. Eligible single HTML pages can be registered after review, previewed, stored and queried with source-backed templates. The custom model now has reviewed immutable snapshots and supervised recorded jobs, demonstrated on original application-architecture examples. Neither path is yet useful general-domain learned explanation. See the [ingestion guide](../Knowledge/SOURCE-OPERATIONS.md) and [training guide](../Training/JOBS.md).
 
 ## Execution order and deliverables
 
@@ -54,4 +54,4 @@ Demonstrate one reproducible end-to-end run: submit and approve an eligible sour
 
 The number of completed tasks is not the success criterion. If model quality fails, record the evidence and seek approval for a new data/architecture/compute experiment.
 
-Next action: implement approved TASK-016 using project-development. Start with the registry/dataset contract and explicit training eligibility; freeze the narrow domain and human-reviewed benchmark before capability experiments. See [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md) for code and preservation instructions.
+Next action: implement approved TASK-019 using project-development. Application architecture, the original corpus and the 30-case rubric are frozen; evaluate capability honestly before selecting improvements. The initial loss-test split has already been inspected once, so do not silently reuse it for candidate tuning. See [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md) for code and preservation instructions.

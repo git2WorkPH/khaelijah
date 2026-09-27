@@ -1,0 +1,13 @@
+# ADR-004 — Local training snapshots and supervised jobs
+
+Status: Accepted implementation design within approved TASK-016; corpus and benchmark reviews remain explicit records.
+
+Use a separate local SQLite training registry under `data/training/`, with immutable, content-addressed snapshot JSON and append-only job attempts. Weights remain validated checkpoint files, never knowledge-table blobs. The knowledge DB is read-only to the training exporter. Source/version selection, snapshot privacy/rights review, submission and start are separate explicit actions. No refresh triggers training.
+
+Snapshots retain source/project split groups, exact version/hash, URL, license and review fingerprints. Validation rejects cross-group split leakage, exact/near duplicates and obvious sensitive-data markers; a recorded human/operator privacy and contamination review is still required. Superseded versions may be deliberately exported while rights remain valid. Withdrawal or changed rights blocks start/resume/export and flags existing artifacts for review; it does not erase learned weights.
+
+A single registry permits one running attempt. The supported CLI uses one fixed registry per checkout. Each start forks a CPU TypeScript worker under a supervisor with a wall-clock deadline and external RSS/pressure/disk sampling. Cancellation is persisted, requested gracefully, then forced if needed. A crash never releases concurrency merely because a lease expires: explicit recovery requires recorded supervisor and worker processes to be absent. A conservative live/reused PID blocks recovery. Resumes create new attempts with parent/checkpoint lineage and new bounded budgets. There is no automatic restart loop.
+
+Checkpoint publication uses the TASK-012 complete-step serializer and atomic replacement. Registry records validate checkpoint identity before declaring completion. Resource stops and forced kills are incomplete/failed, never completed. Selection uses validation only; final test evaluation is a separately reserved, single-use operation per frozen snapshot so a failure cannot silently repeat the test. Capability scoring/promotion remains TASK-019/020, not a training-loss gate.
+
+Initial defaults stay small: 1 GiB RSS, 60-second wall limit, 1 GiB disk reserve, one worker, no network/cloud or accelerator backend. Maximum accepted budget is 6 GiB RSS and 7,200 seconds; config dimensions remain at or below the current baseline. macOS pressure and swap monitoring fail closed when unavailable for production starts. Tests inject observations; a sampling monitor is not an OS-level hard memory reservation. Unsupervised legacy toy CLI commands remain separate and must not run concurrently with jobs.

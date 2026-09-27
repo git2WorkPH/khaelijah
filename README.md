@@ -87,6 +87,10 @@ To change a demonstration passage, edit its Markdown file and rerun the demo. Ad
 
 ## How the trainable model works
 
+TASK-016 adds [reviewed datasets and supervised training jobs](Documentation/Training/JOBS.md). The first approved domain is **application architecture**. Original project-authored examples are separated into train/validation/test groups, with a separate frozen 30-case answer-quality benchmark. `pnpm jobs` provides freeze, export/preview, approve, submit, start, cancel, resume, status and one-time test operations. Metadata lives in `data/training/registry.sqlite`; weight checkpoints remain separate files.
+
+The short 10-update baseline completed under a 60-second/1 GiB budget, with validation NLL 5.86 → 4.63 and held-out loss 4.64. This is pipeline evidence, **not useful learned explanations**; the answer-quality benchmark remains unscored. See [acceptance evidence](Documentation/Acceptance/TASK-016-domain-dataset-evaluation.md). Website ingestion never triggers training automatically, and retrieved content requires separate training permission.
+
 The separate implementation under `src/model/trainable/` provides the building blocks for learning next-token probabilities:
 
 ```text
