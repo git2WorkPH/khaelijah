@@ -1,11 +1,11 @@
 # TASK-018 — Design and gate application-building workspace actions
 
-Task Status: PROPOSED
+Task Status: APPROVED
 Git Status: NOT_STARTED
 
 ## Authorization
 
-New technical follow-on documented for handover. Not implementation approval; request owner approval before moving to Approved/.
+Owner approved implementation of TASK-015–020. Source-specific rights reviews and task safety/quality gates still apply.
 
 ## References and dependencies
 
@@ -40,13 +40,17 @@ Immediate unrestricted shell/filesystem access, production deployment and medica
 
 ## Git and resume
 
-Base: master. Planned branch: task/TASK-018-application-agent-safety. Commit: none. No implementation performed. First action: obtain approval, review dependencies/current code, then refine interfaces and tests before coding.
+Base: master. Planned branch: task/TASK-018-application-agent-safety. Commit: none. No implementation performed. First action: review completed dependencies/current code, then refine interfaces and tests before coding.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
 
 ## Laptop-only implementation constraints
 
-Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Implementation is approved; resource and quality gates still apply.
 
 - [ ] Include tool/test subprocesses in aggregate laptop resource accounting; bound time/memory/concurrency and preserve headroom for other applications. Do not launch training alongside tool execution without a reviewed aggregate budget.
 - [ ] Test child-process timeout/cancellation and resource exhaustion preserve user data and logs. No cloud compute or remote execution as an automatic escape from local limits.
+
+## Owner authorization — current
+
+Owner explicitly approved implementation of TASK-015–020 in conversation. This supersedes historical proposed/approval-pending wording above, but not source-specific reuse reviews, capability gates, resource ceilings or workspace-action safety boundaries. Execution order: 015 → 016 → 019 → 020 → 017 → 018. Only TASK-015 is active in this implementation cycle.

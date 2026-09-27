@@ -1,6 +1,6 @@
 # TASK-020 — Evaluate, promote and roll back accepted checkpoints
 
-Task Status: PROPOSED
+Task Status: APPROVED
 Git Status: NOT_STARTED
 
 ## Goal and requirements
@@ -9,7 +9,7 @@ REQ-PROD-001; ADR-001. Prevent a completed training job from silently replacing 
 
 ## Dependencies and authorization
 
-TASK-012 checkpoint integrity, TASK-016 run registry and TASK-019 capability evidence. TASK-017 consumes the accepted-checkpoint selector. This proposal does not authorize implementation or automatically deploying models.
+TASK-012 checkpoint integrity, TASK-016 run registry and TASK-019 capability evidence. TASK-017 consumes the accepted-checkpoint selector. Implementation is approved; automatic deployment is not authorized.
 
 ## Inputs and expected results
 
@@ -40,11 +40,15 @@ Output: candidate/accepted/rejected/revoked state, an auditable active model sel
 No new training algorithm, hidden hosted-model fallback, automatic production deployment, model quality guarantee from checksum validation, or learned RAG implementation (TASK-017).
 Likely files: training registry/promotion modules (future), checkpoint loader, new CLI and acceptance tests.
 Base: master. Planned branch: task/TASK-020-checkpoint-promotion. Commit: none.
-First action after approval: design lifecycle/pointer storage and failure tests against TASK-016's approved registry ADR.
+First implementation action: design lifecycle/pointer storage and failure tests against TASK-016's approved registry ADR.
 
 ## Laptop-only implementation constraints
 
-Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Implementation is approved; resource and quality gates still apply.
 
 - [ ] Attach the local resource-policy version and telemetry to each candidate evaluation; reject budget-expired/incomplete candidates even when a resumable checkpoint exists.
 - [ ] Preflight space for candidate, temporary promotion files, active and rollback checkpoints under the configured disk reserve. Test low-space failures preserve the existing active model; no unrelated-file cleanup or remote fallback.
+
+## Owner authorization — current
+
+Owner explicitly approved implementation of TASK-015–020 in conversation. This supersedes historical proposed/approval-pending wording above, but not source-specific reuse reviews, capability gates, resource ceilings or workspace-action safety boundaries. Execution order: 015 → 016 → 019 → 020 → 017 → 018. Only TASK-015 is active in this implementation cycle.

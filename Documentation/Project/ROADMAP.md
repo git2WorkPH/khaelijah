@@ -1,12 +1,12 @@
 # Remaining roadmap — from websites to learned explanations
 
-Status: PROPOSED implementation roadmap; documented at owner request. Adding these plans does not approve their implementation, source rights, compute spending, or write-capable tools.
+Status: TASK-015–020 explicitly approved for implementation. TASK-015 is verified. Approval does not bypass source rights, laptop-only compute limits, quality gates or workspace-action permissions.
 
 ## Goal and current baseline
 
 Accept a user-selected eligible website, store attributable knowledge, train our own TypeScript model on separately approved content, and produce useful learned explanations grounded in retrieved evidence. Controlled application building is a subsequent capability.
 
-TASK-001–014 are complete. Today one registered SQLite page can be ingested and queried with source-backed templates; the custom model has checkpoint/resume and synthetic-pattern generation. Neither is yet useful general-domain learned explanation.
+TASK-001–015 are verified. Eligible single HTML pages can now be registered after review, previewed, stored and queried with source-backed templates; the custom model has checkpoint/resume and synthetic-pattern generation. Neither is yet useful general-domain learned explanation. See the [operator guide](../Knowledge/SOURCE-OPERATIONS.md).
 
 ## Execution order and deliverables
 
@@ -16,12 +16,12 @@ Task numbers are stable identifiers, not execution order:
 
 | Task | Deliverable | Completion evidence |
 | --- | --- | --- |
-| [015: website onboarding/operations](../Tasks/Proposed/TASK-015-knowledge-operations.md) | Submit an eligible HTML URL, review rights/profile, register without code edits, ingest/refresh/withdraw | Reopened DB answers with provenance; pending/denied sources and private-network bypass fixtures blocked; recovery tests pass |
-| [016: datasets and training jobs](../Tasks/Proposed/TASK-016-domain-dataset-evaluation.md) | Explicit knowledge-version export, immutable manifests/splits, run registry and bounded job lifecycle | Repeatable snapshot hashes, source lineage, restart/resume/cancel tests, candidate checkpoint and recorded metrics |
-| [019: model capability](../Tasks/Proposed/TASK-019-model-capability.md) | Benchmark current model, justify context/data/architecture/compute, train/evaluate reviewed candidates | Frozen realistic benchmark and human-scored capability gate; report failure as no-go rather than promising useful answers |
-| [020: checkpoint promotion](../Tasks/Proposed/TASK-020-checkpoint-promotion.md) | Accept/reject candidates, atomically select active model, rollback | Failed candidates cannot promote; pointer failure recovery and output-reproducible rollback |
-| [017: learned grounded explanations](../Tasks/Proposed/TASK-017-learned-grounded-inference.md) | Accepted model generates explanations using retrieved evidence | Reviewed correctness/support/uncertainty gates, model/evidence identity, stale/invalid-citation rejection |
-| [018: controlled app changes](../Tasks/Proposed/TASK-018-application-agent-safety.md) | Reviewed workspace diffs and bounded test execution | Independent tests on three disposable application fixtures; permission/escape/recovery checks |
+| [015: website onboarding/operations](../Tasks/Approved/TASK-015-knowledge-operations.md) | Submit an eligible HTML URL, review rights/profile, register without code edits, ingest/refresh/withdraw | Reopened DB answers with provenance; pending/denied sources and private-network bypass fixtures blocked; recovery tests pass |
+| [016: datasets and training jobs](../Tasks/Approved/TASK-016-domain-dataset-evaluation.md) | Explicit knowledge-version export, immutable manifests/splits, run registry and bounded job lifecycle | Repeatable snapshot hashes, source lineage, restart/resume/cancel tests, candidate checkpoint and recorded metrics |
+| [019: model capability](../Tasks/Approved/TASK-019-model-capability.md) | Benchmark current model, justify context/data/architecture/compute, train/evaluate reviewed candidates | Frozen realistic benchmark and human-scored capability gate; report failure as no-go rather than promising useful answers |
+| [020: checkpoint promotion](../Tasks/Approved/TASK-020-checkpoint-promotion.md) | Accept/reject candidates, atomically select active model, rollback | Failed candidates cannot promote; pointer failure recovery and output-reproducible rollback |
+| [017: learned grounded explanations](../Tasks/Approved/TASK-017-learned-grounded-inference.md) | Accepted model generates explanations using retrieved evidence | Reviewed correctness/support/uncertainty gates, model/evidence identity, stale/invalid-citation rejection |
+| [018: controlled app changes](../Tasks/Approved/TASK-018-application-agent-safety.md) | Reviewed workspace diffs and bounded test execution | Independent tests on three disposable application fixtures; permission/escape/recovery checks |
 
 TASK-019 establishes capability before TASK-017 integration. TASK-020 does not manufacture quality: it enforces the reviewed acceptance policy. Infrastructure can be implemented while capability remains blocked by inadequate data or compute.
 
@@ -54,4 +54,4 @@ Demonstrate one reproducible end-to-end run: submit and approve an eligible sour
 
 The number of completed tasks is not the success criterion. If model quality fails, record the evidence and seek approval for a new data/architecture/compute experiment.
 
-Next action: approve/refine TASK-015 and the initial domain/source-review scope, then implement it using project-development. See [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md) for existing code and preservation instructions.
+Next action: implement approved TASK-016 using project-development. Start with the registry/dataset contract and explicit training eligibility; freeze the narrow domain and human-reviewed benchmark before capability experiments. See [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md) for code and preservation instructions.

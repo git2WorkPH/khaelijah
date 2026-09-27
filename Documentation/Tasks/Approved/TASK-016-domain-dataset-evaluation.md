@@ -1,11 +1,11 @@
 # TASK-016 — Knowledge-to-training datasets and recorded training runs
 
-Task Status: PROPOSED
+Task Status: APPROVED
 Git Status: NOT_STARTED
 
 ## Authorization
 
-New technical follow-on documented for handover. Not implementation approval; request owner approval before moving to Approved/.
+Owner approved implementation of TASK-015–020. Source-specific rights reviews and task safety/quality gates still apply.
 
 ## References and dependencies
 
@@ -47,15 +47,19 @@ Input: approved versioned knowledge selections and a reviewed training budget. O
 
 ## Git and resume
 
-Base: master. Planned branch: task/TASK-016-domain-dataset-evaluation. Commit: none. No implementation performed. First action: obtain approval, review dependencies/current code, then refine interfaces and tests before coding.
+Base: master. Planned branch: task/TASK-016-domain-dataset-evaluation. Commit: none. No implementation performed. First action: review completed dependencies/current code, then refine interfaces and tests before coding.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
 
 ## Laptop-only implementation constraints
 
-Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Implementation is approved; resource and quality gates still apply.
 
 - [ ] Implement TRAINING-BUDGET.md in job scheduling: one local worker, maximum 7,200 seconds end-to-end, proposed initial RSS ceiling 6 GiB or lower, and no cloud/remote-compute fallback. Keep shorter defaults until benchmarks justify increases.
 - [ ] Add supervising-process deadline enforcement for synchronous/stalled workers; request graceful stop/checkpoint early, terminate at the ceiling if needed, and retain the previous validated checkpoint. Resumes are explicit jobs with lineage, not unlimited automatic restarts.
 - [ ] Record worker RSS, system memory-pressure/swap observations, time, throughput, free disk and artifact estimates. Apply a reviewed disk reserve; include atomic-save temporary copies and rollback checkpoints in estimates.
 - [ ] Test injected deadline, memory-pressure, low-disk, concurrent-job and unresponsive-worker cases. Jobs must stop/refuse safely, remain auditable and never be marked completed merely because the budget expired.
+
+## Owner authorization — current
+
+Owner explicitly approved implementation of TASK-015–020 in conversation. This supersedes historical proposed/approval-pending wording above, but not source-specific reuse reviews, capability gates, resource ceilings or workspace-action safety boundaries. Execution order: 015 → 016 → 019 → 020 → 017 → 018. Only TASK-015 is active in this implementation cycle.

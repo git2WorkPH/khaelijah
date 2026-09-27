@@ -32,7 +32,7 @@ Use `Documentation/Templates/TASK-TEMPLATE.md` for new tasks.
 
 ## Current task register — 2026-09-27
 
-Completed records remain in Approved/ to preserve existing references; Completed/ is not a second source of truth. Historical verification counts are retained; current baseline is 64 tests.
+Completed records remain in Approved/ to preserve existing references; Completed/ is not a second source of truth. Historical verification counts are retained; current baseline is 73 tests.
 
 | Task | Status | Next action |
 | --- | --- | --- |
@@ -50,15 +50,15 @@ Completed records remain in Approved/ to preserve existing references; Completed
 | [TASK-012](Approved/TASK-012-checkpoints-generation.md) | VERIFIED / merged | Maintain checkpoint/resume/generation gates; see acceptance report |
 | [TASK-013](Approved/TASK-013-internet-knowledge.md) | VERIFIED / delivered | Maintain regression coverage; see technical handover in record |
 | [TASK-014](Approved/TASK-014-persistent-rag.md) | VERIFIED / merged | Source-backed SQLite template prompts |
-| [TASK-015](Proposed/TASK-015-knowledge-operations.md) | PROPOSED / needs approval | URL onboarding, safe fetching, source rights and lifecycle |
-| [TASK-016](Proposed/TASK-016-domain-dataset-evaluation.md) | PROPOSED / needs approval | Knowledge-to-training snapshots, recorded jobs and frozen benchmark |
-| [TASK-017](Proposed/TASK-017-learned-grounded-inference.md) | PROPOSED / needs approval | Integrate learned generation behind the RAG boundary |
-| [TASK-018](Proposed/TASK-018-application-agent-safety.md) | PROPOSED / needs approval | Design and gate application-building workspace actions |
-| [TASK-019](Proposed/TASK-019-model-capability.md) | PROPOSED / needs approval | Measure and establish narrow-domain explanation capability |
-| [TASK-020](Proposed/TASK-020-checkpoint-promotion.md) | PROPOSED / needs approval | Evaluate/review/promote checkpoints with rollback |
+| [TASK-015](Approved/TASK-015-knowledge-operations.md) | VERIFIED | Reviewed onboarding/refresh/recovery; see acceptance evidence |
+| [TASK-016](Approved/TASK-016-domain-dataset-evaluation.md) | APPROVED / next | Knowledge-to-training snapshots, recorded jobs and frozen benchmark |
+| [TASK-017](Approved/TASK-017-learned-grounded-inference.md) | APPROVED | Integrate learned generation behind the RAG boundary |
+| [TASK-018](Approved/TASK-018-application-agent-safety.md) | APPROVED | Design and gate application-building workspace actions |
+| [TASK-019](Approved/TASK-019-model-capability.md) | APPROVED | Measure and establish narrow-domain explanation capability |
+| [TASK-020](Approved/TASK-020-checkpoint-promotion.md) | APPROVED | Evaluate/review/promote checkpoints with rollback |
 
-Implementation order is **015 → 016 → 019 → 020 → 017 → 018**, not numeric order. Read the [remaining roadmap](../Project/ROADMAP.md) for goals, expected results, quality gates and owner decisions. This is planning authorization only; tasks remain proposed until implementation approval.
+Implementation order is **015 → 016 → 019 → 020 → 017 → 018**, not numeric order. Read the [remaining roadmap](../Project/ROADMAP.md) for goals, expected results, quality gates and owner decisions. Owner explicitly approved all six tasks; only TASK-015 has been implemented in this cycle.
 
-All remaining tasks now reference the [laptop-only training budget](../Project/TRAINING-BUDGET.md): owner's M3/18 GB laptop, no paid cloud, at most two hours per run, memory headroom and disk preflight. Resource enforcement is planned work, not already implemented behavior.
+All remaining tasks reference the [laptop-only training budget](../Project/TRAINING-BUDGET.md): owner's M3/18 GB laptop, no paid cloud, at most two hours/run, memory headroom and disk preflight. TASK-015 enforces bounded fetching and disk reserve; training-job resource enforcement remains TASK-016 work.
 
 Read [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md) before resuming. TASK-013 was deliberately implemented before TASK-012. New proposals do not inherit prior blanket approval.
