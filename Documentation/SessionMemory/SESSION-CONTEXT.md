@@ -2,7 +2,7 @@
 
 ## Current milestone
 
-TASK-012 implementation is VERIFIED on task/TASK-012-checkpoints-generation, based on master 91640dc. Commit/merge/push closeout is pending at this snapshot. TASK-001–013 are now verified; TASK-014–018 remain PROPOSED and need approval.
+TASK-012 implementation is VERIFIED and merged into master: implementation f21f358, merge 7eaf622. This memory closeout precedes the authorized push; inspect git status/log for final synchronization before resuming. TASK-001–013 are now verified; TASK-014–018 remain PROPOSED and need approval.
 
 Read [technical handover](TECHNICAL-HANDOVER.md), [TASK-012](../Tasks/Approved/TASK-012-checkpoints-generation.md), and [acceptance report](../Acceptance/TASK-012-checkpoints-generation.md). Do not restart completed work.
 
@@ -25,13 +25,13 @@ No known running processes at handoff.
 
 ## Git and preservation
 
-Base: master. Current task branch: task/TASK-012-checkpoints-generation. Implementation commit pending; inspect git log/status for subsequent closeout.
+Base/current branch: master. Completed task branch: task/TASK-012-checkpoints-generation. Implementation f21f358; merge 7eaf622; inspect git log/status for subsequent documentation closeout and remote sync.
 Preserve and EXCLUDE user formatting changes in src/app/train.ts and src/app/knowledge.ts. The latter appeared during this task and was inspected as formatting-only. No task implementation depends on either edit.
 Standing authorization: merge completed verified tasks into master and push origin/master; no unrelated commits, destructive resets or force-pushes.
 
 ## Next exact action
 
-Review scoped diff, commit TASK-012 files only, record its hash, merge master, push and verify synchronization. Then request approval for TASK-014 persistent RAG before implementation. TASK-014–018 are not approved by earlier blanket authorization.
+Check master/origin synchronization and finish a pending push only if needed. TASK-012 is complete: request approval for TASK-014 persistent RAG before implementation. TASK-014–018 are not approved by earlier blanket authorization. Do not repeat the completed TASK-012 merge.
 
 ## Reproduce
 

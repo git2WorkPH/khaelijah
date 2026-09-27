@@ -1,14 +1,14 @@
 # TASK-012 — Checkpoint/resume, generation, and held-out evaluation
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 ## Authority and dependencies
 
 Restored task record for the existing TASK-008 follow-on, covered by the owner's standing approval of the task sequence. TASK-013 was explicitly prioritized first and is now complete. Implementation and acceptance evidence are recorded below.
 
 References: REQ-PROD-001, ADR-001, Architecture/TRAINABLE-MODEL.md, TASK-009–011.
-Base: master at 91640dc. Branch: task/TASK-012-checkpoints-generation. Implementation commit: pending.
+Base: master at 91640dc. Branch: task/TASK-012-checkpoints-generation. Implementation commit: f21f358. Merge commit: 7eaf622.
 
 ## Technical implementation checklist
 
