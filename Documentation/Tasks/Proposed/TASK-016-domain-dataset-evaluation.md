@@ -50,3 +50,12 @@ Input: approved versioned knowledge selections and a reviewed training budget. O
 Base: master. Planned branch: task/TASK-016-domain-dataset-evaluation. Commit: none. No implementation performed. First action: obtain approval, review dependencies/current code, then refine interfaces and tests before coding.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
+
+## Laptop-only implementation constraints
+
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+
+- [ ] Implement TRAINING-BUDGET.md in job scheduling: one local worker, maximum 7,200 seconds end-to-end, proposed initial RSS ceiling 6 GiB or lower, and no cloud/remote-compute fallback. Keep shorter defaults until benchmarks justify increases.
+- [ ] Add supervising-process deadline enforcement for synchronous/stalled workers; request graceful stop/checkpoint early, terminate at the ceiling if needed, and retain the previous validated checkpoint. Resumes are explicit jobs with lineage, not unlimited automatic restarts.
+- [ ] Record worker RSS, system memory-pressure/swap observations, time, throughput, free disk and artifact estimates. Apply a reviewed disk reserve; include atomic-save temporary copies and rollback checkpoints in estimates.
+- [ ] Test injected deadline, memory-pressure, low-disk, concurrent-job and unresponsive-worker cases. Jobs must stop/refuse safely, remain auditable and never be marked completed merely because the budget expired.

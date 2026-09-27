@@ -6,6 +6,7 @@ This folder contains project-specific context.
 - `VISION.md` — purpose, users, and desired outcome.
 - `SCOPE.md` — boundaries.
 - `GLOSSARY.md` — domain terminology.
+- [TRAINING-BUDGET.md](TRAINING-BUDGET.md) — owner laptop-only constraints and proposed resource safeguards.
 - [ROADMAP.md](ROADMAP.md) — remaining website ingestion, training, model-quality and application-building milestones in dependency order.
 - Start/resume implementation with [technical handover](../SessionMemory/TECHNICAL-HANDOVER.md), [session context](../SessionMemory/SESSION-CONTEXT.md), and [task index](../Tasks/README.md).
 

@@ -86,12 +86,13 @@ TASK-012's checklist and [acceptance report](../Acceptance/TASK-012-checkpoints-
 5. TASK-017: learned explanations from an accepted checkpoint plus retrieved evidence, with support/uncertainty and adversarial gates.
 6. TASK-018: reviewed workspace action safety and tested application changes; only needed for the application-building capability.
 
-See [ROADMAP.md](../Project/ROADMAP.md) for proposed measurable targets and decisions needed before work: narrow domain/sources, reuse rights, compute budget and human-reviewed benchmark. Ingestion makes content searchable; training is a separate approved job, not triggered automatically by each fetch. Useful explanations are achieved only when quality gates pass; adding all pipeline code is not sufficient.
+See [ROADMAP.md](../Project/ROADMAP.md) for proposed measurable targets and remaining decisions: narrow domain/sources, reuse rights, resource-policy calibration and human-reviewed benchmark. The owner has specified the laptop/time/local-only budget below. Ingestion makes content searchable; training is a separate approved job, not triggered automatically by each fetch. Useful explanations are achieved only when quality gates pass; adding all pipeline code is not sufficient.
 
 Each has its own scope, implementation checklist, dependencies and acceptance gates under Tasks/Proposed/. Semantic retrieval/vector indexes and accelerator work need measured justification and separate scope. Medical capabilities remain excluded.
 
 ## Preserve and avoid
 
+- Owner resource constraints: [TRAINING-BUDGET.md](../Project/TRAINING-BUDGET.md). MacBook Pro M3, 18 GB RAM, 512 GB total storage; local-only, no paid cloud/remote compute, maximum two hours per run, preserve headroom for other applications. The initial 6 GiB RSS cap is provisional and must be lowered under pressure. Verify free disk and reserve space; do not assume total capacity is free. TASK-015–020 now include relevant enforcement/benchmark gates. No runtime limits were changed by this documentation update.
 - Existing uncommitted src/app/train.ts and src/app/knowledge.ts changes are user-owned formatting. Never reset, stash, overwrite, or include them in task commits. Inspect their diffs before future overlapping work.
 - Use TypeScript-only runtime, pnpm, no hosted model dependency. Follow project task branches; no force pushes or destructive resets.
 - Publicly readable does not mean licensed for reuse. Only the registered SQLite documentation page is fetched today. License and robots review were manual; no general automated policy checker exists.

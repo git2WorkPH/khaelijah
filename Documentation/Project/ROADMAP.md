@@ -43,7 +43,7 @@ Freeze splits before training, select on validation, and evaluate the sealed tes
 
 1. First narrow technology domain and example sources. Start with ordinary HTML; PDFs/rendered sites need separate extraction tasks.
 2. Retrieval versus training reuse evidence, source-review authority and withdrawal/retention policy.
-3. Available machine, maximum time/memory and any explicitly authorized compute spending.
+3. Resource policy is now specified in [TRAINING-BUDGET.md](TRAINING-BUDGET.md): local MacBook Pro M3, 18 GB RAM, 512 GB total storage, no paid cloud and at most two hours/run. Calibrate the proposed 6 GiB RSS cap and choose the free-disk reserve from actual laptop measurements before larger runs.
 4. Benchmark questions/reference evidence, human reviewer and predeclared acceptance rubric.
 5. Training registry schema/storage ADR and manual job/promotion workflow. A separate logical registry is planned; exact DB architecture is not silently finalized here.
 6. Workspace/tool permissions only when considering TASK-018.

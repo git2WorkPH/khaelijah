@@ -47,3 +47,10 @@ Input: a question, approved knowledge profile and accepted learned checkpoint. O
 Base: master. Planned branch: task/TASK-017-learned-grounded-inference. Commit: none. No implementation performed. First action: obtain approval, review dependencies/current code, then refine interfaces and tests before coding.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
+
+## Laptop-only implementation constraints
+
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+
+- [ ] Benchmark prompt/evidence context size, latency and peak memory on the M3 laptop. Respect the shared memory-pressure/disk policy and serialize heavy inference with training unless measured aggregate usage is safe.
+- [ ] Test resource exhaustion and contention return an explicit unavailable/insufficient-resource result, not a fabricated learned answer or a hidden hosted-model fallback.

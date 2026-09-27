@@ -71,6 +71,8 @@ Examples:
 Unless explicitly configured otherwise, development may create a local task branch and commit approved work, but pushing and merging require explicit authorization.
 
 ## Project constraints
+
+- Local resource policy: [TRAINING-BUDGET.md](TRAINING-BUDGET.md). Owner's M3 MacBook Pro, 18 GB RAM, 512 GB total storage; no paid cloud or remote compute, at most two hours/run, preserve resources for other applications. Proposed initial RSS cap: 6 GiB, subject to downward adjustment and memory-pressure measurements.
 - The custom Transformer, retrieval system, and agent are separate subsystems with explicit interfaces.
 - The model must not depend on training over the entire internet to stay current.
 - The knowledge layer must preserve source, retrieval time, version, and access/licensing metadata.

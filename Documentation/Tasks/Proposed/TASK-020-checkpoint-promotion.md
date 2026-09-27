@@ -41,3 +41,10 @@ No new training algorithm, hidden hosted-model fallback, automatic production de
 Likely files: training registry/promotion modules (future), checkpoint loader, new CLI and acceptance tests.
 Base: master. Planned branch: task/TASK-020-checkpoint-promotion. Commit: none.
 First action after approval: design lifecycle/pointer storage and failure tests against TASK-016's approved registry ADR.
+
+## Laptop-only implementation constraints
+
+Follow [TRAINING-BUDGET.md](../../Project/TRAINING-BUDGET.md). Owner hardware/time/local-only requirements are firm; the 6 GiB RSS cap is a proposed starting safeguard, not measured safe capacity. Task implementation still requires approval.
+
+- [ ] Attach the local resource-policy version and telemetry to each candidate evaluation; reject budget-expired/incomplete candidates even when a resumable checkpoint exists.
+- [ ] Preflight space for candidate, temporary promotion files, active and rollback checkpoints under the configured disk reserve. Test low-space failures preserve the existing active model; no unrelated-file cleanup or remote fallback.
