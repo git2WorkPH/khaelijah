@@ -1,7 +1,7 @@
 # TASK-016 — Knowledge-to-training datasets and recorded training runs
 
 Task Status: VERIFIED
-Git Status: CHANGES_UNCOMMITTED
+Git Status: MERGED
 
 ## Authorization
 
@@ -55,7 +55,7 @@ Input: approved versioned knowledge selections and a reviewed training budget. O
 
 ## Git and resume
 
-Base: master b88e512. Branch: task/TASK-016-domain-dataset-evaluation. Implementation verified; scoped commit/merge/push pending closeout. Preserve unrelated user formatting in src/app/train.ts and src/app/knowledge.ts. Next approved task: TASK-019.
+Base: master b88e512. Branch: task/TASK-016-domain-dataset-evaluation. Implementation d179f28; merge 653e4d6 successfully pushed to origin/master. Preserve unrelated user formatting in src/app/train.ts and src/app/knowledge.ts. Next approved task: TASK-019.
 
 See [technical handover](../../SessionMemory/TECHNICAL-HANDOVER.md). New risks or expanded scope need their own decision/task, not silent implementation.
 

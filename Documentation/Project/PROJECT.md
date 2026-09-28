@@ -29,7 +29,7 @@ PROTOTYPE
 Bounded toy-model training, checkpoint/resume, generation, synthetic held-out evaluation, and curated internet ingestion into SQLite are implemented and verified. Persistent source-backed template prompts are implemented; learned answer integration remains separate.
 
 ## Current active task
-TASK-016 datasets and supervised jobs for application architecture is implemented and under final closeout; see session memory for verification and Git state. TASK-019 is next, followed by 020 → 017 → 018. Source-specific rights and capability gates remain required.
+TASK-016 datasets and supervised jobs for application architecture is verified, merged and pushed. TASK-019 is next, followed by 020 → 017 → 018. Source-specific rights and capability gates remain required.
 
 ## High-level repository structure
 - `Documentation/` — governed project context, requirements, decisions, tasks, and evidence.

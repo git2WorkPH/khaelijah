@@ -6,6 +6,8 @@ Owner selected application architecture and explicitly approved freezing the ori
 
 ## Verification
 
+Implementation d179f28; merge 653e4d6 successfully pushed to origin/master. Unrelated user formatting edits were excluded. Documentation-only closeout follows this merge.
+
 - `pnpm test`: PASS, 84 tests including build (73 prior + 11 training-job tests).
 - `pnpm typecheck`: PASS.
 - `pnpm lint`: PASS (compiler alias, not a separate style/security linter).

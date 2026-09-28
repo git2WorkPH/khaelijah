@@ -2,7 +2,7 @@
 
 ## Current milestone
 
-TASK-001–016 verified; TASK-016 is in final Git closeout, not yet claimed pushed in this record. Owner explicitly approved TASK-015–020. Remaining order: **019 → 020 → 017 → 018**. Use project-development for exactly one approved task per cycle, and project-session-memory at meaningful boundaries/2% remaining.
+TASK-001–016 verified; TASK-016 implementation d179f28 and merge 653e4d6 are pushed to origin/master. Owner explicitly approved TASK-015–020. Remaining order: **019 → 020 → 017 → 018**. Use project-development for exactly one approved task per cycle, and project-session-memory at meaningful boundaries/2% remaining.
 
 Owner chose **application architecture**, not SQLite-backed storage, and explicitly approved freezing original project-authored examples, the 20 explanation + 10 uncertainty/conflict benchmark, and a short 60-second/1 GiB supervised baseline. Do not repeat domain-selection or blanket implementation-approval questions.
 
@@ -27,13 +27,13 @@ The loss-test split has been inspected once and cannot silently be reused for ca
 
 ## Git and preservation
 
-Base at start: master b88e512. Active branch: task/TASK-016-domain-dataset-evaluation. Implementation is uncommitted pending final closeout; inspect Git before resuming. The prior low-credit documentation edits were ours and are included in TASK-016.
+Base at start: master b88e512. Task branch: task/TASK-016-domain-dataset-evaluation. Implementation d179f28 merged as 653e4d6 and pushed; current branch is master. This documentation-only closeout records the delivered state; use git log for its subsequent hash. The prior low-credit documentation edits were ours and are included in TASK-016.
 
 Preserve and EXCLUDE user formatting edits in src/app/train.ts and src/app/knowledge.ts. No TASK-016 change touches them. Standing authorization: merge verified task branch into master and push origin/master; no unrelated commits, force pushes, destructive resets or automatic branch deletion.
 
 ## Next exact action
 
-Finish scoped TASK-016 commit/merge/push if still pending, then begin approved TASK-019. Read the frozen benchmark/rubric, source-to-example lineage, baseline limits and job resource policy. Establish honest human-scored architecture capability evidence before data/model/context improvements. If reusing any inspected loss holdout, record an explicit new evaluation strategy/fresh holdout; do not tune against the prior test. TASK-020 owns checkpoint promotion, TASK-017 learned RAG and TASK-018 workspace actions.
+Begin approved TASK-019. Read the frozen benchmark/rubric, source-to-example lineage, baseline limits and job resource policy. Establish honest human-scored architecture capability evidence before data/model/context improvements. If reusing any inspected loss holdout, record an explicit new evaluation strategy/fresh holdout; do not tune against the prior test. TASK-020 owns checkpoint promotion, TASK-017 learned RAG and TASK-018 workspace actions.
 
 ## Resource and safety constraints
 
@@ -41,4 +41,4 @@ MacBook Pro M3, 18 GB RAM/512 GB total storage; local-only, no paid cloud/remote
 
 System swap was already substantial (~15 GB) while observed pressure was normal; do not attribute that to this subsecond baseline. Jobs stop on non-normal pressure or >64 MiB growth. Do not run legacy toy trainers or other checkouts concurrently: concurrency is enforced only in the supported fixed per-checkout registry. Recovery refuses live/reused recorded PIDs. Forced termination may leave a last validated earlier checkpoint, not the final update. Keep all snapshot/checkpoint history unless a separate deletion policy is approved.
 
-Last usage check: 34% five-hour and 42% weekly remaining; no reset credit consumed. Save memory immediately at 2% remaining. No unattended credit monitor. Actual baseline/evaluation processes finished; final verification/closeout may be in flight, inspect current tool/Git state before restarting.
+At the closeout continuation the usage window had reset: 100% five-hour and 37% weekly remaining; no reset credit consumed. The earlier approval-service refusal was due to exhausted usage, not a code failure. Save memory immediately at 2% remaining. No unattended credit monitor. Baseline/evaluation and runtime verification finished in the prior implementation cycle; this continuation only checks and commits documentation, with git diff --check passing. No known running worker. Inspect Git for this closeout commit and push before starting TASK-019.
