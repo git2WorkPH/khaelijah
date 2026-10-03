@@ -7,6 +7,8 @@ Software builders need an assistant that combines durable engineering reasoning 
 The initial user is the project owner: a developer building applications. Future users may include development teams working in a defined knowledge profile, such as technology or medicine.
 
 ## Desired outcome
+The long-term goal is an application for building and continually improving our own model, then using it as a coworker for research, explanations, code generation and verified work. Technology and medical research are intended domain tracks, each with its own sources, evaluations and appropriate human review. See the [future coworker roadmap](FUTURE-CODING-AGENT-ROADMAP.md).
+
 Given a scoped application request, the system can retrieve relevant, attributable knowledge from an approved corpus, explain the evidence it used, propose an implementation plan, and eventually assist with building and validating the application under explicit human control.
 
 ## Product principles

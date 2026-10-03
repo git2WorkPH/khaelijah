@@ -2,6 +2,8 @@
 
 ## Current milestone
 
+Product direction update (2026-10-03): the owner requested publishing the future roadmap for an owned, improvable model and coworker for coding and research, including medical research. See [future coworker roadmap](../Project/FUTURE-CODING-AGENT-ROADMAP.md). This master delivery contains documentation only. TASK-019 work remains on task/TASK-019-model-capability, with latest development evidence at 12e1d62 and roadmap update at deccb27; capability remains NO_GO. Read that branch's session memory before continuing model work. Future milestones are not yet approved implementation. Documentation verification: git diff --check and relative-link checks; no runtime changes.
+
 TASK-001–016 verified; TASK-016 implementation d179f28 and merge 653e4d6 are pushed to origin/master. Owner explicitly approved TASK-015–020. Remaining order: **019 → 020 → 017 → 018**. Use project-development for exactly one approved task per cycle, and project-session-memory at meaningful boundaries/2% remaining.
 
 Owner chose **application architecture**, not SQLite-backed storage, and explicitly approved freezing original project-authored examples, the 20 explanation + 10 uncertainty/conflict benchmark, and a short 60-second/1 GiB supervised baseline. Do not repeat domain-selection or blanket implementation-approval questions.

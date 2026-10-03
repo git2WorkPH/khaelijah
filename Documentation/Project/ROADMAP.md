@@ -49,6 +49,8 @@ Freeze splits before training, select on validation, and evaluate the sealed tes
 6. Workspace/tool permissions only when considering TASK-018.
 
 ## Definition of goal achieved
+The broader goal, clarified on 2026-10-03, is an application for building and improving an owned model that works as a coworker across coding and research, including medical research. The [future coworker roadmap](FUTURE-CODING-AGENT-ROADMAP.md) records shared research/tool capabilities, domain-specific evaluation, medical research boundaries and reviewed continual improvement. These future tracks do not change the current approved execution order.
+
 
 Demonstrate one reproducible end-to-end run: submit and approve an eligible source, retrieve it, export approved versions, train within budget, accept a checkpoint using frozen evaluation, and answer new questions with useful learned explanations and supported citations. TASK-018 additionally demonstrates safe tested application changes if that capability is in scope.
 

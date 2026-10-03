@@ -2,6 +2,8 @@
 
 ## Start here
 
+The owner clarified the broader product direction on 2026-10-03: build and improve an owned model through this app, then use it as a coworker for coding and research, including medical research. Read the [future coworker roadmap](../Project/FUTURE-CODING-AGENT-ROADMAP.md) for capabilities, coding milestones, medical research scope and expected evidence. This documentation delivery is separate from unfinished TASK-019 work on task/TASK-019-model-capability; consult that branch's current session memory before resuming training.
+
 Latest delivery: TASK-016 implements reviewed application-architecture snapshots and supervised recorded jobs. Owner approved the original corpus and frozen benchmark plus a short baseline. Read [training operations](../Training/JOBS.md) and [acceptance evidence](../Acceptance/TASK-016-domain-dataset-evaluation.md). Next approved task is TASK-019 capability evaluation; do not repeat domain selection or treat public web access as training permission.
 
 Check [session context](SESSION-CONTEXT.md) for the current branch, user-owned changes, and next action, then follow the reading order below. Use .agents/skills/project-development/SKILL.md for implementation and project-session-memory/SKILL.md for closeout. Repository files, tests, and Git history are authoritative; conversation recall is not required.
